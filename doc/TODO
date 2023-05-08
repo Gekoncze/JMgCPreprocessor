@@ -1,7 +1,13 @@
 add tests
     for expression package
     for macro package
+
     for processors package
+        comment processor
+        newline processor
+        operator processor
+        whitespace processor
+
     for preprocessor
 
 TODO
