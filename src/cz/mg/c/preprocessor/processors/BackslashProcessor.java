@@ -6,6 +6,8 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.SpecialToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class BackslashProcessor {
     private static @Optional BackslashProcessor instance;
@@ -41,14 +43,18 @@ public @Service class BackslashProcessor {
     }
 
     private boolean isBackslash(@Optional ListItem<Token> item) {
-        return is(item, "\\");
+        return is(item, "\\", SpecialToken.class);
     }
 
     private boolean isNewline(@Optional ListItem<Token> item) {
-        return is(item, "\n");
+        return is(item, "\n", WhitespaceToken.class);
     }
 
-    private boolean is(@Optional ListItem<Token> item, @Mandatory String s) {
-        return item != null && item.get().getText().equals(s);
+    private boolean is(
+        @Optional ListItem<Token> item,
+        @Mandatory String s,
+        @Mandatory Class<? extends Token> tokenClass
+    ) {
+        return item != null && item.get().getText().equals(s) && tokenClass.isInstance(item.get());
     }
 }

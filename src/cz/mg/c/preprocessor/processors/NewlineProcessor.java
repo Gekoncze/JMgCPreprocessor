@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class NewlineProcessor {
     private static @Optional NewlineProcessor instance;
@@ -26,12 +27,16 @@ public @Service class NewlineProcessor {
         List<List<Token>> lines = new List<>();
         lines.addLast(new List<>());
         for (Token token : tokens) {
-            if (token.getText().equals("\n")) {
+            if (isNewline(token)) {
                 lines.addLast(new List<>());
             } else {
                 lines.getLast().addLast(token);
             }
         }
         return lines;
+    }
+
+    private boolean isNewline(@Mandatory Token token) {
+        return token.getText().equals("\n") && token instanceof WhitespaceToken;
     }
 }
