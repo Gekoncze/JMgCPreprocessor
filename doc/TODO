@@ -1,0 +1,12 @@
+add tests
+    for expression package
+    for macro package
+    for processors package
+    for preprocessor
+
+TODO
+    in ExpressionPreprocessor
+    in MacroExpansionService
+
+investigate if whitespaces make sense for macro processing
+add support for vararg macros
