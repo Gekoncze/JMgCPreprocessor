@@ -34,7 +34,7 @@ public @Test class CommentProcessorTest {
             f.comment("="),
             f.whitespace("\t"),
             f.plain("bar"),
-            f.documentation(" "),
+            f.comment(" "),
             f.plain("69")
         );
         processor.process(tokens);
@@ -43,7 +43,7 @@ public @Test class CommentProcessorTest {
 
     private void testProcessingLast() {
         CommentProcessor processor = CommentProcessor.getInstance();
-        List<Token> tokens = new List<>(f.plain("~"), f.whitespace(" "), f.documentation("yay\nmay"));
+        List<Token> tokens = new List<>(f.plain("~"), f.whitespace(" "), f.comment("yay\nmay"));
         processor.process(tokens);
         validator.check(tokens, "~", " ");
     }

@@ -7,7 +7,6 @@ import cz.mg.tokenizer.entities.BracketToken;
 import cz.mg.tokenizer.entities.OperatorToken;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.CommentToken;
-import cz.mg.tokenizer.entities.tokens.DocumentationToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
@@ -30,10 +29,6 @@ public @Service class TokenFactory {
 
     public @Mandatory CommentToken comment(@Mandatory String text) {
         return new CommentToken(text, 0);
-    }
-
-    public @Mandatory DocumentationToken documentation(@Mandatory String text) {
-        return new DocumentationToken(text, 0);
     }
 
     public @Mandatory OperatorToken operator(@Mandatory String text) {
