@@ -6,6 +6,7 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.CommentToken;
+import cz.mg.tokenizer.entities.tokens.DocumentationToken;
 
 public @Service class CommentProcessor {
     private static @Optional CommentProcessor instance;
@@ -24,6 +25,6 @@ public @Service class CommentProcessor {
      * Removes comment tokens.
      */
     public void process(@Mandatory List<Token> tokens) {
-        tokens.removeIf(token -> token instanceof CommentToken);
+        tokens.removeIf(token -> token instanceof CommentToken || token instanceof DocumentationToken);
     }
 }

@@ -4,7 +4,6 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.BackslashProcessor;
 import cz.mg.collections.list.List;
-import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
@@ -28,7 +27,7 @@ public @Test class BackslashProcessorTest {
         BackslashProcessor processor = BackslashProcessor.getInstance();
         List<Token> tokens = new List<>(special("\\"), whitespace("\n"), plain("6"), plain("9"));
         processor.process(tokens);
-        check(tokens, "6", "9");
+        TokenValidator.getInstance().check(tokens, "6", "9");
     }
 
     private void testProcessingMiddle() {
@@ -40,50 +39,38 @@ public @Test class BackslashProcessorTest {
             plain("bar"),
             special("\\"),
             whitespace("\n"),
-            plain("69"));
+            plain("69")
+        );
         processor.process(tokens);
-        check(tokens, "foo", "bar", "69");
+        TokenValidator.getInstance().check(tokens, "foo", "bar", "69");
     }
 
     private void testProcessingLast() {
         BackslashProcessor processor = BackslashProcessor.getInstance();
         List<Token> tokens = new List<>(plain("6"), plain("9"), special("\\"), whitespace("\n"));
         processor.process(tokens);
-        check(tokens, "6", "9");
+        TokenValidator.getInstance().check(tokens, "6", "9");
     }
 
     private void testFakeBackslash() {
         BackslashProcessor processor = BackslashProcessor.getInstance();
         List<Token> tokens = new List<>(plain("6"), plain("\\"), plain("\n"), plain("9"));
         processor.process(tokens);
-        check(tokens, "6", "\\", "\n", "9");
+        TokenValidator.getInstance().check(tokens, "6", "\\", "\n", "9");
     }
 
     private void testMissortedBackslash() {
         BackslashProcessor processor = BackslashProcessor.getInstance();
         List<Token> tokens = new List<>(plain("6"), whitespace("\n"), special("\\"), plain("9"));
         processor.process(tokens);
-        check(tokens, "6", "\n", "\\", "9");
+        TokenValidator.getInstance().check(tokens, "6", "\n", "\\", "9");
     }
 
     private void testOther() {
         BackslashProcessor processor = BackslashProcessor.getInstance();
         List<Token> tokens = new List<>(plain("6"), special("a"), whitespace("b"), plain("9"));
         processor.process(tokens);
-        check(tokens, "6", "a", "b", "9");
-    }
-
-    private void check(@Mandatory List<Token> actualTokens, String... expectation) {
-        List<String> reality = new List<>();
-        for (Token actualToken : actualTokens) {
-            reality.addLast(actualToken.getText());
-        }
-
-        Assert
-            .assertThatCollections(new List<>(expectation), reality)
-            .withPrintFunction(s -> s.equals("\n") ? "\\n" : s)
-            .verbose("[", ",", "]")
-            .areEqual();
+        TokenValidator.getInstance().check(tokens, "6", "a", "b", "9");
     }
 
     private @Mandatory Token plain(@Mandatory String text) {
