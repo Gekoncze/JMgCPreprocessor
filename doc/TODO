@@ -11,8 +11,18 @@ add tests
     for preprocessor
 
 TODO
-    in ExpressionPreprocessor
+    in ExpressionProcessor (add test first)
     in MacroExpansionService
 
-investigate if whitespaces make sense for macro processing
-add support for vararg macros
+backslash processing should be run before tokenizer
+    but that would mess up traceability
+        unless position service counted with backslashes
+
+macros
+    check if whitespaces make sense for macro processing
+
+    add support for ## macro joining operation
+        investigate what should be the result token type
+        investigate what token types should be joined together and when
+
+    add support for vararg macros

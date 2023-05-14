@@ -19,7 +19,6 @@ public @Service class Preprocessor {
         if (instance == null) {
             instance = new Preprocessor();
             instance.backslashProcessor = BackslashProcessor.getInstance();
-            instance.bracketProcessor = BracketProcessor.getInstance();
             instance.commentProcessor = CommentProcessor.getInstance();
             instance.macroProcessor = MacroProcessor.getInstance();
             instance.newlineProcessor = NewlineProcessor.getInstance();
@@ -30,7 +29,6 @@ public @Service class Preprocessor {
     }
 
     private BackslashProcessor backslashProcessor;
-    private BracketProcessor bracketProcessor;
     private CommentProcessor commentProcessor;
     private MacroProcessor macroProcessor;
     private NewlineProcessor newlineProcessor;
@@ -58,7 +56,6 @@ public @Service class Preprocessor {
     private @Mandatory List<Token> process(@Mandatory File file, @Mandatory Macros macros) {
         List<Token> tokens = new Tokenizer().tokenize(file.getContent());
         backslashProcessor.process(tokens);
-        bracketProcessor.process(tokens);
         operatorProcessor.process(tokens);
         commentProcessor.process(tokens);
         List<List<Token>> lines = newlineProcessor.process(tokens);

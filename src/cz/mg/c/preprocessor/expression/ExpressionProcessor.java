@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.BracketToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.utilities.TokenReader;
@@ -126,11 +127,11 @@ public @Service class ExpressionProcessor {
     }
 
     private boolean isOpeningBracket(@Mandatory Token token) {
-        return token.getText().equals("(");
+        return token instanceof BracketToken && token.getText().equals("(");
     }
 
     private boolean isClosingBracket(@Mandatory Token token) {
-        return token.getText().equals("(");
+        return token instanceof BracketToken && token.getText().equals(")");
     }
 
     private boolean isOperator(@Mandatory ListItem<Token> item, @Mandatory Operator operator) {
