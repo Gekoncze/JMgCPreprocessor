@@ -1,12 +1,9 @@
 package cz.mg.c.preprocessor.preprocessors;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.CommentProcessor;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.CommentToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Test class CommentProcessorTest {
     public static void main(String[] args) {
@@ -20,47 +17,34 @@ public @Test class CommentProcessorTest {
         System.out.println("OK");
     }
 
+    private final TokenValidator validator = TokenValidator.getInstance();
+    private final TokenFactory f = TokenFactory.getInstance();
+
     private void testProcessingFirst() {
         CommentProcessor processor = CommentProcessor.getInstance();
-        List<Token> tokens = new List<>(comment("foo bar"), plain("a"), whitespace(" "), plain("bb"));
+        List<Token> tokens = new List<>(f.comment("foo bar"), f.plain("a"), f.whitespace(" "), f.plain("bb"));
         processor.process(tokens);
-        TokenValidator.getInstance().check(tokens, "a", " ", "bb");
+        validator.check(tokens, "a", " ", "bb");
     }
 
     private void testProcessingMiddle() {
         CommentProcessor processor = CommentProcessor.getInstance();
         List<Token> tokens = new List<>(
-            plain("foo"),
-            comment("="),
-            whitespace("\t"),
-            plain("bar"),
-            documentation(" "),
-            plain("69")
+            f.plain("foo"),
+            f.comment("="),
+            f.whitespace("\t"),
+            f.plain("bar"),
+            f.documentation(" "),
+            f.plain("69")
         );
         processor.process(tokens);
-        TokenValidator.getInstance().check(tokens, "foo", "\t", "bar", "69");
+        validator.check(tokens, "foo", "\t", "bar", "69");
     }
 
     private void testProcessingLast() {
         CommentProcessor processor = CommentProcessor.getInstance();
-        List<Token> tokens = new List<>(plain("~"), whitespace(" "), documentation("yay\nmay"));
+        List<Token> tokens = new List<>(f.plain("~"), f.whitespace(" "), f.documentation("yay\nmay"));
         processor.process(tokens);
-        TokenValidator.getInstance().check(tokens, "~", " ");
-    }
-
-    private @Mandatory Token plain(@Mandatory String text) {
-        return new Token(text, 0);
-    }
-
-    private @Mandatory Token comment(@Mandatory String text) {
-        return new CommentToken(text, 0);
-    }
-
-    private @Mandatory Token documentation(@Mandatory String text) {
-        return new CommentToken(text, 0);
-    }
-
-    private @Mandatory Token whitespace(@Mandatory String text) {
-        return new WhitespaceToken(text, 0);
+        validator.check(tokens, "~", " ");
     }
 }

@@ -3,7 +3,6 @@ add tests
     for macro package
 
     for processors package
-        comment processor
         newline processor
         operator processor
         whitespace processor

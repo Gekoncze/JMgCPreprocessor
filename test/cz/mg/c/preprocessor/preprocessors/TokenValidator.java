@@ -17,6 +17,9 @@ public @Service class TokenValidator {
         return instance;
     }
 
+    private TokenValidator() {
+    }
+
     public void check(@Mandatory List<Token> actualTokens, String... expectation) {
         List<String> reality = new List<>();
 
