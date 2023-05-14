@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
+import cz.mg.tokenizer.entities.OperatorToken;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 
@@ -37,13 +38,31 @@ public @Service class OperatorProcessor {
     }
 
     /**
+     * Transforms special tokens with operator to operator tokens.
      * Joins operator tokens that are next to each other.
      */
     public void process(@Mandatory List<Token> tokens) {
-        if (!tokens.isEmpty()) {
-            for (ListItem<Token> item = tokens.getFirstItem(); item.getNextItem() != null; item = item.getNextItem()) {
-                join(item);
+        transform(tokens);
+        join(tokens);
+    }
+
+    private void transform(@Mandatory List<Token> tokens) {
+        for (ListItem<Token> item = tokens.getFirstItem(); item != null; item = tokens.getFirstItem().getNextItem()) {
+            Token token = item.get();
+            if (isOperator(token)) {
+                item.set(
+                    new OperatorToken(
+                        token.getText(),
+                        token.getPosition()
+                    )
+                );
             }
+        }
+    }
+
+    private void join(@Mandatory List<Token> tokens) {
+        for (ListItem<Token> item = tokens.getFirstItem(); item.getNextItem() != null; item = item.getNextItem()) {
+            join(item);
         }
     }
 
@@ -51,17 +70,20 @@ public @Service class OperatorProcessor {
         while (true) {
             Token t = item.get();
             Token nt = item.getNextItem().get();
-            if (t instanceof SpecialToken && nt instanceof SpecialToken) {
-                char ch = t.getText().charAt(0);
-                char nch = nt.getText().charAt(0);
-                if (isOperator(ch) && isOperator(nch)) {
-                    t.setText(t.getText() + nt.getText());
-                    item.getList().removeItem(item.getNextItem());
-                    continue;
-                }
+
+            if (t instanceof OperatorToken && nt instanceof OperatorToken) {
+                t.setText(t.getText() + nt.getText());
+                item.getList().removeItem(item.getNextItem());
+                continue;
             }
+
             break;
         }
+    }
+
+    private boolean isOperator(@Mandatory Token token) {
+        return token instanceof SpecialToken
+            && isOperator(token.getText().charAt(0));
     }
 
     private boolean isOperator(char ch) {

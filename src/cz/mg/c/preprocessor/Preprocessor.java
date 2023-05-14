@@ -19,21 +19,23 @@ public @Service class Preprocessor {
         if (instance == null) {
             instance = new Preprocessor();
             instance.backslashProcessor = BackslashProcessor.getInstance();
-            instance.operatorProcessor = OperatorProcessor.getInstance();
+            instance.bracketProcessor = BracketProcessor.getInstance();
             instance.commentProcessor = CommentProcessor.getInstance();
-            instance.newlineProcessor = NewlineProcessor.getInstance();
-            instance.whitespaceProcessor = WhitespaceProcessor.getInstance();
             instance.macroProcessor = MacroProcessor.getInstance();
+            instance.newlineProcessor = NewlineProcessor.getInstance();
+            instance.operatorProcessor = OperatorProcessor.getInstance();
+            instance.whitespaceProcessor = WhitespaceProcessor.getInstance();
         }
         return instance;
     }
 
     private BackslashProcessor backslashProcessor;
-    private OperatorProcessor operatorProcessor;
+    private BracketProcessor bracketProcessor;
     private CommentProcessor commentProcessor;
-    private NewlineProcessor newlineProcessor;
-    private WhitespaceProcessor whitespaceProcessor;
     private MacroProcessor macroProcessor;
+    private NewlineProcessor newlineProcessor;
+    private OperatorProcessor operatorProcessor;
+    private WhitespaceProcessor whitespaceProcessor;
 
     private Preprocessor() {
     }
