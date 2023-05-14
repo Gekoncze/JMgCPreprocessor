@@ -3,12 +3,8 @@ package cz.mg.c.preprocessor.preprocessors;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
-import cz.mg.tokenizer.entities.BracketToken;
-import cz.mg.tokenizer.entities.OperatorToken;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.CommentToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
+import cz.mg.tokenizer.entities.tokens.*;
 
 public @Service class TokenFactory {
     private static @Optional TokenFactory instance;

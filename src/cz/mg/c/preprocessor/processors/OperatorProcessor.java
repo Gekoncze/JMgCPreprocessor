@@ -5,8 +5,8 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
-import cz.mg.tokenizer.entities.OperatorToken;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.OperatorToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 
 public @Service class OperatorProcessor {
