@@ -3,7 +3,6 @@ add tests
     for macro package
 
     for processors package
-        bracket processor
         newline processor
         operator processor
         whitespace processor
@@ -15,8 +14,7 @@ TODO
     in MacroExpansionService
 
 backslash processing should be run before tokenizer
-    but that would mess up traceability
-        unless position service counted with backslashes
+    position must then be corrected using backslash position correction service
 
 macros
     check if whitespaces make sense for macro processing
