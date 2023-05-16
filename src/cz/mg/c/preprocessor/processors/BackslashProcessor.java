@@ -9,6 +9,7 @@ import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
+@Deprecated
 public @Service class BackslashProcessor {
     private static @Optional BackslashProcessor instance;
 

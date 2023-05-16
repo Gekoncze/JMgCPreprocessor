@@ -1,3 +1,7 @@
+backslash processing should be run before tokenizer
+    before using PositionService, the position must be corrected using BackslashPositionCorrectionService
+    + remove BackslashProcessor afterwards
+
 add tests
     for expression package
     for macro package
@@ -12,9 +16,6 @@ add tests
 TODO
     in ExpressionProcessor (add test first)
     in MacroExpansionService
-
-backslash processing should be run before tokenizer
-    position must then be corrected using backslash position correction service
 
 macros
     check if whitespaces make sense for macro processing
