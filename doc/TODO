@@ -1,5 +1,10 @@
+macros
+    check if whitespaces make sense for macro processing
+
 add tests
     for expression package
+        expression processor
+
     for macro package
 
     for processors package
@@ -14,8 +19,6 @@ TODO
     in MacroExpansionService
 
 macros
-    check if whitespaces make sense for macro processing
-
     add support for ## macro joining operation
         investigate what should be the result token type
         investigate what token types should be joined together and when

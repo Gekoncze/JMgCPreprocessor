@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class ExpressionParser {
     private static volatile @Service ExpressionParser instance;
@@ -33,8 +34,11 @@ public @Service class ExpressionParser {
         }
 
         List<Token> expression = new List<>();
-        while (reader.hasNext()) {
-            expression.addLast(reader.read());
+        while (reader.has()) {
+            Token token = reader.read();
+            if (!(token instanceof WhitespaceToken)) {
+                expression.addLast(token);
+            }
         }
         return expression;
     }

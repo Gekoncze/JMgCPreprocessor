@@ -2,16 +2,19 @@ package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.*;
 
 public @Service class TokenFactory {
-    private static @Optional TokenFactory instance;
+    private static volatile @Service TokenFactory instance;
 
-    public static @Mandatory TokenFactory getInstance() {
+    public static @Service TokenFactory getInstance() {
         if (instance == null) {
-            instance = new TokenFactory();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new TokenFactory();
+                }
+            }
         }
         return instance;
     }
@@ -25,6 +28,14 @@ public @Service class TokenFactory {
 
     public @Mandatory CommentToken comment(@Mandatory String text) {
         return new CommentToken(text, 0);
+    }
+
+    public @Mandatory NameToken name(@Mandatory String text) {
+        return new NameToken(text, 0);
+    }
+
+    public @Mandatory NumberToken number(@Mandatory String text) {
+        return new NumberToken(text, 0);
     }
 
     public @Mandatory OperatorToken operator(@Mandatory String text) {
