@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.macro.utilities;
+package cz.mg.c.preprocessor.macro.components;
 
 public enum MacroCondition {
     TRUE,

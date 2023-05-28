@@ -1,16 +1,17 @@
-package cz.mg.c.preprocessor.macro.utilities;
+package cz.mg.c.preprocessor.macro.components;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.entities.Macro;
 import cz.mg.c.preprocessor.macro.entities.Macros;
+import cz.mg.c.preprocessor.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.macro.services.MacroExpansionService;
 import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
 
-public @Utility class MacroExpander {
+public @Component class MacroExpander {
     private final MacroExpansionService macroExpansionService = MacroExpansionService.getInstance();
 
     private final @Mandatory Macros macros;

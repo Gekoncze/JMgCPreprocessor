@@ -1,12 +1,13 @@
-package cz.mg.c.preprocessor.macro.utilities;
+package cz.mg.c.preprocessor.macro.components;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.c.preprocessor.macro.exceptions.MacroException;
 import cz.mg.collections.list.List;
 import cz.mg.collections.pair.Pair;
 import cz.mg.tokenizer.entities.Token;
 
-public @Utility class MacroConditions {
+public @Component class MacroConditions {
     private final @Mandatory List<Pair<Token, MacroCondition>> conditions = new List<>();
 
     public MacroConditions() {

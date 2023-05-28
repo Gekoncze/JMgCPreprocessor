@@ -1,10 +1,10 @@
-package cz.mg.c.preprocessor.utilities;
+package cz.mg.c.preprocessor.exceptions;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Error;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.tokenizer.utilities.CodeException;
 
-public @Utility class PreprocessorException extends CodeException {
+public @Error class PreprocessorException extends CodeException {
     public PreprocessorException(int position, @Mandatory String message) {
         super(position, message);
     }

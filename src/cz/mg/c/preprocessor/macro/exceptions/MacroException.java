@@ -1,10 +1,10 @@
-package cz.mg.c.preprocessor.macro.utilities;
+package cz.mg.c.preprocessor.macro.exceptions;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Error;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.utilities.PreprocessorException;
+import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 
-public @Utility class MacroException extends PreprocessorException {
+public @Error class MacroException extends PreprocessorException {
     public MacroException(int position, @Mandatory String message) {
         super(position, message);
     }

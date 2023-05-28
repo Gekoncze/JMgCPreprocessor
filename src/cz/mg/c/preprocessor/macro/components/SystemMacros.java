@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.macro.utilities;
+package cz.mg.c.preprocessor.macro.components;
 
 import cz.mg.annotations.classes.Static;
 import cz.mg.annotations.requirement.Mandatory;

@@ -2,7 +2,7 @@ package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.macro.utilities.MacroExpansion;
+import cz.mg.c.preprocessor.macro.components.MacroExpansion;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;

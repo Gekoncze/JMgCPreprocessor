@@ -1,9 +1,9 @@
 package cz.mg.c.preprocessor.expression;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Static;
 import cz.mg.collections.list.List;
 
-public @Utility class Operators {
+public @Static class Operators {
     public static final List<List<Operator>> OPERATORS = new List<>(
         new List<>(
             new Operator("+", OperatorType.LUNARY, (a, b) -> +b),

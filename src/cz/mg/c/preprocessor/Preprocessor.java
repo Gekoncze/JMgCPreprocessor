@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.macro.MacroProcessor;
 import cz.mg.c.preprocessor.macro.entities.Macros;
-import cz.mg.c.preprocessor.macro.utilities.SystemMacros;
+import cz.mg.c.preprocessor.macro.components.SystemMacros;
 import cz.mg.c.preprocessor.processors.*;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;

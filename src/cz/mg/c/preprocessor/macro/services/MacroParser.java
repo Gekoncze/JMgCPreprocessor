@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.entities.Macro;
-import cz.mg.c.preprocessor.macro.utilities.MacroException;
+import cz.mg.c.preprocessor.macro.exceptions.MacroException;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;

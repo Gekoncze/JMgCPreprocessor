@@ -1,10 +1,10 @@
 package cz.mg.c.preprocessor.expression;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.utilities.PreprocessorException;
+import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 
-public @Utility class ExpressionException extends PreprocessorException {
+public @Component class ExpressionException extends PreprocessorException {
     public ExpressionException(int position, @Mandatory String message) {
         super(position, message);
     }

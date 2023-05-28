@@ -1,13 +1,13 @@
-package cz.mg.c.preprocessor.macro.utilities;
+package cz.mg.c.preprocessor.macro.components;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.entities.Macro;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
 
-public @Utility class MacroExpansion {
+public @Component class MacroExpansion {
     private final @Mandatory Token token;
     private final @Mandatory Macro macro;
     private final @Optional List<List<Token>> arguments = new List<>();

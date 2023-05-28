@@ -1,9 +1,9 @@
 package cz.mg.c.preprocessor.expression;
 
-import cz.mg.annotations.classes.Utility;
+import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 
-public @Utility class Operator {
+public @Component class Operator {
     private final @Mandatory String text;
     private final @Mandatory OperatorType type;
     private final @Mandatory OperatorOperation operation;
