@@ -1,7 +1,3 @@
-backslash processing should be run before tokenizer
-    before using PositionService, the position must be corrected using BackslashPositionCorrectionService
-    + remove BackslashProcessor afterwards
-
 add tests
     for expression package
     for macro package

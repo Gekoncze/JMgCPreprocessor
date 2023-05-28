@@ -54,8 +54,8 @@ public @Service class Preprocessor {
     }
 
     private @Mandatory List<Token> process(@Mandatory File file, @Mandatory Macros macros) {
-        List<Token> tokens = new Tokenizer().tokenize(file.getContent());
-        backslashProcessor.process(tokens);
+        String content = backslashProcessor.process(file.getContent());
+        List<Token> tokens = new Tokenizer().tokenize(content);
         operatorProcessor.process(tokens);
         commentProcessor.process(tokens);
         List<List<Token>> lines = newlineProcessor.process(tokens);
