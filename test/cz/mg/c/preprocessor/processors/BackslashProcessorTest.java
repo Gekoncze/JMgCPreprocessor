@@ -1,7 +1,6 @@
-package cz.mg.c.preprocessor.preprocessors;
+package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.BackslashProcessor;
 import cz.mg.test.Assert;
 
 public @Test class BackslashProcessorTest {
