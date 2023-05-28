@@ -28,21 +28,25 @@ public @Service class MacroProcessor {
     public static final String ENDIF = "endif";
     public static final String ERROR = "error";
 
-    private static @Optional MacroProcessor instance;
+    private static volatile @Service MacroProcessor instance;
 
-    public static @Mandatory MacroProcessor getInstance() {
+    public static @Service MacroProcessor getInstance() {
         if (instance == null) {
-            instance = new MacroProcessor();
-            instance.macroParser = MacroParser.getInstance();
-            instance.expressionParser = ExpressionParser.getInstance();
-            instance.expressionProcessor = ExpressionProcessor.getInstance();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new MacroProcessor();
+                    instance.macroParser = MacroParser.getInstance();
+                    instance.expressionParser = ExpressionParser.getInstance();
+                    instance.expressionProcessor = ExpressionProcessor.getInstance();
+                }
+            }
         }
         return instance;
     }
 
-    private MacroParser macroParser;
-    private ExpressionParser expressionParser;
-    private ExpressionProcessor expressionProcessor;
+    private @Service MacroParser macroParser;
+    private @Service ExpressionParser expressionParser;
+    private @Service ExpressionProcessor expressionProcessor;
 
     private MacroProcessor() {
     }

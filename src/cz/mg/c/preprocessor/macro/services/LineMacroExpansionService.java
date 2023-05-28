@@ -24,7 +24,7 @@ public @Service class LineMacroExpansionService {
         return instance;
     }
 
-    private PositionService positionService;
+    private @Service PositionService positionService;
 
     private LineMacroExpansionService() {
     }

@@ -31,12 +31,12 @@ public @Service class Preprocessor {
         return instance;
     }
 
-    private BackslashProcessor backslashProcessor;
-    private CommentProcessor commentProcessor;
-    private MacroProcessor macroProcessor;
-    private NewlineProcessor newlineProcessor;
-    private OperatorProcessor operatorProcessor;
-    private WhitespaceProcessor whitespaceProcessor;
+    private @Service BackslashProcessor backslashProcessor;
+    private @Service CommentProcessor commentProcessor;
+    private @Service MacroProcessor macroProcessor;
+    private @Service NewlineProcessor newlineProcessor;
+    private @Service OperatorProcessor operatorProcessor;
+    private @Service WhitespaceProcessor whitespaceProcessor;
 
     private Preprocessor() {
     }

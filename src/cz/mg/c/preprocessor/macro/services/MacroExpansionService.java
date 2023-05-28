@@ -29,11 +29,11 @@ public @Service class MacroExpansionService {
         return instance;
     }
 
-    private MacroExpansionValidator macroExpansionValidator;
-    private DefinedMacroExpansionService definedMacroExpansionService;
-    private FileMacroExpansionService fileMacroExpansionService;
-    private LineMacroExpansionService lineMacroExpansionService;
-    private PlainMacroExpansionService plainMacroExpansionService;
+    private @Service MacroExpansionValidator macroExpansionValidator;
+    private @Service DefinedMacroExpansionService definedMacroExpansionService;
+    private @Service FileMacroExpansionService fileMacroExpansionService;
+    private @Service LineMacroExpansionService lineMacroExpansionService;
+    private @Service PlainMacroExpansionService plainMacroExpansionService;
 
     private MacroExpansionService() {
     }
