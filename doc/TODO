@@ -1,5 +1,8 @@
 macros
     check if whitespaces make sense for macro processing
+        if we keep newlines for macro processing, then don't forget to remove them afterwards
+        check that newlines will not be removed (together with whitespaces) before they are processed
+        consider tokenizing operators that stand next to each other (replacing operator processor)
 
 add tests
     for expression package
