@@ -2,18 +2,21 @@ package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.utilities.MacroException;
 import cz.mg.c.preprocessor.macro.utilities.MacroExpansion;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 
 public @Service class MacroExpansionValidator {
-    private static @Optional MacroExpansionValidator instance;
+    private static volatile @Service MacroExpansionValidator instance;
 
-    public static @Mandatory MacroExpansionValidator getInstance() {
+    public static @Service MacroExpansionValidator getInstance() {
         if (instance == null) {
-            instance = new MacroExpansionValidator();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new MacroExpansionValidator();
+                }
+            }
         }
         return instance;
     }

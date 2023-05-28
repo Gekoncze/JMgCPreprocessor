@@ -2,17 +2,20 @@ package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class NewlineProcessor {
-    private static @Optional NewlineProcessor instance;
+    private static volatile @Service NewlineProcessor instance;
 
-    public static @Mandatory NewlineProcessor getInstance() {
+    public static @Service NewlineProcessor getInstance() {
         if (instance == null) {
-            instance = new NewlineProcessor();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new NewlineProcessor();
+                }
+            }
         }
         return instance;
     }

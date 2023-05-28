@@ -2,7 +2,6 @@ package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.utilities.MacroExpansion;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
@@ -12,11 +11,15 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public @Service class PlainMacroExpansionService {
-    private static @Optional PlainMacroExpansionService instance;
+    private static volatile @Service PlainMacroExpansionService instance;
 
-    public static @Mandatory PlainMacroExpansionService getInstance() {
+    public static @Service PlainMacroExpansionService getInstance() {
         if (instance == null) {
-            instance = new PlainMacroExpansionService();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new PlainMacroExpansionService();
+                }
+            }
         }
         return instance;
     }

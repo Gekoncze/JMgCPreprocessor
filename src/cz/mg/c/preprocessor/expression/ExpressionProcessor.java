@@ -12,11 +12,15 @@ import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 
 public @Service class ExpressionProcessor {
-    private static @Optional ExpressionProcessor instance;
+    private static volatile @Service ExpressionProcessor instance;
 
-    public static @Mandatory ExpressionProcessor getInstance() {
+    public static @Service ExpressionProcessor getInstance() {
         if (instance == null) {
-            instance = new ExpressionProcessor();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new ExpressionProcessor();
+                }
+            }
         }
         return instance;
     }

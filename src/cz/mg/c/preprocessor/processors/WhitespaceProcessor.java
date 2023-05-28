@@ -2,17 +2,20 @@ package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class WhitespaceProcessor {
-    private static @Optional WhitespaceProcessor instance;
+    private static volatile @Service WhitespaceProcessor instance;
 
-    public static @Mandatory WhitespaceProcessor getInstance() {
+    public static @Service WhitespaceProcessor getInstance() {
         if (instance == null) {
-            instance = new WhitespaceProcessor();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new WhitespaceProcessor();
+                }
+            }
         }
         return instance;
     }

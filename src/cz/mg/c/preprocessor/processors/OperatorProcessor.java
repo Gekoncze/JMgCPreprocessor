@@ -2,7 +2,6 @@ package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.tokenizer.entities.Token;
@@ -10,11 +9,15 @@ import cz.mg.tokenizer.entities.tokens.OperatorToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 
 public @Service class OperatorProcessor {
-    private static @Optional OperatorProcessor instance;
+    private static volatile @Service OperatorProcessor instance;
 
-    public static @Mandatory OperatorProcessor getInstance() {
+    public static @Service OperatorProcessor getInstance() {
         if (instance == null) {
-            instance = new OperatorProcessor();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new OperatorProcessor();
+                }
+            }
         }
         return instance;
     }

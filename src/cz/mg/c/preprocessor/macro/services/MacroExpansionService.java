@@ -2,7 +2,6 @@ package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.entities.Macros;
 import cz.mg.c.preprocessor.macro.utilities.MacroExpander;
 import cz.mg.c.preprocessor.macro.utilities.MacroExpansion;
@@ -12,16 +11,20 @@ import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
 
 public @Service class MacroExpansionService {
-    private static @Optional MacroExpansionService instance;
+    private static volatile @Service MacroExpansionService instance;
 
-    public static @Mandatory MacroExpansionService getInstance() {
+    public static @Service MacroExpansionService getInstance() {
         if (instance == null) {
-            instance = new MacroExpansionService();
-            instance.macroExpansionValidator = MacroExpansionValidator.getInstance();
-            instance.definedMacroExpansionService = DefinedMacroExpansionService.getInstance();
-            instance.fileMacroExpansionService = FileMacroExpansionService.getInstance();
-            instance.lineMacroExpansionService = LineMacroExpansionService.getInstance();
-            instance.plainMacroExpansionService = PlainMacroExpansionService.getInstance();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new MacroExpansionService();
+                    instance.macroExpansionValidator = MacroExpansionValidator.getInstance();
+                    instance.definedMacroExpansionService = DefinedMacroExpansionService.getInstance();
+                    instance.fileMacroExpansionService = FileMacroExpansionService.getInstance();
+                    instance.lineMacroExpansionService = LineMacroExpansionService.getInstance();
+                    instance.plainMacroExpansionService = PlainMacroExpansionService.getInstance();
+                }
+            }
         }
         return instance;
     }

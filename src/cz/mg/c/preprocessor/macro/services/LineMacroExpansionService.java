@@ -2,21 +2,24 @@ package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.utilities.MacroExpansion;
+import cz.mg.collections.list.List;
+import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.services.PositionService;
-import cz.mg.collections.list.List;
-import cz.mg.file.File;
 
 public @Service class LineMacroExpansionService {
-    private static @Optional LineMacroExpansionService instance;
+    private static volatile @Service LineMacroExpansionService instance;
 
-    public static @Mandatory LineMacroExpansionService getInstance() {
+    public static @Service LineMacroExpansionService getInstance() {
         if (instance == null) {
-            instance = new LineMacroExpansionService();
-            instance.positionService = PositionService.getInstance();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new LineMacroExpansionService();
+                    instance.positionService = PositionService.getInstance();
+                }
+            }
         }
         return instance;
     }

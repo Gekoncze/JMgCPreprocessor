@@ -2,14 +2,17 @@ package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 
 public @Service class BackslashProcessor {
-    private static @Optional BackslashProcessor instance;
+    private static volatile @Service BackslashProcessor instance;
 
-    public static @Mandatory BackslashProcessor getInstance() {
+    public static @Service BackslashProcessor getInstance() {
         if (instance == null) {
-            instance = new BackslashProcessor();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new BackslashProcessor();
+                }
+            }
         }
         return instance;
     }

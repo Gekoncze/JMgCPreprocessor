@@ -2,7 +2,6 @@ package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.entities.Macros;
 import cz.mg.c.preprocessor.macro.utilities.MacroException;
 import cz.mg.c.preprocessor.macro.utilities.MacroExpansion;
@@ -13,11 +12,15 @@ import cz.mg.tokenizer.entities.tokens.NumberToken;
 import java.util.Objects;
 
 public @Service class DefinedMacroExpansionService {
-    private static @Optional DefinedMacroExpansionService instance;
+    private static volatile @Service DefinedMacroExpansionService instance;
 
-    public static @Mandatory DefinedMacroExpansionService getInstance() {
+    public static @Service DefinedMacroExpansionService getInstance() {
         if (instance == null) {
-            instance = new DefinedMacroExpansionService();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new DefinedMacroExpansionService();
+                }
+            }
         }
         return instance;
     }

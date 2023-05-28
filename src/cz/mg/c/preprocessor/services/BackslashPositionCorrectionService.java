@@ -2,14 +2,17 @@ package cz.mg.c.preprocessor.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 
 public @Service class BackslashPositionCorrectionService {
-    private static @Optional BackslashPositionCorrectionService instance;
+    private static volatile @Service BackslashPositionCorrectionService instance;
 
-    public static @Mandatory BackslashPositionCorrectionService getInstance() {
+    public static @Service BackslashPositionCorrectionService getInstance() {
         if (instance == null) {
-            instance = new BackslashPositionCorrectionService();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new BackslashPositionCorrectionService();
+                }
+            }
         }
         return instance;
     }

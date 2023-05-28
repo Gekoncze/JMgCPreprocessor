@@ -11,11 +11,15 @@ import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.utilities.TokenReader;
 
 public @Service class MacroParser {
-    private static @Optional MacroParser instance;
+    private static volatile @Service MacroParser instance;
 
-    public static @Mandatory MacroParser getInstance() {
+    public static @Service MacroParser getInstance() {
         if (instance == null) {
-            instance = new MacroParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new MacroParser();
+                }
+            }
         }
         return instance;
     }

@@ -2,17 +2,20 @@ package cz.mg.c.preprocessor.expression;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
+import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.utilities.TokenReader;
-import cz.mg.collections.list.List;
 
 public @Service class ExpressionParser {
-    private static @Optional ExpressionParser instance;
+    private static volatile @Service ExpressionParser instance;
 
-    public static @Mandatory ExpressionParser getInstance() {
+    public static @Service ExpressionParser getInstance() {
         if (instance == null) {
-            instance = new ExpressionParser();
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new ExpressionParser();
+                }
+            }
         }
         return instance;
     }
