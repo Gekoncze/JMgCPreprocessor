@@ -7,6 +7,7 @@ import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.BracketToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
+import cz.mg.tokenizer.entities.tokens.OperatorToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
@@ -41,7 +42,7 @@ public @Service class ExpressionProcessor {
         int position = -1;
         List<Token> tokens = new List<>();
 
-        while (reader.hasNext() && !closed) {
+        while (reader.has() && !closed) {
             Token token = reader.read();
             position = token.getPosition();
             if (isOpeningBracket(token)) {
@@ -123,7 +124,7 @@ public @Service class ExpressionProcessor {
     }
 
     private boolean isOperator(@Optional ListItem<Token> item) {
-        return item != null && item.get() instanceof SpecialToken;
+        return item != null && item.get() instanceof OperatorToken;
     }
 
     private boolean isNumber(@Optional ListItem<Token> item) {

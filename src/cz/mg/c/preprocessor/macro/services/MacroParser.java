@@ -43,12 +43,12 @@ public @Service class MacroParser {
     }
 
     private @Optional List<Token> readParameters(@Mandatory TokenReader reader) {
-        if (reader.hasNext("(")) {
+        if (reader.has("(")) {
             List<Token> parameters = new List<>();
             int startPosition = reader.read().getPosition();
             boolean expectedName = true;
             while (true) {
-                if (reader.hasNext(")")) {
+                if (reader.has(")")) {
                     int endPosition = reader.read().getPosition();
                     if (expectedName && !parameters.isEmpty()) {
                         throw new MacroException(
@@ -57,7 +57,7 @@ public @Service class MacroParser {
                         );
                     }
                     break;
-                } else if (!reader.hasNext()) {
+                } else if (!reader.has()) {
                     throw new MacroException(
                         startPosition,
                         "Missing right parenthesis for macro parameter list."
@@ -79,7 +79,7 @@ public @Service class MacroParser {
 
     private @Mandatory List<Token> readTokens(@Mandatory TokenReader reader) {
         List<Token> tokens = new List<>();
-        while (reader.hasNext()) {
+        while (reader.has()) {
             tokens.addLast(reader.read());
         }
         return tokens;
