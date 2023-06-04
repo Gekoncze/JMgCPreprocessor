@@ -1,9 +1,3 @@
-macros
-    check if whitespaces make sense for macro processing
-        if we keep newlines for macro processing, then don't forget to remove them afterwards
-        check that newlines will not be removed (together with whitespaces) before they are processed
-        consider tokenizing operators that stand next to each other (replacing operator processor)
-
 add tests
     add performance test for ExpressionProcessorTest
         add optimization if needed
@@ -21,5 +15,6 @@ macros
         some combination of token types are invalid
         result should always form a single token
         otherwise warning or error should be thrown
+        looks like spaces are ignored as if they didn't exist
 
     add support for vararg macros
