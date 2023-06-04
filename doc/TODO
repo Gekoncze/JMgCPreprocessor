@@ -1,3 +1,8 @@
+refactor system macros
+    file system macro should contain file object
+    line system macro should contain line object
+    defined system macro probably don't need any extra object
+
 TODO
     in ExpressionProcessor
     in MacroExpansionService
