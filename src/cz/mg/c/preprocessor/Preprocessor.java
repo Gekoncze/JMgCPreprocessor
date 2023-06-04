@@ -23,7 +23,6 @@ public @Service class Preprocessor {
                     instance.commentProcessor = CommentProcessor.getInstance();
                     instance.macroProcessor = MacroProcessor.getInstance();
                     instance.newlineProcessor = NewlineProcessor.getInstance();
-                    instance.operatorProcessor = OperatorProcessor.getInstance();
                     instance.whitespaceProcessor = WhitespaceProcessor.getInstance();
                 }
             }
@@ -35,7 +34,6 @@ public @Service class Preprocessor {
     private @Service CommentProcessor commentProcessor;
     private @Service MacroProcessor macroProcessor;
     private @Service NewlineProcessor newlineProcessor;
-    private @Service OperatorProcessor operatorProcessor;
     private @Service WhitespaceProcessor whitespaceProcessor;
 
     private Preprocessor() {
@@ -60,7 +58,6 @@ public @Service class Preprocessor {
 
         String content = backslashProcessor.process(file.getContent());
         List<Token> tokens = new Tokenizer().tokenize(content);
-        operatorProcessor.process(tokens);
         commentProcessor.process(tokens);
         List<List<Token>> lines = newlineProcessor.process(tokens);
         whitespaceProcessor.process(lines);
