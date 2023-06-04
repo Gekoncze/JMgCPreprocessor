@@ -24,11 +24,29 @@ public @Service class WhitespaceProcessor {
     }
 
     /**
-     * Removes whitespace tokens.
+     * Splits list of tokens to list of lines using newline token as delimiter.
+     * All whitespace tokens are removed.
      */
-    public void process(@Mandatory List<List<Token>> lines) {
-        for (List<Token> line : lines) {
-            line.removeIf(token -> token instanceof WhitespaceToken);
+    public @Mandatory List<List<Token>> process(@Mandatory List<Token> tokens) {
+        List<List<Token>> lines = new List<>();
+        lines.addLast(new List<>());
+        for (Token token : tokens) {
+            if (isWhitespace(token)) {
+                if (isNewline(token)) {
+                    lines.addLast(new List<>());
+                }
+            } else {
+                lines.getLast().addLast(token);
+            }
         }
+        return lines;
+    }
+
+    private boolean isNewline(@Mandatory Token token) {
+        return token.getText().equals("\n");
+    }
+
+    private boolean isWhitespace(@Mandatory Token token) {
+        return token instanceof WhitespaceToken;
     }
 }

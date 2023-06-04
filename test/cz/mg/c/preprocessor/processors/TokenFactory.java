@@ -46,6 +46,10 @@ public @Service class TokenFactory {
         return new Token(text, 0);
     }
 
+    public @Mandatory SeparatorToken separator(@Mandatory String text) {
+        return new SeparatorToken(text, 0);
+    }
+
     public @Mandatory SpecialToken special(@Mandatory String text) {
         return new SpecialToken(text, 0);
     }

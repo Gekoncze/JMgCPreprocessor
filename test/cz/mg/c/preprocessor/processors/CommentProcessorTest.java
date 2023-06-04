@@ -18,16 +18,15 @@ public @Test class CommentProcessorTest {
 
     private final TokenValidator validator = TokenValidator.getInstance();
     private final TokenFactory f = TokenFactory.getInstance();
+    private final CommentProcessor processor = CommentProcessor.getInstance();
 
     private void testProcessingFirst() {
-        CommentProcessor processor = CommentProcessor.getInstance();
         List<Token> tokens = new List<>(f.comment("foo bar"), f.plain("a"), f.whitespace(" "), f.plain("bb"));
         processor.process(tokens);
         validator.check(tokens, "a", " ", "bb");
     }
 
     private void testProcessingMiddle() {
-        CommentProcessor processor = CommentProcessor.getInstance();
         List<Token> tokens = new List<>(
             f.plain("foo"),
             f.comment("="),
@@ -41,7 +40,6 @@ public @Test class CommentProcessorTest {
     }
 
     private void testProcessingLast() {
-        CommentProcessor processor = CommentProcessor.getInstance();
         List<Token> tokens = new List<>(f.plain("~"), f.whitespace(" "), f.comment("yay\nmay"));
         processor.process(tokens);
         validator.check(tokens, "~", " ");

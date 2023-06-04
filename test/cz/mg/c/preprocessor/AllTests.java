@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.expression.ExpressionParserTest;
 import cz.mg.c.preprocessor.processors.BackslashProcessorTest;
 import cz.mg.c.preprocessor.processors.CommentProcessorTest;
+import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -13,5 +14,6 @@ public @Test class AllTests {
         // cz.mg.c.preprocessor.processors
         BackslashProcessorTest.main(args);
         CommentProcessorTest.main(args);
+        WhitespaceProcessorTest.main(args);
     }
 }

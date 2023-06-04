@@ -9,12 +9,7 @@ add tests
         expression processor
 
     for macro package
-
-    for processors package
-        newline processor
-        whitespace processor
-
-    for preprocessor
+    for Preprocessor
 
 TODO
     in ExpressionProcessor (add test first)

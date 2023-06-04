@@ -17,11 +17,11 @@ public @Test class ExpressionParserTest {
         System.out.println("OK");
     }
 
-    private void testParse() {
-        ExpressionParser parser = ExpressionParser.getInstance();
-        TokenValidator validator = TokenValidator.getInstance();
-        TokenFactory f = TokenFactory.getInstance();
+    private final ExpressionParser parser = ExpressionParser.getInstance();
+    private final TokenValidator validator = TokenValidator.getInstance();
+    private final TokenFactory f = TokenFactory.getInstance();
 
+    private void testParse() {
         validator.check(
             parser.parse(new List<>(
                 f.special("#"),
