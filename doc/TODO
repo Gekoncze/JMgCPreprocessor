@@ -12,7 +12,6 @@ add tests
 
     for processors package
         newline processor
-        operator processor
         whitespace processor
 
     for preprocessor
@@ -23,7 +22,9 @@ TODO
 
 macros
     add support for ## macro joining operation
-        investigate what should be the result token type
-        investigate what token types should be joined together and when
+        it can join tokens of different types
+        some combination of token types are invalid
+        result should always form a single token
+        otherwise warning or error should be thrown
 
     add support for vararg macros
