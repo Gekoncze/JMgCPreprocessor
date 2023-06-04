@@ -58,6 +58,8 @@ public @Service class MacroExpansionService {
         @Mandatory File file
     ) {
         // TODO - check if this can be refactored
+        // TODO - ideally there should be a single interface and implementations in a list
+        // TODO - maybe this class could be deleted after refactoring
         macroExpansionValidator.validate(expansion);
         if (expansion.getMacro().getName().equals(SystemMacros.DEFINED.getName())) {
             return definedMacroExpansionService.expand(expansion, macros);

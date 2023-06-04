@@ -1,13 +1,25 @@
+TODO
+    in ExpressionProcessor
+    in MacroExpansionService
+
 add tests
     extend performance test for ExpressionProcessorTest
         add optimization if needed
 
     for macro package
-    for Preprocessor
+        for components package
+            MacroConditions
+            MacroExpander
 
-TODO
-    in ExpressionProcessor (add test first)
-    in MacroExpansionService
+        for services package
+            DefinedMacroExpansionService
+            FileMacroExpansionService
+            LineMacroExpansionService
+            MacroExpansionService
+            MacroExpansionValidator
+            PlainMacroExpansionService
+
+    for Preprocessor
 
 macros
     add support for ## macro joining operation
