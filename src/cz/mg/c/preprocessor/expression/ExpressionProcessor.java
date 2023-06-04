@@ -3,14 +3,13 @@ package cz.mg.c.preprocessor.expression;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
+import cz.mg.collections.list.List;
+import cz.mg.collections.list.ListItem;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.BracketToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.entities.tokens.OperatorToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
-import cz.mg.collections.list.List;
-import cz.mg.collections.list.ListItem;
 
 public @Service class ExpressionProcessor {
     private static volatile @Service ExpressionProcessor instance;
