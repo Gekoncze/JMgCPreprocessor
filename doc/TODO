@@ -5,9 +5,7 @@ macros
         consider tokenizing operators that stand next to each other (replacing operator processor)
 
 add tests
-    for expression package
-        expression processor
-
+    ExpressionProcessor
     for macro package
     for Preprocessor
 
