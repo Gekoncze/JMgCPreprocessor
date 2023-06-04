@@ -1,4 +1,6 @@
 add tests
+    extend expression evaluation test to use "defined" operator
+
     extend performance test for ExpressionProcessorTest
         add optimization if needed
 
