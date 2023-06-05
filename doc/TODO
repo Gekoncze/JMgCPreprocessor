@@ -4,9 +4,9 @@ refactor AllMacroExpansionService
     then maybe MacroExpander might be turned into just some dto
 
 add tests
-    extend performance test for ExpressionProcessorTest
+    extend performance test for ExpressionEvaluator
         add optimization if needed
-            TODO in ExpressionProcessor
+            TODO in ExpressionEvaluator
 
     for macro package
         for components package
