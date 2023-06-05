@@ -13,6 +13,7 @@ import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
 import cz.mg.tokenizer.entities.Token;
 
+@Deprecated
 public @Service class AllMacroExpansionService {
     private static volatile @Service AllMacroExpansionService instance;
 

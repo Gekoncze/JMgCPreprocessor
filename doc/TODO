@@ -1,3 +1,8 @@
+refactor AllMacroExpansionService
+    try to move its logic to MacroExpander
+    and then try to move MacroExpander logic into some service
+    then maybe MacroExpander might be turned into just some dto
+
 add tests
     extend performance test for ExpressionProcessorTest
         add optimization if needed
