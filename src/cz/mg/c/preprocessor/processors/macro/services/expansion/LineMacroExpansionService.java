@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpansion;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
-import cz.mg.c.preprocessor.services.BackslashPositionService;
+import cz.mg.c.preprocessor.processors.backslash.BackslashPositionService;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NumberToken;

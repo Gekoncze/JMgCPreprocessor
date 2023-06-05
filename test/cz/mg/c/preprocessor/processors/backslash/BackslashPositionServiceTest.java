@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.services;
+package cz.mg.c.preprocessor.processors.backslash;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;

@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.processors;
+package cz.mg.c.preprocessor.processors.backslash;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.test.Assert;
