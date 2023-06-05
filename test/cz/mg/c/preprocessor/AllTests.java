@@ -21,5 +21,8 @@ public @Test class AllTests {
         BackslashProcessorTest.main(args);
         CommentProcessorTest.main(args);
         WhitespaceProcessorTest.main(args);
+
+        // cz.mg.c.preprocessor
+        PreprocessorTest.main(args);
     }
 }

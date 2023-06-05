@@ -1,7 +1,7 @@
 package cz.mg.c.preprocessor.expression;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.TokenFactory;
+import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 

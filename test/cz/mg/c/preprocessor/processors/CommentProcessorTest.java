@@ -1,6 +1,8 @@
 package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.test.TokenFactory;
+import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 

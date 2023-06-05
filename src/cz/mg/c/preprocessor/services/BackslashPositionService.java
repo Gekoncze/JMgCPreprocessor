@@ -3,21 +3,21 @@ package cz.mg.c.preprocessor.services;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 
-public @Service class BackslashPositionCorrectionService {
-    private static volatile @Service BackslashPositionCorrectionService instance;
+public @Service class BackslashPositionService {
+    private static volatile @Service BackslashPositionService instance;
 
-    public static @Service BackslashPositionCorrectionService getInstance() {
+    public static @Service BackslashPositionService getInstance() {
         if (instance == null) {
             synchronized (Service.class) {
                 if (instance == null) {
-                    instance = new BackslashPositionCorrectionService();
+                    instance = new BackslashPositionService();
                 }
             }
         }
         return instance;
     }
 
-    private BackslashPositionCorrectionService() {
+    private BackslashPositionService() {
     }
 
     @SuppressWarnings("SpellCheckingInspection")

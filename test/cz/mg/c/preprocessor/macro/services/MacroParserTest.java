@@ -2,8 +2,8 @@ package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.macro.entities.Macro;
-import cz.mg.c.preprocessor.processors.TokenFactory;
-import cz.mg.c.preprocessor.processors.TokenValidator;
+import cz.mg.c.preprocessor.test.TokenFactory;
+import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.CodeException;

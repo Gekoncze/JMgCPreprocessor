@@ -6,11 +6,11 @@ import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Position;
 import cz.mg.tokenizer.services.PositionService;
 
-public @Test class BackslashPositionCorrectionServiceTest {
+public @Test class BackslashPositionServiceTest {
     public static void main(String[] args) {
-        System.out.print("Running " + BackslashPositionCorrectionServiceTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + BackslashPositionServiceTest.class.getSimpleName() + " ... ");
 
-        BackslashPositionCorrectionServiceTest test = new BackslashPositionCorrectionServiceTest();
+        BackslashPositionServiceTest test = new BackslashPositionServiceTest();
         test.testCorrection();
 
         System.out.println("OK");
@@ -113,7 +113,7 @@ public @Test class BackslashPositionCorrectionServiceTest {
     }
 
     private void testCorrection(@Mandatory String originalContent, int position, int expectedRow, int expectedColumn) {
-        BackslashPositionCorrectionService service = BackslashPositionCorrectionService.getInstance();
+        BackslashPositionService service = BackslashPositionService.getInstance();
         int actualCorrectedPosition = service.correct(originalContent, position);
         PositionService positionService = PositionService.getInstance();
         Position actualPosition = positionService.find(originalContent, actualCorrectedPosition);

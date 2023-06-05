@@ -32,10 +32,12 @@ public @Component class MacroExpander {
         if (expansion == null) {
             Macro macro = macros.get(token.getText());
             if (macro != null) {
-                expansion = new MacroExpansion(token, macro);
                 if (macro.getParameters() == null) {
+                    expansion = new MacroExpansion(token, macro, null);
                     tokens.addCollectionLast(macroExpansionService.expandRecursively(expansion, macros, file));
                     expansion = null;
+                } else {
+                    expansion = new MacroExpansion(token, macro, new List<>());
                 }
             } else {
                 tokens.addLast(token);

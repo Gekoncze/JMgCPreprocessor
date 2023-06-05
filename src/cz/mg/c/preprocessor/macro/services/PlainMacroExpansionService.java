@@ -31,7 +31,7 @@ public @Service class PlainMacroExpansionService {
         Map<String, List<Token>> map = createMap(expansion);
         List<Token> expandedTokens = new List<>();
         for (Token macroToken : expansion.getMacro().getTokens()) {
-            List<Token> replacement = map.get(macroToken.getText());
+            List<Token> replacement = map.getOptional(macroToken.getText());
             if (replacement != null) {
                 expandedTokens.addCollectionLast(replacement);
             } else {

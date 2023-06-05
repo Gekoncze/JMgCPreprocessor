@@ -10,12 +10,13 @@ import cz.mg.collections.list.List;
 public @Component class MacroExpansion {
     private final @Mandatory Token token;
     private final @Mandatory Macro macro;
-    private final @Optional List<List<Token>> arguments = new List<>();
+    private final @Optional List<List<Token>> arguments;
     private int nesting;
 
-    public MacroExpansion(@Mandatory Token token, @Mandatory Macro macro) {
+    public MacroExpansion(@Mandatory Token token, @Mandatory Macro macro, @Optional List<List<Token>> arguments) {
         this.token = token;
         this.macro = macro;
+        this.arguments = arguments;
     }
 
     public @Mandatory Token getToken() {

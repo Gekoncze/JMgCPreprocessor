@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.processors;
+package cz.mg.c.preprocessor.test;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
