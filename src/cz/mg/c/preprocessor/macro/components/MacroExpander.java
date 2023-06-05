@@ -30,7 +30,7 @@ public @Component class MacroExpander {
 
     public void expand(@Mandatory Token token) {
         if (expansion == null) {
-            Macro macro = macros.get(token.getText());
+            Macro macro = macros.getMap().getOptional(token.getText());
             if (macro != null) {
                 if (macro.getParameters() == null) {
                     expansion = new MacroExpansion(token, macro, null);

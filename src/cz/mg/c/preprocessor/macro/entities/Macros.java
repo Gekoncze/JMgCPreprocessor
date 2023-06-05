@@ -2,7 +2,6 @@ package cz.mg.c.preprocessor.macro.entities;
 
 import cz.mg.annotations.classes.Entity;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.annotations.requirement.Optional;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Shared;
 import cz.mg.collections.map.Map;
@@ -24,10 +23,6 @@ public @Entity class Macros {
 
     public void define(@Mandatory Macro definition) {
         map.set(definition.getName().getText(), definition);
-    }
-
-    public @Optional Macro get(@Mandatory String name) {
-        return map.getOptional(name);
     }
 
     public boolean defined(@Mandatory String name) {
