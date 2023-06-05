@@ -1,8 +1,10 @@
-package cz.mg.c.preprocessor.macro.services;
+package cz.mg.c.preprocessor.macro.services.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.macro.components.MacroExpansion;
+import cz.mg.c.preprocessor.macro.entities.Macros;
+import cz.mg.c.preprocessor.macro.entities.system.FileMacro;
 import cz.mg.c.preprocessor.services.BackslashPositionService;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
@@ -10,7 +12,7 @@ import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.services.PositionService;
 
-public @Service class LineMacroExpansionService {
+public @Service class LineMacroExpansionService implements MacroExpansionService {
     private static volatile @Service LineMacroExpansionService instance;
 
     public static @Service LineMacroExpansionService getInstance() {
@@ -32,13 +34,13 @@ public @Service class LineMacroExpansionService {
     private LineMacroExpansionService() {
     }
 
-    public @Mandatory List<Token> expand(@Mandatory MacroExpansion expansion, @Mandatory File file) {
-        int correctedPosition = backslashPositionService.correct(file.getContent(), expansion.getToken().getPosition());
-        return new List<>(
-            new NumberToken(
-                "" + positionService.find(file.getContent(), correctedPosition).getRow(),
-                expansion.getToken().getPosition()
-            )
-        );
+    @Override
+    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroExpansion expansion) {
+        FileMacro fileMacro = (FileMacro) macros.getMap().get(FileMacro.NAME);
+        String content = fileMacro.getFile().getContent();
+        int position = expansion.getToken().getPosition();
+        int correctedPosition = backslashPositionService.correct(content, position);
+        int row = positionService.find(content, correctedPosition).getRow();
+        return new List<>(new NumberToken("" + row, position));
     }
 }

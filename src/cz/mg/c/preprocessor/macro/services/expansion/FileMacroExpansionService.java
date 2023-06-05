@@ -1,14 +1,15 @@
-package cz.mg.c.preprocessor.macro.services;
+package cz.mg.c.preprocessor.macro.services.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.macro.components.MacroExpansion;
+import cz.mg.c.preprocessor.macro.entities.Macros;
+import cz.mg.c.preprocessor.macro.entities.system.FileMacro;
 import cz.mg.collections.list.List;
-import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
 
-public @Service class FileMacroExpansionService {
+public @Service class FileMacroExpansionService implements MacroExpansionService {
     private static volatile @Service FileMacroExpansionService instance;
 
     public static @Service FileMacroExpansionService getInstance() {
@@ -25,12 +26,11 @@ public @Service class FileMacroExpansionService {
     private FileMacroExpansionService() {
     }
 
-    public @Mandatory List<Token> expand(@Mandatory MacroExpansion expansion, @Mandatory File file) {
-        return new List<>(
-            new DoubleQuoteToken(
-                file.getPath().toAbsolutePath().toString(),
-                expansion.getToken().getPosition()
-            )
-        );
+    @Override
+    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroExpansion expansion) {
+        FileMacro macro = (FileMacro) expansion.getMacro();
+        String path = macro.getFile().getPath().toAbsolutePath().toString();
+        int position = expansion.getToken().getPosition();
+        return new List<>(new DoubleQuoteToken(path, position));
     }
 }

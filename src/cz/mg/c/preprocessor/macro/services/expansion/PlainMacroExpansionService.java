@@ -1,8 +1,9 @@
-package cz.mg.c.preprocessor.macro.services;
+package cz.mg.c.preprocessor.macro.services.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.macro.components.MacroExpansion;
+import cz.mg.c.preprocessor.macro.entities.Macros;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
@@ -10,7 +11,7 @@ import cz.mg.collections.map.Map;
 import java.util.Iterator;
 import java.util.Objects;
 
-public @Service class PlainMacroExpansionService {
+public @Service class PlainMacroExpansionService implements MacroExpansionService {
     private static volatile @Service PlainMacroExpansionService instance;
 
     public static @Service PlainMacroExpansionService getInstance() {
@@ -27,7 +28,8 @@ public @Service class PlainMacroExpansionService {
     private PlainMacroExpansionService() {
     }
 
-    public @Mandatory List<Token> expand(@Mandatory MacroExpansion expansion) {
+    @Override
+    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroExpansion expansion) {
         Map<String, List<Token>> map = createMap(expansion);
         List<Token> expandedTokens = new List<>();
         for (Token macroToken : expansion.getMacro().getTokens()) {

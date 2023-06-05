@@ -6,22 +6,19 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.macro.entities.Macro;
 import cz.mg.c.preprocessor.macro.entities.Macros;
 import cz.mg.c.preprocessor.macro.exceptions.MacroException;
-import cz.mg.c.preprocessor.macro.services.MacroExpansionService;
-import cz.mg.file.File;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.c.preprocessor.macro.services.AllMacroExpansionService;
 import cz.mg.collections.list.List;
+import cz.mg.tokenizer.entities.Token;
 
 public @Component class MacroExpander {
-    private final MacroExpansionService macroExpansionService = MacroExpansionService.getInstance();
+    private final AllMacroExpansionService allMacroExpansionService = AllMacroExpansionService.getInstance();
 
     private final @Mandatory Macros macros;
-    private final @Mandatory File file;
     private final @Mandatory List<Token> tokens = new List<>();
     private @Optional MacroExpansion expansion;
 
-    public MacroExpander(@Mandatory Macros macros, @Mandatory File file) {
+    public MacroExpander(@Mandatory Macros macros) {
         this.macros = macros;
-        this.file = file;
     }
 
     public @Mandatory List<Token> getTokens() {
@@ -34,7 +31,7 @@ public @Component class MacroExpander {
             if (macro != null) {
                 if (macro.getParameters() == null) {
                     expansion = new MacroExpansion(token, macro, null);
-                    tokens.addCollectionLast(macroExpansionService.expandRecursively(expansion, macros, file));
+                    tokens.addCollectionLast(allMacroExpansionService.expandRecursively(expansion, macros));
                     expansion = null;
                 } else {
                     expansion = new MacroExpansion(token, macro, new List<>());
@@ -66,7 +63,7 @@ public @Component class MacroExpander {
                         expansion.getArguments().getLast().addLast(token);
                         expansion.setNesting(expansion.getNesting() + 1);
                     } else if (token.getText().equals(")")) {
-                        tokens.addCollectionLast(macroExpansionService.expandRecursively(expansion, macros, file));
+                        tokens.addCollectionLast(allMacroExpansionService.expandRecursively(expansion, macros));
                         expansion = null;
                     } else if (token.getText().equals(",")) {
                         expansion.getArguments().addLast(new List<>());

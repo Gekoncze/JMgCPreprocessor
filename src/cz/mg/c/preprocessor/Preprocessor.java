@@ -4,7 +4,8 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.macro.MacroProcessor;
 import cz.mg.c.preprocessor.macro.entities.Macros;
-import cz.mg.c.preprocessor.macro.components.SystemMacros;
+import cz.mg.c.preprocessor.macro.entities.system.FileMacro;
+import cz.mg.c.preprocessor.macro.entities.system.LineMacro;
 import cz.mg.c.preprocessor.processors.*;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
@@ -41,23 +42,14 @@ public @Service class Preprocessor {
      * Preprocessing of c source code before parsing.
      */
     public @Mandatory List<Token> preprocess(@Mandatory File file, @Mandatory Macros macros) {
-        macros.define(SystemMacros.__FILE__);
-        macros.define(SystemMacros.__LINE__);
-
-        List<Token> tokens = process(file, macros);
-
-        macros.undefine(SystemMacros.__LINE__.getName().getText());
-        macros.undefine(SystemMacros.__FILE__.getName().getText());
-
-        return tokens;
-    }
-
-    private @Mandatory List<Token> process(@Mandatory File file, @Mandatory Macros macros) {
-
-        String content = backslashProcessor.process(file.getContent());
-        List<Token> tokens = new Tokenizer().tokenize(content);
-        commentProcessor.process(tokens);
-        List<List<Token>> lines = whitespaceProcessor.process(tokens);
-        return macroProcessor.process(lines, macros, file);
+        return Macros.temporary(macros, new FileMacro(file), () -> {
+            return Macros.temporary(macros, new LineMacro(), () -> {
+                String content = backslashProcessor.process(file.getContent());
+                List<Token> tokens = new Tokenizer().tokenize(content);
+                commentProcessor.process(tokens);
+                List<List<Token>> lines = whitespaceProcessor.process(tokens);
+                return macroProcessor.process(lines, macros);
+            });
+        });
     }
 }

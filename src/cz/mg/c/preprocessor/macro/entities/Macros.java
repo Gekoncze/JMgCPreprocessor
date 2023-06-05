@@ -32,4 +32,21 @@ public @Entity class Macros {
     public void undefine(@Mandatory String name) {
         map.remove(name);
     }
+
+    public static <T> T temporary(
+        @Mandatory Macros macros,
+        @Mandatory Macro macro,
+        @Mandatory ReturnRunnable<T> runnable
+    ) {
+        try {
+            macros.define(macro);
+            return runnable.run();
+        } finally {
+            macros.undefine(macro.getName().getText());
+        }
+    }
+
+    public interface ReturnRunnable<T> {
+        T run();
+    }
 }

@@ -1,8 +1,9 @@
-package cz.mg.c.preprocessor.macro.services;
+package cz.mg.c.preprocessor.macro.services.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.macro.entities.Macros;
+import cz.mg.c.preprocessor.macro.entities.system.DefinedMacro;
 import cz.mg.c.preprocessor.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.macro.components.MacroExpansion;
 import cz.mg.collections.list.List;
@@ -11,7 +12,7 @@ import cz.mg.tokenizer.entities.tokens.NumberToken;
 
 import java.util.Objects;
 
-public @Service class DefinedMacroExpansionService {
+public @Service class DefinedMacroExpansionService implements MacroExpansionService {
     private static volatile @Service DefinedMacroExpansionService instance;
 
     public static @Service DefinedMacroExpansionService getInstance() {
@@ -28,17 +29,24 @@ public @Service class DefinedMacroExpansionService {
     private DefinedMacroExpansionService() {
     }
 
-    public @Mandatory List<Token> expand(@Mandatory MacroExpansion expansion, @Mandatory Macros macros) {
+    @Override
+    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroExpansion expansion) {
+        validate(expansion);
+        Objects.requireNonNull(expansion.getArguments());
+        String name = expansion.getArguments().getFirst().getFirst().getText();
+        String result = macros.defined(name) ? "1" : "0";
+        int position = expansion.getToken().getPosition();
+        return new List<>(new NumberToken(result, position));
+    }
+
+    private void validate(@Mandatory MacroExpansion expansion) {
         Objects.requireNonNull(expansion.getArguments());
         int tokenCount = expansion.getArguments().getFirst().count();
-        if (tokenCount == 1) {
-            String name = expansion.getArguments().getFirst().getFirst().getText();
-            String result = macros.defined(name) ? "1" : "0";
-            return new List<>(new NumberToken(result, expansion.getToken().getPosition()));
-        } else {
+        if (tokenCount != 1) {
             throw new MacroException(
                 expansion.getToken().getPosition(),
-                "Wrong number of tokens for 'defined' macro. Expected 1 token, but got " + tokenCount + "."
+                "Wrong number of tokens for '" + DefinedMacro.NAME + "' macro. "
+                    + "Expected 1 token, but got " + tokenCount + "."
             );
         }
     }

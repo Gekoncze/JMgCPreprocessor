@@ -1,22 +1,18 @@
 package cz.mg.c.preprocessor.macro.entities.system;
 
 import cz.mg.annotations.classes.Entity;
-import cz.mg.annotations.requirement.Required;
-import cz.mg.annotations.storage.Value;
+import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.macro.entities.Macro;
+import cz.mg.tokenizer.entities.tokens.NameToken;
 
 public @Entity class LineMacro extends Macro implements SystemMacro {
-    private int line;
+    public static final @Mandatory String NAME = "__LINE__";
 
     public LineMacro() {
-    }
-
-    @Required @Value
-    public int getLine() {
-        return line;
-    }
-
-    public void setLine(int line) {
-        this.line = line;
+        super(
+            new NameToken(NAME, -1),
+            null,
+            null
+        );
     }
 }

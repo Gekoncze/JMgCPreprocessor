@@ -7,13 +7,12 @@ import cz.mg.c.preprocessor.expression.ExpressionProcessor;
 import cz.mg.c.preprocessor.expression.ExpressionException;
 import cz.mg.c.preprocessor.expression.ExpressionParser;
 import cz.mg.c.preprocessor.macro.entities.Macros;
+import cz.mg.c.preprocessor.macro.entities.system.DefinedMacro;
 import cz.mg.c.preprocessor.macro.services.MacroParser;
 import cz.mg.c.preprocessor.macro.components.MacroConditions;
 import cz.mg.c.preprocessor.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.macro.components.MacroExpander;
-import cz.mg.c.preprocessor.macro.components.SystemMacros;
 import cz.mg.collections.list.List;
-import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
 
 public @Service class MacroProcessor {
@@ -56,20 +55,16 @@ public @Service class MacroProcessor {
      * Macro definitions are stored into macros parameter.
      * Macros are evaluated during the processing.
      */
-    public @Mandatory List<Token> process(
-        @Mandatory List<List<Token>> lines,
-        @Mandatory Macros macros,
-        @Mandatory File file
-    ) {
+    public @Mandatory List<Token> process(@Mandatory List<List<Token>> lines, @Mandatory Macros macros) {
         MacroConditions conditions = new MacroConditions();
-        MacroExpander expander = new MacroExpander(macros, file);
+        MacroExpander expander = new MacroExpander(macros);
 
         for (List<Token> line : lines) {
             Token directive = findDirective(line);
             if (conditions.isTrue()) {
-                processTrueBranch(line, directive, macros, file, conditions, expander);
+                processTrueBranch(line, directive, macros, conditions, expander);
             } else if (conditions.isFalse()) {
-                processFalseBranch(line, directive, macros, file, conditions, expander);
+                processFalseBranch(line, directive, macros, conditions, expander);
             } else if (conditions.isCompleted()) {
                 processCompletedBranch(line, directive, macros, conditions, expander);
             } else {
@@ -87,7 +82,6 @@ public @Service class MacroProcessor {
         @Mandatory List<Token> line,
         @Optional Token directive,
         @Mandatory Macros macros,
-        @Mandatory File file,
         @Mandatory MacroConditions conditions,
         @Mandatory MacroExpander expander
     ) {
@@ -98,7 +92,7 @@ public @Service class MacroProcessor {
         } else if (directive.getText().equals(INCLUDE)) {
             return; // includes are skipped and should be processed separately
         } else if (directive.getText().equals(IF)) {
-            if (evaluateExpression(line, macros, file)) {
+            if (evaluateExpression(line, macros)) {
                 conditions.nest(directive);
             } else {
                 conditions.skip();
@@ -142,14 +136,13 @@ public @Service class MacroProcessor {
         @Mandatory List<Token> line,
         @Optional Token directive,
         @Mandatory Macros macros,
-        @Mandatory File file,
         @Mandatory MacroConditions conditions,
         @Mandatory MacroExpander expander
     ) {
         if (directive == null) {
             return;
         } else if (directive.getText().equals(ELIF)) {
-            if (evaluateExpression(line, macros, file)) {
+            if (evaluateExpression(line, macros)) {
                 conditions.nest(directive);
             } else {
                 conditions.skip();
@@ -203,17 +196,12 @@ public @Service class MacroProcessor {
         }
     }
 
-    private boolean evaluateExpression(
-        @Mandatory List<Token> line,
-        @Mandatory Macros macros,
-        @Mandatory File file
-    ) {
+    private boolean evaluateExpression(@Mandatory List<Token> line, @Mandatory Macros macros) {
         try {
             return expressionProcessor.evaluate(
                 expandExpressionMacros(
                     expressionParser.parse(line),
-                    macros,
-                    file
+                    macros
                 )
             );
         } catch (ExpressionException e) {
@@ -227,21 +215,14 @@ public @Service class MacroProcessor {
         }
     }
 
-    private @Mandatory List<Token> expandExpressionMacros(
-        @Mandatory List<Token> tokens,
-        @Mandatory Macros macros,
-        @Mandatory File file
-    ) {
-        macros.define(SystemMacros.DEFINED);
-
-        MacroExpander expander = new MacroExpander(macros, file);
-        for (Token token : tokens) {
-            expander.expand(token);
-        }
-        expander.validateNotExpanding();
-
-        macros.undefine(SystemMacros.DEFINED.getName().getText());
-
-        return expander.getTokens();
+    private @Mandatory List<Token> expandExpressionMacros(@Mandatory List<Token> tokens, @Mandatory Macros macros) {
+        return Macros.temporary(macros, new DefinedMacro(), () -> {
+            MacroExpander expander = new MacroExpander(macros);
+            for (Token token : tokens) {
+                expander.expand(token);
+            }
+            expander.validateNotExpanding();
+            return expander.getTokens();
+        });
     }
 }
