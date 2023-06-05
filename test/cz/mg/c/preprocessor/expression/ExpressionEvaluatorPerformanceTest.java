@@ -6,17 +6,17 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.test.Performance;
 
-public @Test class ExpressionProcessorPerformanceTest {
+public @Test class ExpressionEvaluatorPerformanceTest {
     private static final int ITERATIONS = 10;
 
     public static void main(String[] args) {
-        System.out.print("Running " + ExpressionProcessorPerformanceTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + ExpressionEvaluatorPerformanceTest.class.getSimpleName() + " ... ");
 
-        ExpressionProcessorPerformanceTest test = new ExpressionProcessorPerformanceTest();
+        ExpressionEvaluatorPerformanceTest test = new ExpressionEvaluatorPerformanceTest();
         test.testPerformance();
     }
 
-    private final ExpressionProcessor expressionProcessor = ExpressionProcessor.getInstance();
+    private final ExpressionEvaluator evaluator = ExpressionEvaluator.getInstance();
     private final TokenFactory f = TokenFactory.getInstance();
 
     private void testPerformance() {
@@ -24,7 +24,7 @@ public @Test class ExpressionProcessorPerformanceTest {
     }
 
     private void testCase() {
-        Assert.assertEquals(true, expressionProcessor.evaluate(new List<>(
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("=="),
             f.number("1"),

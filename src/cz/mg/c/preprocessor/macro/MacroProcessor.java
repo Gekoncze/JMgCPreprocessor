@@ -3,7 +3,7 @@ package cz.mg.c.preprocessor.macro;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
-import cz.mg.c.preprocessor.expression.ExpressionProcessor;
+import cz.mg.c.preprocessor.expression.ExpressionEvaluator;
 import cz.mg.c.preprocessor.expression.ExpressionException;
 import cz.mg.c.preprocessor.expression.ExpressionParser;
 import cz.mg.c.preprocessor.macro.entities.Macros;
@@ -36,7 +36,7 @@ public @Service class MacroProcessor {
                     instance = new MacroProcessor();
                     instance.macroParser = MacroParser.getInstance();
                     instance.expressionParser = ExpressionParser.getInstance();
-                    instance.expressionProcessor = ExpressionProcessor.getInstance();
+                    instance.expressionEvaluator = ExpressionEvaluator.getInstance();
                 }
             }
         }
@@ -45,7 +45,7 @@ public @Service class MacroProcessor {
 
     private @Service MacroParser macroParser;
     private @Service ExpressionParser expressionParser;
-    private @Service ExpressionProcessor expressionProcessor;
+    private @Service ExpressionEvaluator expressionEvaluator;
 
     private MacroProcessor() {
     }
@@ -198,7 +198,7 @@ public @Service class MacroProcessor {
 
     private boolean evaluateExpression(@Mandatory List<Token> line, @Mandatory Macros macros) {
         try {
-            return expressionProcessor.evaluate(
+            return expressionEvaluator.evaluate(
                 expandExpressionMacros(
                     expressionParser.parse(line),
                     macros

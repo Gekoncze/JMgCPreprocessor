@@ -11,21 +11,21 @@ import cz.mg.tokenizer.entities.tokens.BracketToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.entities.tokens.OperatorToken;
 
-public @Service class ExpressionProcessor {
-    private static volatile @Service ExpressionProcessor instance;
+public @Service class ExpressionEvaluator {
+    private static volatile @Service ExpressionEvaluator instance;
 
-    public static @Service ExpressionProcessor getInstance() {
+    public static @Service ExpressionEvaluator getInstance() {
         if (instance == null) {
             synchronized (Service.class) {
                 if (instance == null) {
-                    instance = new ExpressionProcessor();
+                    instance = new ExpressionEvaluator();
                 }
             }
         }
         return instance;
     }
 
-    private ExpressionProcessor() {
+    private ExpressionEvaluator() {
     }
 
     public boolean evaluate(@Mandatory List<Token> tokens) {

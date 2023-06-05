@@ -5,11 +5,11 @@ import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 
-public @Test class ExpressionProcessorTest {
+public @Test class ExpressionEvaluatorTest {
     public static void main(String[] args) {
-        System.out.print("Running " + ExpressionProcessorTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + ExpressionEvaluatorTest.class.getSimpleName() + " ... ");
 
-        ExpressionProcessorTest test = new ExpressionProcessorTest();
+        ExpressionEvaluatorTest test = new ExpressionEvaluatorTest();
         test.testSingleEvaluate();
         test.testBinaryAndEvaluate();
         test.testBinaryOrEvaluate();
@@ -18,39 +18,39 @@ public @Test class ExpressionProcessorTest {
         System.out.println("OK");
     }
 
-    private final ExpressionProcessor processor = ExpressionProcessor.getInstance();
+    private final ExpressionEvaluator evaluator = ExpressionEvaluator.getInstance();
     private final TokenFactory f = TokenFactory.getInstance();
 
     private void testSingleEvaluate() {
-        Assert.assertEquals(true, processor.evaluate(new List<>(
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1")
         )));
 
-        Assert.assertEquals(false, processor.evaluate(new List<>(
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("0")
         )));
     }
 
     private void testBinaryAndEvaluate() {
-        Assert.assertEquals(false, processor.evaluate(new List<>(
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("0"),
             f.operator("&&"),
             f.number("0")
         )));
 
-        Assert.assertEquals(false, processor.evaluate(new List<>(
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("&&"),
             f.number("0")
         )));
 
-        Assert.assertEquals(false, processor.evaluate(new List<>(
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("0"),
             f.operator("&&"),
             f.number("1")
         )));
 
-        Assert.assertEquals(true, processor.evaluate(new List<>(
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("&&"),
             f.number("1")
@@ -58,25 +58,25 @@ public @Test class ExpressionProcessorTest {
     }
 
     private void testBinaryOrEvaluate() {
-        Assert.assertEquals(false, processor.evaluate(new List<>(
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("0"),
             f.operator("||"),
             f.number("0")
         )));
 
-        Assert.assertEquals(true, processor.evaluate(new List<>(
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("||"),
             f.number("0")
         )));
 
-        Assert.assertEquals(true, processor.evaluate(new List<>(
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("0"),
             f.operator("||"),
             f.number("1")
         )));
 
-        Assert.assertEquals(true, processor.evaluate(new List<>(
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("||"),
             f.number("1")
@@ -84,7 +84,7 @@ public @Test class ExpressionProcessorTest {
     }
 
     private void testComplexEvaluate() {
-        Assert.assertEquals(true, processor.evaluate(new List<>(
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("&&"),
             f.bracket("("),
@@ -94,7 +94,7 @@ public @Test class ExpressionProcessorTest {
             f.bracket(")")
         )));
 
-        Assert.assertEquals(false, processor.evaluate(new List<>(
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("&&"),
             f.bracket("("),
@@ -104,7 +104,7 @@ public @Test class ExpressionProcessorTest {
             f.bracket(")")
         )));
 
-        Assert.assertEquals(false, processor.evaluate(new List<>(
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("&&"),
             f.bracket("("),
@@ -120,7 +120,7 @@ public @Test class ExpressionProcessorTest {
             f.bracket(")")
         )));
 
-        Assert.assertEquals(true, processor.evaluate(new List<>(
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
             f.operator("&&"),
             f.bracket("("),
