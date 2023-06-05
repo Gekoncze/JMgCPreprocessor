@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.expression;
+package cz.mg.c.preprocessor.macro.expression;
 
 import cz.mg.annotations.classes.Error;
 import cz.mg.annotations.requirement.Mandatory;

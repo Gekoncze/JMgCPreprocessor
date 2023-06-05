@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.expression;
+package cz.mg.c.preprocessor.macro.expression;
 
 public enum OperatorType {
     LUNARY,

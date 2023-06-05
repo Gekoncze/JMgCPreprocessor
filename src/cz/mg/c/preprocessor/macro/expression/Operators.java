@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.expression;
+package cz.mg.c.preprocessor.macro.expression;
 
 import cz.mg.annotations.classes.Static;
 import cz.mg.collections.list.List;

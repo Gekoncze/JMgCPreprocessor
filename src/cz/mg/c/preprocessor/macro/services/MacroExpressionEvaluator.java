@@ -2,9 +2,9 @@ package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.expression.ExpressionEvaluator;
-import cz.mg.c.preprocessor.expression.ExpressionException;
-import cz.mg.c.preprocessor.expression.ExpressionParser;
+import cz.mg.c.preprocessor.macro.expression.ExpressionEvaluator;
+import cz.mg.c.preprocessor.macro.expression.ExpressionException;
+import cz.mg.c.preprocessor.macro.expression.ExpressionParser;
 import cz.mg.c.preprocessor.macro.components.MacroExpander;
 import cz.mg.c.preprocessor.macro.entities.Macros;
 import cz.mg.c.preprocessor.macro.entities.system.DefinedMacro;
