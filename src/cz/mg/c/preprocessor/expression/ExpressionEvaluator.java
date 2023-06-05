@@ -29,7 +29,7 @@ public @Service class ExpressionEvaluator {
     }
 
     public boolean evaluate(@Mandatory List<Token> tokens) {
-        return evaluateResult(evaluateExpression(new TokenReader(tokens), false));
+        return evaluateResult(evaluateExpression(new TokenReader(tokens, ExpressionException::new), false));
     }
 
     private boolean evaluateResult(@Mandatory Token token) {

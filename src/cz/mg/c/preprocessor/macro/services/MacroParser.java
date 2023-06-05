@@ -28,7 +28,7 @@ public @Service class MacroParser {
     }
 
     public @Mandatory Macro parse(@Mandatory List<Token> line) {
-        TokenReader reader = new TokenReader(line);
+        TokenReader reader = new TokenReader(line, MacroException::new);
         reader.read("#");
         reader.read("define");
         return new Macro(

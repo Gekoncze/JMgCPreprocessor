@@ -25,7 +25,7 @@ public @Service class ExpressionParser {
     }
 
     public @Mandatory List<Token> parse(@Mandatory List<Token> line) {
-        TokenReader reader = new TokenReader(line);
+        TokenReader reader = new TokenReader(line, ExpressionException::new);
         reader.read("#");
         int position = reader.read().getPosition();
 

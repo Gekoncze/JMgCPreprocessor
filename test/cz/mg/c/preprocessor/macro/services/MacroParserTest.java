@@ -1,12 +1,12 @@
 package cz.mg.c.preprocessor.macro.services;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.preprocessor.macro.entities.Macro;
 import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.exceptions.CodeException;
 
 public @Test class MacroParserTest {
     public static void main(String[] args) {
@@ -95,7 +95,7 @@ public @Test class MacroParserTest {
                 f.name("PLUS"),
                 f.bracket("(")
             ));
-        }).throwsException(CodeException.class);
+        }).throwsException(PreprocessorException.class);
 
         Assert.assertThatCode(() -> {
             parser.parse(new List<>(
@@ -106,6 +106,6 @@ public @Test class MacroParserTest {
                 f.separator(","),
                 f.bracket(")")
             ));
-        }).throwsException(CodeException.class);
+        }).throwsException(PreprocessorException.class);
     }
 }

@@ -1,11 +1,11 @@
 package cz.mg.c.preprocessor.expression;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.exceptions.CodeException;
 
 public @Test class ExpressionParserTest {
     public static void main(String[] args) {
@@ -50,7 +50,7 @@ public @Test class ExpressionParserTest {
             .assertThatCode(() -> {
                 parser.parse(new List<>());
             })
-            .throwsException(CodeException.class);
+            .throwsException(PreprocessorException.class);
 
         Assert
             .assertThatCode(() -> {
@@ -58,7 +58,7 @@ public @Test class ExpressionParserTest {
                     f.special("#")
                 ));
             })
-            .throwsException(CodeException.class);
+            .throwsException(PreprocessorException.class);
 
         Assert
             .assertThatCode(() -> {
@@ -67,6 +67,6 @@ public @Test class ExpressionParserTest {
                     f.name("if")
                 ));
             })
-            .throwsException(CodeException.class);
+            .throwsException(PreprocessorException.class);
     }
 }
