@@ -22,17 +22,18 @@ public @Test class ExpressionParserTest {
     private final TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
-        validator.check(
+        validator.assertNameEquals(
+            new List<>("69"),
             parser.parse(new List<>(
                 f.special("#"),
                 f.name("if"),
                 f.whitespace(" "),
                 f.number("69")
-            )),
-            "69"
+            ))
         );
 
-        validator.check(
+        validator.assertNameEquals(
+            new List<>("6", "+", "9"),
             parser.parse(new List<>(
                 f.special("#"),
                 f.name("if"),
@@ -42,8 +43,7 @@ public @Test class ExpressionParserTest {
                 f.special("+"),
                 f.whitespace(" "),
                 f.special("9")
-            )),
-            "6", "+", "9"
+            ))
         );
 
         Assert

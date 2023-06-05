@@ -26,15 +26,15 @@ public @Service class TokenValidator {
     private TokenValidator() {
     }
 
-    public void check(@Mandatory List<Token> actualTokens, String... expectation) {
-        List<String> reality = new List<>();
+    public void assertNameEquals(@Mandatory List<String> expectation, @Mandatory List<Token> reality) {
+        List<String> actualNames = new List<>();
 
-        for (Token actualToken : actualTokens) {
-            reality.addLast(actualToken.getText());
+        for (Token actualToken : reality) {
+            actualNames.addLast(actualToken.getText());
         }
 
         Assert
-            .assertThatCollections(new List<>(expectation), reality)
+            .assertThatCollections(new List<>(expectation), actualNames)
             .withPrintFunction(this::encode)
             .verbose("[", ",", "]")
             .areEqual();

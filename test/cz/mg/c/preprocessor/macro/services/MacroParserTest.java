@@ -35,7 +35,7 @@ public @Test class MacroParserTest {
 
         Assert.assertEquals("LOREM_IPSUM", macro.getName().getText());
         Assert.assertNull(macro.getParameters());
-        validator.check(macro.getTokens());
+        validator.assertNameEquals(new List<>(), macro.getTokens());
     }
 
     private void testParametersAndNoImplementation() {
@@ -49,7 +49,7 @@ public @Test class MacroParserTest {
 
         Assert.assertEquals("LOREM_IPSUM", macro.getName().getText());
         Assert.assertNotNull(macro.getParameters());
-        validator.check(macro.getTokens());
+        validator.assertNameEquals(new List<>(), macro.getTokens());
     }
 
     private void testNoParametersAndImplementation() {
@@ -63,7 +63,7 @@ public @Test class MacroParserTest {
 
         Assert.assertEquals("TEST", macro.getName().getText());
         Assert.assertNull(macro.getParameters());
-        validator.check(macro.getTokens(), "foo", "bar");
+        validator.assertNameEquals(new List<>("foo", "bar"), macro.getTokens());
     }
 
     private void testParametersAndImplementation() {
@@ -83,8 +83,8 @@ public @Test class MacroParserTest {
 
         Assert.assertEquals("PLUS", macro.getName().getText());
         Assert.assertNotNull(macro.getParameters());
-        validator.check(macro.getParameters(), "x", "y");
-        validator.check(macro.getTokens(), "x", "+", "y");
+        validator.assertNameEquals(new List<>("x", "y"), macro.getParameters());
+        validator.assertNameEquals(new List<>("x", "+", "y"), macro.getTokens());
     }
 
     private void testErrors() {
