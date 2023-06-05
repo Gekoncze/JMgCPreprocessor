@@ -3,29 +3,26 @@ package cz.mg.c.preprocessor.macro;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
-import cz.mg.c.preprocessor.expression.ExpressionEvaluator;
-import cz.mg.c.preprocessor.expression.ExpressionException;
-import cz.mg.c.preprocessor.expression.ExpressionParser;
-import cz.mg.c.preprocessor.macro.entities.Macros;
-import cz.mg.c.preprocessor.macro.entities.system.DefinedMacro;
-import cz.mg.c.preprocessor.macro.services.MacroParser;
 import cz.mg.c.preprocessor.macro.components.MacroConditions;
-import cz.mg.c.preprocessor.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.macro.components.MacroExpander;
+import cz.mg.c.preprocessor.macro.entities.Macros;
+import cz.mg.c.preprocessor.macro.exceptions.MacroException;
+import cz.mg.c.preprocessor.macro.services.MacroExpressionEvaluator;
+import cz.mg.c.preprocessor.macro.services.MacroParser;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 
 public @Service class MacroProcessor {
-    public static final String INCLUDE = "include";
-    public static final String IF = "if";
-    public static final String ELIF = "elif";
-    public static final String ELSE = "else";
-    public static final String IFDEF = "ifdef";
-    public static final String IFNDEF = "ifndef";
-    public static final String DEFINE = "define";
-    public static final String UNDEF = "undef";
-    public static final String ENDIF = "endif";
-    public static final String ERROR = "error";
+    private static final @Mandatory String INCLUDE = "include";
+    private static final @Mandatory String IF = "if";
+    private static final @Mandatory String ELIF = "elif";
+    private static final @Mandatory String ELSE = "else";
+    private static final @Mandatory String IFDEF = "ifdef";
+    private static final @Mandatory String IFNDEF = "ifndef";
+    private static final @Mandatory String DEFINE = "define";
+    private static final @Mandatory String UNDEF = "undef";
+    private static final @Mandatory String ENDIF = "endif";
+    private static final @Mandatory String ERROR = "error";
 
     private static volatile @Service MacroProcessor instance;
 
@@ -35,8 +32,7 @@ public @Service class MacroProcessor {
                 if (instance == null) {
                     instance = new MacroProcessor();
                     instance.macroParser = MacroParser.getInstance();
-                    instance.expressionParser = ExpressionParser.getInstance();
-                    instance.expressionEvaluator = ExpressionEvaluator.getInstance();
+                    instance.macroExpressionEvaluator = MacroExpressionEvaluator.getInstance();
                 }
             }
         }
@@ -44,8 +40,7 @@ public @Service class MacroProcessor {
     }
 
     private @Service MacroParser macroParser;
-    private @Service ExpressionParser expressionParser;
-    private @Service ExpressionEvaluator expressionEvaluator;
+    private @Service MacroExpressionEvaluator macroExpressionEvaluator;
 
     private MacroProcessor() {
     }
@@ -92,7 +87,7 @@ public @Service class MacroProcessor {
         } else if (directive.getText().equals(INCLUDE)) {
             return; // includes are skipped and should be processed separately
         } else if (directive.getText().equals(IF)) {
-            if (evaluateExpression(line, macros)) {
+            if (macroExpressionEvaluator.evaluateExpression(line, macros)) {
                 conditions.nest(directive);
             } else {
                 conditions.skip();
@@ -142,7 +137,7 @@ public @Service class MacroProcessor {
         if (directive == null) {
             return;
         } else if (directive.getText().equals(ELIF)) {
-            if (evaluateExpression(line, macros)) {
+            if (macroExpressionEvaluator.evaluateExpression(line, macros)) {
                 conditions.nest(directive);
             } else {
                 conditions.skip();
@@ -194,35 +189,5 @@ public @Service class MacroProcessor {
                 "Error directive reached."
             );
         }
-    }
-
-    private boolean evaluateExpression(@Mandatory List<Token> line, @Mandatory Macros macros) {
-        try {
-            return expressionEvaluator.evaluate(
-                expandExpressionMacros(
-                    expressionParser.parse(line),
-                    macros
-                )
-            );
-        } catch (ExpressionException e) {
-            throw new MacroException(
-                e.getPosition() != -1
-                    ? e.getPosition()
-                    : line.get(1).getPosition(),
-                "Could not evaluate condition.",
-                e
-            );
-        }
-    }
-
-    private @Mandatory List<Token> expandExpressionMacros(@Mandatory List<Token> tokens, @Mandatory Macros macros) {
-        return Macros.temporary(macros, new DefinedMacro(), () -> {
-            MacroExpander expander = new MacroExpander(macros);
-            for (Token token : tokens) {
-                expander.expand(token);
-            }
-            expander.validateNotExpanding();
-            return expander.getTokens();
-        });
     }
 }
