@@ -2,10 +2,10 @@ package cz.mg.c.preprocessor;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.macro.MacroProcessor;
-import cz.mg.c.preprocessor.macro.entities.Macros;
-import cz.mg.c.preprocessor.macro.entities.system.FileMacro;
-import cz.mg.c.preprocessor.macro.entities.system.LineMacro;
+import cz.mg.c.preprocessor.processors.macro.MacroProcessor;
+import cz.mg.c.preprocessor.processors.macro.entities.Macros;
+import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
+import cz.mg.c.preprocessor.processors.macro.entities.system.LineMacro;
 import cz.mg.c.preprocessor.processors.*;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
