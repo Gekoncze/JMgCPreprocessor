@@ -10,7 +10,6 @@ import cz.mg.c.preprocessor.processors.macro.entities.system.LineMacro;
 import cz.mg.c.preprocessor.processors.*;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
-import cz.mg.tokenizer.Tokenizer;
 import cz.mg.tokenizer.entities.Token;
 
 public @Service class Preprocessor {
@@ -24,6 +23,7 @@ public @Service class Preprocessor {
                     instance.backslashProcessor = BackslashProcessor.getInstance();
                     instance.commentProcessor = CommentProcessor.getInstance();
                     instance.macroProcessor = MacroProcessor.getInstance();
+                    instance.tokenProcessor = TokenProcessor.getInstance();
                     instance.whitespaceProcessor = WhitespaceProcessor.getInstance();
                 }
             }
@@ -34,6 +34,7 @@ public @Service class Preprocessor {
     private @Service BackslashProcessor backslashProcessor;
     private @Service CommentProcessor commentProcessor;
     private @Service MacroProcessor macroProcessor;
+    private @Service TokenProcessor tokenProcessor;
     private @Service WhitespaceProcessor whitespaceProcessor;
 
     private Preprocessor() {
@@ -46,7 +47,7 @@ public @Service class Preprocessor {
         return Macros.temporary(macros, new FileMacro(file), () -> {
             return Macros.temporary(macros, new LineMacro(), () -> {
                 String content = backslashProcessor.process(file.getContent());
-                List<Token> tokens = new Tokenizer().tokenize(content);
+                List<Token> tokens = tokenProcessor.process(content);
                 commentProcessor.process(tokens);
                 List<List<Token>> lines = whitespaceProcessor.process(tokens);
                 return macroProcessor.process(lines, macros);
