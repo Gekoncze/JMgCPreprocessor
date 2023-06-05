@@ -1,9 +1,7 @@
-TODO
-    in ExpressionProcessor
-
 add tests
     extend performance test for ExpressionProcessorTest
         add optimization if needed
+            TODO in ExpressionProcessor
 
     for macro package
         for components package
