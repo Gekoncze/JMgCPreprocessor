@@ -2,7 +2,6 @@ package cz.mg.c.preprocessor.processors.macro.services;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.DefinedMacro;
@@ -13,15 +12,14 @@ import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
 import cz.mg.tokenizer.entities.Token;
 
-@Deprecated
-public @Service class AllMacroExpansionService {
-    private static volatile @Service AllMacroExpansionService instance;
+public @Service class MacroCallExpansionService {
+    private static volatile @Service MacroCallExpansionService instance;
 
-    public static @Service AllMacroExpansionService getInstance() {
+    public static @Service MacroCallExpansionService getInstance() {
         if (instance == null) {
             synchronized (Service.class) {
                 if (instance == null) {
-                    instance = new AllMacroExpansionService();
+                    instance = new MacroCallExpansionService();
                     instance.macroCallValidator = MacroCallValidator.getInstance();
                     instance.macroExpansionNames = new Map<>(10);
                     instance.macroExpansionNames.set(DefinedMacro.NAME, DefinedMacro.NAME);
@@ -42,14 +40,10 @@ public @Service class AllMacroExpansionService {
     private @Service Map<String, String> macroExpansionNames;
     private @Service Map<String, MacroExpansionService> macroExpansionServices;
 
-    private AllMacroExpansionService() {
+    private MacroCallExpansionService() {
     }
 
-    public @Mandatory List<Token> expandRecursively(@Mandatory MacroCall call, @Mandatory Macros macros) {
-        return MacroExpander.expand(expand(call, macros), macros);
-    }
-
-    private @Mandatory List<Token> expand(@Mandatory MacroCall call, @Mandatory Macros macros) {
+    public @Mandatory List<Token> expand(@Mandatory MacroCall call, @Mandatory Macros macros) {
         macroCallValidator.validate(call);
         String name = call.getMacro().getName().getText();
         String macroExpansionName = macroExpansionNames.getOptional(name);

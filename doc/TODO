@@ -18,6 +18,10 @@ add tests
         for maro processor
 
 macros
+    should we parse directives ?
+        create entities for each directive
+        create parsers for each directive
+
     add possibility to collect macro calls
         maybe as optional parameter to Preprocessor ?
 

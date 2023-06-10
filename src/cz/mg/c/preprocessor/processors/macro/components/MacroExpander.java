@@ -7,12 +7,12 @@ import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
-import cz.mg.c.preprocessor.processors.macro.services.AllMacroExpansionService;
+import cz.mg.c.preprocessor.processors.macro.services.MacroCallExpansionService;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 
 public @Component class MacroExpander {
-    private final AllMacroExpansionService allMacroExpansionService = AllMacroExpansionService.getInstance();
+    private final MacroCallExpansionService macroCallExpansionService = MacroCallExpansionService.getInstance();
 
     private final @Mandatory Macros macros;
     private final @Mandatory List<Token> tokens = new List<>();
@@ -38,7 +38,9 @@ public @Component class MacroExpander {
             Macro macro = macros.getMap().getOptional(token.getText());
             if (macro != null) {
                 if (macro.getParameters() == null) {
-                    tokens.addCollectionLast(allMacroExpansionService.expandRecursively(new MacroCall(macro, token, null), macros));
+                    call = new MacroCall(macro, token, null);
+                    tokens.addCollectionLast(expandRecursively(call, macros));
+                    call = null;
                 } else {
                     call = new MacroCall(macro, token, new List<>());
                     nesting = 0;
@@ -71,7 +73,7 @@ public @Component class MacroExpander {
                         call.getArguments().getLast().addLast(token);
                         nesting++;
                     } else if (token.getText().equals(")")) {
-                        tokens.addCollectionLast(allMacroExpansionService.expandRecursively(call, macros));
+                        tokens.addCollectionLast(expandRecursively(call, macros));
                         call = null;
                         nesting = null;
                     } else if (token.getText().equals(",")) {
@@ -84,6 +86,13 @@ public @Component class MacroExpander {
         } else {
             throw new IllegalStateException();
         }
+    }
+
+    private @Mandatory List<Token> expandRecursively(@Mandatory MacroCall call, @Mandatory Macros macros) {
+        return MacroExpander.expand(
+            macroCallExpansionService.expand(call, macros),
+            macros
+        );
     }
 
     public void validateNotExpanding() {
