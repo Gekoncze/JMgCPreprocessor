@@ -56,9 +56,7 @@ public @Service class MacroExpressionEvaluator {
     private @Mandatory List<Token> expandExpressionMacros(@Mandatory List<Token> tokens, @Mandatory Macros macros) {
         return Macros.temporary(macros, new DefinedMacro(), () -> {
             MacroExpander expander = new MacroExpander(macros);
-            for (Token token : tokens) {
-                expander.expand(token);
-            }
+            expander.expand(tokens);
             expander.validateNotExpanding();
             return expander.getTokens();
         });

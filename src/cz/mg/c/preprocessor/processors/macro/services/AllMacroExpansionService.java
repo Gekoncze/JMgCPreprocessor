@@ -48,9 +48,7 @@ public @Service class AllMacroExpansionService {
     public @Mandatory List<Token> expandRecursively(@Mandatory MacroCall call, @Mandatory Macros macros) {
         List<Token> expandedTokens = expand(call, macros);
         MacroExpander expander = new MacroExpander(macros);
-        for (Token token : expandedTokens) {
-            expander.expand(token);
-        }
+        expander.expand(expandedTokens);
         expander.validateNotExpanding();
         return expander.getTokens();
     }

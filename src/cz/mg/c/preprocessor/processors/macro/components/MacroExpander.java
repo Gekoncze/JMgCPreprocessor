@@ -27,6 +27,12 @@ public @Component class MacroExpander {
         return tokens;
     }
 
+    public void expand(@Mandatory List<Token> tokens) {
+        for (Token token : tokens) {
+            expand(token);
+        }
+    }
+
     public void expand(@Mandatory Token token) {
         if (call == null || nesting == null) {
             Macro macro = macros.getMap().getOptional(token.getText());
