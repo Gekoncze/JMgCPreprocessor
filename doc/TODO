@@ -6,6 +6,8 @@ refactor AllMacroExpansionService
 turn MacroExpansion component into MacroCall entity
 
 add tests
+    add test for undef
+
     extend performance test for ExpressionEvaluator
         add optimization if needed
             TODO in ExpressionEvaluator

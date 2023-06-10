@@ -20,6 +20,7 @@ public @Test class PreprocessorTest {
         PreprocessorTest test = new PreprocessorTest();
         test.testProcessing();
         test.testNestedMacros();
+        test.testNestedConditions();
 
         System.out.println("OK");
     }
@@ -98,11 +99,84 @@ public @Test class PreprocessorTest {
         Assert.assertEquals(true, macros.defined("OPERATION"));
         Assert.assertEquals(true, macros.defined("MINUS"));
 
+        macroValidator.assertEquals(
+            new Macro(
+                new NameToken("MINUS", 41),
+                new List<>(new NameToken("x", 47), new NameToken("y", 50)),
+                new List<>(
+                    new NameToken("OPERATION", 53),
+                    new BracketToken("(", 62),
+                    new NameToken("x", 63),
+                    new SeparatorToken(",", 64),
+                    new OperatorToken("-", 66),
+                    new SeparatorToken(",", 67),
+                    new NameToken("y", 69),
+                    new BracketToken(")", 70)
+                )
+            ),
+            macros.getMap().get("MINUS")
+        );
+
         tokenValidator.assertEquals(
             new List<>(
                 new NumberToken("7", 114),
                 new OperatorToken("-", 66),
                 new NumberToken("2", 111)
+            ),
+            tokens
+        );
+    }
+
+    private void testNestedConditions() {
+        File file = new File(
+            Path.of("/test/file/main.c"),
+                "0\n" +
+                "#ifdef straw\n" +
+                "1\n" +
+                "#if defined(apple)\n" +
+                "2\n" +
+                "#define STRAWAPPLE\n" +
+                "3\n" +
+                "#elif defined(berry)\n" +
+                "4\n" +
+                "#define STRAWBERRY\n" +
+                "5\n" +
+                "#else\n" +
+                "6\n" +
+                "#define STRAW\n" +
+                "7\n" +
+                "#endif\n" +
+                "8\n" +
+                "#else\n" +
+                "9\n" +
+                "#define NONE\n" +
+                "10\n" +
+                "#endif\n" +
+                "11\n"
+        );
+
+        Macros macros = new Macros();
+        macros.define(new Macro(new NameToken("straw", -1), null, new List<>()));
+        macros.define(new Macro(new NameToken("berry", -1), null, new List<>()));
+
+        List<Token> tokens = preprocessor.preprocess(file, macros);
+
+        Assert.assertEquals(true, macros.defined("straw"));
+        Assert.assertEquals(true, macros.defined("berry"));
+        Assert.assertEquals(true, macros.defined("STRAWBERRY"));
+        Assert.assertEquals(false, macros.defined("apple"));
+        Assert.assertEquals(false, macros.defined("STRAWAPPLE"));
+        Assert.assertEquals(false, macros.defined("STRAW"));
+        Assert.assertEquals(false, macros.defined("NONE"));
+
+        tokenValidator.assertEquals(
+            new List<>(
+                new NumberToken("0", 0),
+                new NumberToken("1", 15),
+                new NumberToken("4", 80),
+                new NumberToken("5", 101),
+                new NumberToken("8", 134),
+                new NumberToken("11", 167)
             ),
             tokens
         );
