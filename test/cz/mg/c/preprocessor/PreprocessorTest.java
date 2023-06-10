@@ -19,6 +19,7 @@ public @Test class PreprocessorTest {
 
         PreprocessorTest test = new PreprocessorTest();
         test.testProcessing();
+        test.testNestedMacros();
 
         System.out.println("OK");
     }
@@ -77,6 +78,31 @@ public @Test class PreprocessorTest {
                 new BracketToken(")", 151 - 2),
                 new SeparatorToken(";", 152 - 2),
                 new BracketToken("}", 154 - 2)
+            ),
+            tokens
+        );
+    }
+
+    private void testNestedMacros() {
+        File file = new File(
+            Path.of("/test/file/main.c"),
+                "#define OPERATION(x, o, y) x o y\n" +
+                "#define MINUS(x, y) OPERATION(x, -, y)\n" +
+                "#define OPERATION(x, o, y) y o x\n" +
+                "MINUS(2, 7)"
+        );
+
+        Macros macros = new Macros();
+        List<Token> tokens = preprocessor.preprocess(file, macros);
+
+        Assert.assertEquals(true, macros.defined("OPERATION"));
+        Assert.assertEquals(true, macros.defined("MINUS"));
+
+        tokenValidator.assertEquals(
+            new List<>(
+                new NumberToken("7", 114),
+                new OperatorToken("-", 66),
+                new NumberToken("2", 111)
             ),
             tokens
         );

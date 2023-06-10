@@ -3,6 +3,8 @@ refactor AllMacroExpansionService
     and then try to move MacroExpander logic into some service
     then maybe MacroExpander might be turned into just some dto
 
+turn MacroExpansion component into MacroCall entity
+
 add tests
     extend performance test for ExpressionEvaluator
         add optimization if needed
