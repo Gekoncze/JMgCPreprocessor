@@ -21,10 +21,10 @@ public @Service class MacroCallExpansionService {
                 if (instance == null) {
                     instance = new MacroCallExpansionService();
                     instance.macroCallValidator = MacroCallValidator.getInstance();
-                    instance.macroExpansionNames = new Map<>(10);
-                    instance.macroExpansionNames.set(DefinedMacro.NAME, DefinedMacro.NAME);
-                    instance.macroExpansionNames.set(FileMacro.NAME, FileMacro.NAME);
-                    instance.macroExpansionNames.set(LineMacro.NAME, LineMacro.NAME);
+                    instance.systemMacroNames = new Map<>(10);
+                    instance.systemMacroNames.set(DefinedMacro.NAME, DefinedMacro.NAME);
+                    instance.systemMacroNames.set(FileMacro.NAME, FileMacro.NAME);
+                    instance.systemMacroNames.set(LineMacro.NAME, LineMacro.NAME);
                     instance.macroExpansionServices = new Map<>(10);
                     instance.macroExpansionServices.set(DefinedMacro.NAME, DefinedMacroExpansionService.getInstance());
                     instance.macroExpansionServices.set(FileMacro.NAME, FileMacroExpansionService.getInstance());
@@ -37,7 +37,7 @@ public @Service class MacroCallExpansionService {
     }
 
     private @Service MacroCallValidator macroCallValidator;
-    private @Service Map<String, String> macroExpansionNames;
+    private @Service Map<String, String> systemMacroNames;
     private @Service Map<String, MacroExpansionService> macroExpansionServices;
 
     private MacroCallExpansionService() {
@@ -46,8 +46,8 @@ public @Service class MacroCallExpansionService {
     public @Mandatory List<Token> expand(@Mandatory MacroCall call, @Mandatory Macros macros) {
         macroCallValidator.validate(call);
         String name = call.getMacro().getName().getText();
-        String macroExpansionName = macroExpansionNames.getOptional(name);
-        MacroExpansionService macroExpansionService = macroExpansionServices.get(macroExpansionName);
+        String systemMacroName = systemMacroNames.getOptional(name);
+        MacroExpansionService macroExpansionService = macroExpansionServices.get(systemMacroName);
         return macroExpansionService.expand(macros, call);
     }
 }
