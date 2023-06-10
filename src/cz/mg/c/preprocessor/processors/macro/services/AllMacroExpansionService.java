@@ -3,7 +3,7 @@ package cz.mg.c.preprocessor.processors.macro.services;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
-import cz.mg.c.preprocessor.processors.macro.components.MacroExpansion;
+import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.DefinedMacro;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
@@ -22,7 +22,7 @@ public @Service class AllMacroExpansionService {
             synchronized (Service.class) {
                 if (instance == null) {
                     instance = new AllMacroExpansionService();
-                    instance.macroExpansionValidator = MacroExpansionValidator.getInstance();
+                    instance.macroCallValidator = MacroCallValidator.getInstance();
                     instance.macroExpansionNames = new Map<>(10);
                     instance.macroExpansionNames.set(DefinedMacro.NAME, DefinedMacro.NAME);
                     instance.macroExpansionNames.set(FileMacro.NAME, FileMacro.NAME);
@@ -38,15 +38,15 @@ public @Service class AllMacroExpansionService {
         return instance;
     }
 
-    private @Service MacroExpansionValidator macroExpansionValidator;
+    private @Service MacroCallValidator macroCallValidator;
     private @Service Map<String, String> macroExpansionNames;
     private @Service Map<String, MacroExpansionService> macroExpansionServices;
 
     private AllMacroExpansionService() {
     }
 
-    public @Mandatory List<Token> expandRecursively(@Mandatory MacroExpansion expansion, @Mandatory Macros macros) {
-        List<Token> expandedTokens = expand(expansion, macros);
+    public @Mandatory List<Token> expandRecursively(@Mandatory MacroCall call, @Mandatory Macros macros) {
+        List<Token> expandedTokens = expand(call, macros);
         MacroExpander expander = new MacroExpander(macros);
         for (Token token : expandedTokens) {
             expander.expand(token);
@@ -55,11 +55,11 @@ public @Service class AllMacroExpansionService {
         return expander.getTokens();
     }
 
-    private @Mandatory List<Token> expand(@Mandatory MacroExpansion expansion, @Mandatory Macros macros) {
-        macroExpansionValidator.validate(expansion);
-        String name = expansion.getMacro().getName().getText();
+    private @Mandatory List<Token> expand(@Mandatory MacroCall call, @Mandatory Macros macros) {
+        macroCallValidator.validate(call);
+        String name = call.getMacro().getName().getText();
         String macroExpansionName = macroExpansionNames.getOptional(name);
         MacroExpansionService macroExpansionService = macroExpansionServices.get(macroExpansionName);
-        return macroExpansionService.expand(macros, expansion);
+        return macroExpansionService.expand(macros, call);
     }
 }

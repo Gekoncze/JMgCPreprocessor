@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.processors.macro.services.AllMacroExpansionService;
@@ -15,7 +16,8 @@ public @Component class MacroExpander {
 
     private final @Mandatory Macros macros;
     private final @Mandatory List<Token> tokens = new List<>();
-    private @Optional MacroExpansion expansion;
+    private @Optional MacroCall call;
+    private @Optional Integer nesting;
 
     public MacroExpander(@Mandatory Macros macros) {
         this.macros = macros;
@@ -26,49 +28,50 @@ public @Component class MacroExpander {
     }
 
     public void expand(@Mandatory Token token) {
-        if (expansion == null) {
+        if (call == null || nesting == null) {
             Macro macro = macros.getMap().getOptional(token.getText());
             if (macro != null) {
                 if (macro.getParameters() == null) {
-                    expansion = new MacroExpansion(token, macro, null);
-                    tokens.addCollectionLast(allMacroExpansionService.expandRecursively(expansion, macros));
-                    expansion = null;
+                    tokens.addCollectionLast(allMacroExpansionService.expandRecursively(new MacroCall(macro, token, null), macros));
                 } else {
-                    expansion = new MacroExpansion(token, macro, new List<>());
+                    call = new MacroCall(macro, token, new List<>());
+                    nesting = 0;
                 }
             } else {
                 tokens.addLast(token);
             }
-        } else if (expansion.getArguments() != null) {
-            if (expansion.getArguments().isEmpty()) {
+        } else if (call.getArguments() != null) {
+            if (call.getArguments().isEmpty()) {
                 if (token.getText().equals("(")) {
-                    expansion.getArguments().addLast(new List<>());
+                    call.getArguments().addLast(new List<>());
                 } else {
-                    tokens.addLast(expansion.getToken());
-                    expansion = null;
+                    tokens.addLast(call.getToken());
+                    call = null;
+                    nesting = null;
                 }
             } else {
-                if (expansion.getNesting() > 0) {
+                if (nesting > 0) {
                     if (token.getText().equals("(")) {
-                        expansion.getArguments().getLast().addLast(token);
-                        expansion.setNesting(expansion.getNesting() + 1);
+                        call.getArguments().getLast().addLast(token);
+                        nesting++;
                     } else if (token.getText().equals(")")) {
-                        expansion.getArguments().getLast().addLast(token);
-                        expansion.setNesting(expansion.getNesting() - 1);
+                        call.getArguments().getLast().addLast(token);
+                        nesting--;
                     } else {
-                        expansion.getArguments().getLast().addLast(token);
+                        call.getArguments().getLast().addLast(token);
                     }
                 } else {
                     if (token.getText().equals("(")) {
-                        expansion.getArguments().getLast().addLast(token);
-                        expansion.setNesting(expansion.getNesting() + 1);
+                        call.getArguments().getLast().addLast(token);
+                        nesting++;
                     } else if (token.getText().equals(")")) {
-                        tokens.addCollectionLast(allMacroExpansionService.expandRecursively(expansion, macros));
-                        expansion = null;
+                        tokens.addCollectionLast(allMacroExpansionService.expandRecursively(call, macros));
+                        call = null;
+                        nesting = null;
                     } else if (token.getText().equals(",")) {
-                        expansion.getArguments().addLast(new List<>());
+                        call.getArguments().addLast(new List<>());
                     } else {
-                        expansion.getArguments().getLast().addLast(token);
+                        call.getArguments().getLast().addLast(token);
                     }
                 }
             }
@@ -78,9 +81,9 @@ public @Component class MacroExpander {
     }
 
     public void validateNotExpanding() {
-        if (expansion != null) {
+        if (call != null) {
             throw new MacroException(
-                expansion.getToken().getPosition(),
+                call.getToken().getPosition(),
                 "Unfinished macro expansion."
             );
         }

@@ -2,7 +2,7 @@ package cz.mg.c.preprocessor.processors.macro.services.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.processors.macro.components.MacroExpansion;
+import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
 import cz.mg.c.preprocessor.processors.backslash.BackslashPositionService;
@@ -34,10 +34,10 @@ public @Service class LineMacroExpansionService implements MacroExpansionService
     }
 
     @Override
-    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroExpansion expansion) {
+    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroCall call) {
         FileMacro fileMacro = (FileMacro) macros.getMap().get(FileMacro.NAME);
         String content = fileMacro.getFile().getContent();
-        int position = expansion.getToken().getPosition();
+        int position = call.getToken().getPosition();
         int correctedPosition = backslashPositionService.correct(content, position);
         int row = positionService.find(content, correctedPosition).getRow();
         return new List<>(new NumberToken("" + row, position));

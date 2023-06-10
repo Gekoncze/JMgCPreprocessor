@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.DefinedMacro;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
-import cz.mg.c.preprocessor.processors.macro.components.MacroExpansion;
+import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
@@ -30,21 +30,21 @@ public @Service class DefinedMacroExpansionService implements MacroExpansionServ
     }
 
     @Override
-    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroExpansion expansion) {
-        validate(expansion);
-        Objects.requireNonNull(expansion.getArguments());
-        String name = expansion.getArguments().getFirst().getFirst().getText();
+    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroCall call) {
+        validate(call);
+        Objects.requireNonNull(call.getArguments());
+        String name = call.getArguments().getFirst().getFirst().getText();
         String result = macros.defined(name) ? "1" : "0";
-        int position = expansion.getToken().getPosition();
+        int position = call.getToken().getPosition();
         return new List<>(new NumberToken(result, position));
     }
 
-    private void validate(@Mandatory MacroExpansion expansion) {
-        Objects.requireNonNull(expansion.getArguments());
-        int tokenCount = expansion.getArguments().getFirst().count();
+    private void validate(@Mandatory MacroCall call) {
+        Objects.requireNonNull(call.getArguments());
+        int tokenCount = call.getArguments().getFirst().count();
         if (tokenCount != 1) {
             throw new MacroException(
-                expansion.getToken().getPosition(),
+                call.getToken().getPosition(),
                 "Wrong number of tokens for '" + DefinedMacro.NAME + "' macro. "
                     + "Expected 1 token, but got " + tokenCount + "."
             );

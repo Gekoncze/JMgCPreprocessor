@@ -3,10 +3,10 @@ refactor AllMacroExpansionService
     and then try to move MacroExpander logic into some service
     then maybe MacroExpander might be turned into just some dto
 
-turn MacroExpansion component into MacroCall entity
-
 add tests
     add test for undef
+    add test for infinite recursive macro expansion
+        during recursion, macro can be expanded only once
 
     extend performance test for ExpressionEvaluator
         add optimization if needed
@@ -18,6 +18,9 @@ add tests
         for maro processor
 
 macros
+    add possibility to collect macro calls
+        maybe as optional parameter to Preprocessor ?
+
     add support for ## macro joining operation
         it can join tokens of different types
         some combination of token types are invalid

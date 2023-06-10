@@ -2,7 +2,7 @@ package cz.mg.c.preprocessor.processors.macro.services.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.processors.macro.components.MacroExpansion;
+import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
@@ -29,10 +29,10 @@ public @Service class PlainMacroExpansionService implements MacroExpansionServic
     }
 
     @Override
-    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroExpansion expansion) {
-        Map<String, List<Token>> map = createMap(expansion);
+    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroCall call) {
+        Map<String, List<Token>> map = createMap(call);
         List<Token> expandedTokens = new List<>();
-        for (Token macroToken : expansion.getMacro().getTokens()) {
+        for (Token macroToken : call.getMacro().getTokens()) {
             List<Token> replacement = map.getOptional(macroToken.getText());
             if (replacement != null) {
                 expandedTokens.addCollectionLast(replacement);
@@ -43,10 +43,10 @@ public @Service class PlainMacroExpansionService implements MacroExpansionServic
         return expandedTokens;
     }
 
-    private @Mandatory Map<String, List<Token>> createMap(@Mandatory MacroExpansion expansion) {
+    private @Mandatory Map<String, List<Token>> createMap(@Mandatory MacroCall call) {
         Map<String, List<Token>> map = new Map<>(100);
-        Iterator<Token> parameterIterator = Objects.requireNonNull(expansion.getMacro().getParameters()).iterator();
-        Iterator<List<Token>> argumentIterator = Objects.requireNonNull(expansion.getArguments()).iterator();
+        Iterator<Token> parameterIterator = Objects.requireNonNull(call.getMacro().getParameters()).iterator();
+        Iterator<List<Token>> argumentIterator = Objects.requireNonNull(call.getArguments()).iterator();
         while (parameterIterator.hasNext() && argumentIterator.hasNext()) {
             Token parameter = parameterIterator.next();
             List<Token> arguments = argumentIterator.next();
