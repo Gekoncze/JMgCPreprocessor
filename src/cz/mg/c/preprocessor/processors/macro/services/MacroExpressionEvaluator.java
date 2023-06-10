@@ -35,30 +35,13 @@ public @Service class MacroExpressionEvaluator {
     }
 
     public boolean evaluateExpression(@Mandatory List<Token> line, @Mandatory Macros macros) {
-        try {
+        return Macros.temporary(macros, new DefinedMacro(), () -> {
             return expressionEvaluator.evaluate(
-                expandExpressionMacros(
+                MacroExpander.expand(
                     expressionParser.parse(line),
                     macros
                 )
             );
-        } catch (ExpressionException e) {
-            throw new MacroException(
-                e.getPosition() != -1
-                    ? e.getPosition()
-                    : line.get(1).getPosition(),
-                "Could not evaluate condition.",
-                e
-            );
-        }
-    }
-
-    private @Mandatory List<Token> expandExpressionMacros(@Mandatory List<Token> tokens, @Mandatory Macros macros) {
-        return Macros.temporary(macros, new DefinedMacro(), () -> {
-            MacroExpander expander = new MacroExpander(macros);
-            expander.expand(tokens);
-            expander.validateNotExpanding();
-            return expander.getTokens();
         });
     }
 }

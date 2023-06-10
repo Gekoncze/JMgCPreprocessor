@@ -94,4 +94,11 @@ public @Component class MacroExpander {
             );
         }
     }
+
+    public static @Mandatory List<Token> expand(@Mandatory List<Token> tokens, @Mandatory Macros macros) {
+        MacroExpander expander = new MacroExpander(macros);
+        expander.expand(tokens);
+        expander.validateNotExpanding();
+        return expander.getTokens();
+    }
 }
