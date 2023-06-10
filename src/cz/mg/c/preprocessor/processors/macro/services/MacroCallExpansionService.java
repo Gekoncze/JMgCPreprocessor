@@ -45,8 +45,8 @@ public @Service class MacroCallExpansionService {
 
     public @Mandatory List<Token> expand(@Mandatory MacroCall call, @Mandatory Macros macros) {
         macroCallValidator.validate(call);
-        String name = call.getMacro().getName().getText();
-        String systemMacroName = systemMacroNames.getOptional(name);
+        String macroName = call.getMacro().getName().getText();
+        String systemMacroName = systemMacroNames.getOptional(macroName);
         MacroExpansionService macroExpansionService = macroExpansionServices.get(systemMacroName);
         return macroExpansionService.expand(macros, call);
     }
