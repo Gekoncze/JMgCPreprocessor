@@ -9,9 +9,9 @@ add tests
         for maro processor
 
 macros
-    should we parse directives ?
-        create entities for each directive
+    directive refactoring
         create parsers for each directive
+        update MacroProcessor logic
 
     think if expression package is really necessary
         if not then move classes to upper level and delete special exception
@@ -31,3 +31,6 @@ macros
         looks like spaces are ignored as if they didn't exist
 
     add support for vararg macros
+
+    add proper support for error and warning macro
+        error message should be text between position of first token and end of line
