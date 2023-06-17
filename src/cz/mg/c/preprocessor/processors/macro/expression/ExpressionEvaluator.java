@@ -75,12 +75,6 @@ public @Service class ExpressionEvaluator {
     }
 
     private @Mandatory List<Token> evaluateOperators(@Mandatory List<Token> tokens) {
-        // TODO - I sense a possible optimization here
-        // TODO - We could iterate over all tokens and store operator items in array of lists
-        // TODO - where array index would equal operator priority, the priority would be found in
-        // TODO - hash map whose key would be the operator string (might be multiple chars)
-        // TODO - then we would evaluate operators by priority.
-        // TODO - This should be tested with a performance test.
         for (List<Operator> operators : Operators.OPERATORS) {
             for (ListItem<Token> item = tokens.getFirstItem(); item != null; item = item.getNextItem()) {
                 if (isOperator(item)) {
