@@ -38,7 +38,7 @@ public @Service class MacroProcessor {
     /**
      * Removes macro definitions from lines and returns list of remaining tokens.
      * Macro definitions are stored into macros parameter.
-     * Macros are evaluated during the processing.
+     * Macro calls are evaluated during the processing.
      */
     public @Mandatory List<Token> process(@Mandatory List<List<Token>> lines, @Mandatory Macros macros) {
         MacroConditions conditions = new MacroConditions();

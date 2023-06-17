@@ -4,11 +4,13 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.c.preprocessor.processors.macro.entities.directives.DefineDirective;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.SpecialToken;
 
 public @Service class MacroParser {
     private static volatile @Service MacroParser instance;
@@ -29,8 +31,8 @@ public @Service class MacroParser {
 
     public @Mandatory Macro parse(@Mandatory List<Token> line) {
         TokenReader reader = new TokenReader(line, MacroException::new);
-        reader.read("#");
-        reader.read("define");
+        reader.read("#", SpecialToken.class);
+        reader.read(DefineDirective.KEYWORD, NameToken.class);
         return new Macro(
             readName(reader),
             readParameters(reader),

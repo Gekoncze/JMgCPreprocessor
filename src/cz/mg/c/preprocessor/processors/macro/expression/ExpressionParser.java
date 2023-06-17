@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class ExpressionParser {
@@ -27,7 +28,7 @@ public @Service class ExpressionParser {
     public @Mandatory List<Token> parse(@Mandatory List<Token> line) {
         TokenReader reader = new TokenReader(line, ExpressionException::new);
         reader.read("#");
-        int position = reader.read().getPosition();
+        int position = reader.read(NameToken.class).getPosition();
 
         if (!reader.hasNext()) {
             throw new ExpressionException(position, "Missing expression.");
