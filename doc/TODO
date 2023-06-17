@@ -24,6 +24,8 @@ macros
 
         update MacroProcessor logic to use directive parsers
 
+    remove redundant whitespace checking in expression parser
+
     think if expression package is really necessary
         if not then move classes to upper level and delete special exception
 

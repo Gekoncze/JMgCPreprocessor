@@ -33,8 +33,8 @@ public @Test class ExpressionParserTest {
             ),
             new List<>(0, 1),
             tokens -> {
-                validator.assertNameEquals(
-                    new List<>("69"),
+                validator.assertEquals(
+                    new List<>(f.number("69")),
                     parser.parse(tokens)
                 );
             }
@@ -53,8 +53,8 @@ public @Test class ExpressionParserTest {
             ),
             new List<>(0, 1),
             tokens -> {
-                validator.assertNameEquals(
-                    new List<>("6", "+", "9"),
+                validator.assertEquals(
+                    new List<>(f.number("6"), f.special("+"), f.special("9")),
                     parser.parse(tokens)
                 );
             }

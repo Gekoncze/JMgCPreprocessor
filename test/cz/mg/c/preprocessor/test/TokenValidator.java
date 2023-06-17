@@ -26,20 +26,6 @@ public @Service class TokenValidator {
     private TokenValidator() {
     }
 
-    public void assertNameEquals(@Mandatory List<String> expectation, @Mandatory List<Token> reality) {
-        List<String> actualNames = new List<>();
-
-        for (Token actualToken : reality) {
-            actualNames.addLast(actualToken.getText());
-        }
-
-        Assert
-            .assertThatCollections(new List<>(expectation), actualNames)
-            .withPrintFunction(this::encode)
-            .verbose("[", ",", "]")
-            .areEqual();
-    }
-
     public void assertEquals(@Optional Token expectation, @Optional Token reality) {
         Assert
             .assertThat(expectation, reality)

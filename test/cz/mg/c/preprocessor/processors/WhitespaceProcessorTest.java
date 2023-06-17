@@ -35,7 +35,7 @@ public @Test class WhitespaceProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(1, lines.count());
-        validator.assertNameEquals(new List<>("a", "11", ";"), lines.get(0));
+        validator.assertEquals(new List<>(f.name("a"), f.number("11"), f.separator(";")), lines.get(0));
     }
 
     private void testProcessingNewlines() {
@@ -49,9 +49,9 @@ public @Test class WhitespaceProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(3, lines.count());
-        validator.assertNameEquals(new List<>("a"), lines.get(0));
-        validator.assertNameEquals(new List<>("11", "69"), lines.get(1));
-        validator.assertNameEquals(new List<>(";"), lines.get(2));
+        validator.assertEquals(new List<>(f.name("a")), lines.get(0));
+        validator.assertEquals(new List<>(f.number("11"), f.number("69")), lines.get(1));
+        validator.assertEquals(new List<>(f.separator(";")), lines.get(2));
     }
 
     private void testProcessingFirst() {
@@ -63,8 +63,8 @@ public @Test class WhitespaceProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        validator.assertNameEquals(new List<>(), lines.get(0));
-        validator.assertNameEquals(new List<>("3", "foo"), lines.get(1));
+        validator.assertEquals(new List<>(), lines.get(0));
+        validator.assertEquals(new List<>(f.number("3"), f.name("foo")), lines.get(1));
     }
 
     private void testProcessingMiddle() {
@@ -77,8 +77,8 @@ public @Test class WhitespaceProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        validator.assertNameEquals(new List<>("foo"), lines.get(0));
-        validator.assertNameEquals(new List<>("bar"), lines.get(1));
+        validator.assertEquals(new List<>(f.name("foo")), lines.get(0));
+        validator.assertEquals(new List<>(f.name("bar")), lines.get(1));
     }
 
     private void testProcessingLast() {
@@ -90,7 +90,7 @@ public @Test class WhitespaceProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        validator.assertNameEquals(new List<>("Pony", "!"), lines.get(0));
-        validator.assertNameEquals(new List<>(), lines.get(1));
+        validator.assertEquals(new List<>(f.name("Pony"), f.operator("!")), lines.get(0));
+        validator.assertEquals(new List<>(), lines.get(1));
     }
 }

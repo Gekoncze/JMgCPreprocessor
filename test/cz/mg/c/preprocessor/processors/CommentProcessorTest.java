@@ -25,7 +25,7 @@ public @Test class CommentProcessorTest {
     private void testProcessingFirst() {
         List<Token> tokens = new List<>(f.comment("foo bar"), f.plain("a"), f.whitespace(" "), f.plain("bb"));
         processor.process(tokens);
-        validator.assertNameEquals(new List<>("a", " ", "bb"), tokens);
+        validator.assertEquals(new List<>(f.plain("a"), f.whitespace(" "), f.plain("bb")), tokens);
     }
 
     private void testProcessingMiddle() {
@@ -35,15 +35,20 @@ public @Test class CommentProcessorTest {
             f.whitespace("\t"),
             f.plain("bar"),
             f.comment(" "),
-            f.plain("69")
+            f.number("69")
         );
         processor.process(tokens);
-        validator.assertNameEquals(new List<>("foo", "\t", "bar", "69"), tokens);
+        validator.assertEquals(new List<>(
+            f.plain("foo"),
+            f.whitespace("\t"),
+            f.plain("bar"),
+            f.number("69")
+        ), tokens);
     }
 
     private void testProcessingLast() {
         List<Token> tokens = new List<>(f.plain("~"), f.whitespace(" "), f.comment("yay\nmay"));
         processor.process(tokens);
-        validator.assertNameEquals(new List<>("~", " "), tokens);
+        validator.assertEquals(new List<>(f.plain("~"), f.whitespace(" ")), tokens);
     }
 }
