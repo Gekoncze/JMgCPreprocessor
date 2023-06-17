@@ -3,6 +3,7 @@ package cz.mg.c.preprocessor.processors.macro.expression;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.preprocessor.test.TokenFactory;
+import cz.mg.c.preprocessor.test.TokenMutator;
 import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
@@ -19,22 +20,28 @@ public @Test class ExpressionParserTest {
 
     private final ExpressionParser parser = ExpressionParser.getInstance();
     private final TokenValidator validator = TokenValidator.getInstance();
+    private final TokenMutator mutator = TokenMutator.getInstance();
     private final TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
-        validator.assertNameEquals(
-            new List<>("69"),
-            parser.parse(new List<>(
+        mutator.mutate(
+            new List<>(
                 f.special("#"),
                 f.name("if"),
                 f.whitespace(" "),
                 f.number("69")
-            ))
+            ),
+            new List<>(0, 1),
+            tokens -> {
+                validator.assertNameEquals(
+                    new List<>("69"),
+                    parser.parse(tokens)
+                );
+            }
         );
 
-        validator.assertNameEquals(
-            new List<>("6", "+", "9"),
-            parser.parse(new List<>(
+        mutator.mutate(
+            new List<>(
                 f.special("#"),
                 f.name("if"),
                 f.whitespace(" "),
@@ -43,7 +50,14 @@ public @Test class ExpressionParserTest {
                 f.special("+"),
                 f.whitespace(" "),
                 f.special("9")
-            ))
+            ),
+            new List<>(0, 1),
+            tokens -> {
+                validator.assertNameEquals(
+                    new List<>("6", "+", "9"),
+                    parser.parse(tokens)
+                );
+            }
         );
 
         Assert

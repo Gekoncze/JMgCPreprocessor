@@ -5,6 +5,7 @@ import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.test.MacroValidator;
 import cz.mg.c.preprocessor.test.TokenFactory;
+import cz.mg.c.preprocessor.test.TokenMutator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 
@@ -25,52 +26,66 @@ public @Test class MacroParserTest {
     private final MacroParser parser = MacroParser.getInstance();
     private final TokenFactory f = TokenFactory.getInstance();
     private final MacroValidator validator = MacroValidator.getInstance();
+    private final TokenMutator mutator = TokenMutator.getInstance();
 
     private void testNoParametersAndNoImplementation() {
-        validator.assertEquals(
-            new Macro(f.name("LOREM_IPSUM"), null, new List<>()),
-            parser.parse(new List<>(
+        mutator.mutate(
+            new List<>(
                 f.special("#"),
                 f.name("define"),
                 f.name("LOREM_IPSUM")
-            ))
+            ),
+            new List<>(0, 1, 2),
+            tokens -> {
+                validator.assertEquals(
+                    new Macro(f.name("LOREM_IPSUM"), null, new List<>()),
+                    parser.parse(tokens)
+                );
+            }
         );
     }
 
     private void testParametersAndNoImplementation() {
-        validator.assertEquals(
-            new Macro(f.name("LOREM_IPSUM"), new List<>(), new List<>()),
-            parser.parse(new List<>(
+        mutator.mutate(
+            new List<>(
                 f.special("#"),
                 f.name("define"),
                 f.name("LOREM_IPSUM"),
                 f.bracket("("),
                 f.bracket(")")
-            ))
+            ),
+            new List<>(0, 1, 2, 3, 4),
+            tokens -> {
+                validator.assertEquals(
+                    new Macro(f.name("LOREM_IPSUM"), new List<>(), new List<>()),
+                    parser.parse(tokens)
+                );
+            }
         );
     }
 
     private void testNoParametersAndImplementation() {
-        validator.assertEquals(
-            new Macro(f.name("TEST"), null, new List<>(f.name("foo"), f.name("bar"))),
-            parser.parse(new List<>(
+        mutator.mutate(
+            new List<>(
                 f.special("#"),
                 f.name("define"),
                 f.name("TEST"),
                 f.name("foo"),
                 f.name("bar")
-            ))
+            ),
+            new List<>(0, 1, 2),
+            tokens -> {
+                validator.assertEquals(
+                    new Macro(f.name("TEST"), null, new List<>(f.name("foo"), f.name("bar"))),
+                    parser.parse(tokens)
+                );
+            }
         );
     }
 
     private void testParametersAndImplementation() {
-        validator.assertEquals(
-            new Macro(
-                f.name("PLUS"),
-                new List<>(f.name("x"), f.name("y")),
-                new List<>(f.name("x"), f.operator("+"), f.name("y"))
-            ),
-            parser.parse(new List<>(
+        mutator.mutate(
+            new List<>(
                 f.special("#"),
                 f.name("define"),
                 f.name("PLUS"),
@@ -82,7 +97,18 @@ public @Test class MacroParserTest {
                 f.name("x"),
                 f.operator("+"),
                 f.name("y")
-            ))
+            ),
+            new List<>(0, 1, 2, 3, 4, 5, 6, 7),
+            tokens -> {
+                validator.assertEquals(
+                    new Macro(
+                        f.name("PLUS"),
+                        new List<>(f.name("x"), f.name("y")),
+                        new List<>(f.name("x"), f.operator("+"), f.name("y"))
+                    ),
+                    parser.parse(tokens)
+                );
+            }
         );
     }
 

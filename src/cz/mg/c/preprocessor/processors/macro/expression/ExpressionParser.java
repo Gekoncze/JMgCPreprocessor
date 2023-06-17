@@ -6,6 +6,7 @@ import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class ExpressionParser {
@@ -27,7 +28,7 @@ public @Service class ExpressionParser {
 
     public @Mandatory List<Token> parse(@Mandatory List<Token> line) {
         TokenReader reader = new TokenReader(line, ExpressionException::new);
-        reader.read("#");
+        reader.read("#", SpecialToken.class);
         int position = reader.read(NameToken.class).getPosition();
 
         if (!reader.hasNext()) {

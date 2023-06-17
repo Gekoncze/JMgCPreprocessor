@@ -9,7 +9,9 @@ import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.BracketToken;
 import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.SeparatorToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 
 public @Service class MacroParser {
@@ -29,7 +31,7 @@ public @Service class MacroParser {
     private MacroParser() {
     }
 
-    public @Mandatory Macro parse(@Mandatory List<Token> line) {
+public @Mandatory Macro parse(@Mandatory List<Token> line) {
         TokenReader reader = new TokenReader(line, MacroException::new);
         reader.read("#", SpecialToken.class);
         reader.read(DefineDirective.KEYWORD, NameToken.class);
@@ -45,12 +47,12 @@ public @Service class MacroParser {
     }
 
     private @Optional List<Token> readParameters(@Mandatory TokenReader reader) {
-        if (reader.has("(")) {
+        if (reader.has("(", BracketToken.class)) {
             List<Token> parameters = new List<>();
             int startPosition = reader.read().getPosition();
             boolean expectedName = true;
             while (true) {
-                if (reader.has(")")) {
+                if (reader.has(")", BracketToken.class)) {
                     int endPosition = reader.read().getPosition();
                     if (expectedName && !parameters.isEmpty()) {
                         throw new MacroException(
@@ -68,7 +70,7 @@ public @Service class MacroParser {
                     if (expectedName) {
                         parameters.addLast(reader.read(NameToken.class));
                     } else {
-                        reader.read(",");
+                        reader.read(",", SeparatorToken.class);
                     }
                     expectedName = !expectedName;
                 }
