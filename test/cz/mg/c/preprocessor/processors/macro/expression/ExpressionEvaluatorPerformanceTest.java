@@ -8,6 +8,7 @@ import cz.mg.test.Performance;
 
 public @Test class ExpressionEvaluatorPerformanceTest {
     private static final int ITERATIONS = 10;
+    private static final int LOOPS = 100000;
 
     public static void main(String[] args) {
         System.out.print("Running " + ExpressionEvaluatorPerformanceTest.class.getSimpleName() + " ... ");
@@ -24,22 +25,34 @@ public @Test class ExpressionEvaluatorPerformanceTest {
     }
 
     private void testCase() {
-        Assert.assertEquals(true, evaluator.evaluate(new List<>(
-            f.number("1"),
-            f.operator("=="),
-            f.number("1"),
-            f.operator("&&"),
-            f.bracket("("),
-            f.bracket("("),
-            f.number("1"),
-            f.operator("&&"),
-            f.number("1"),
-            f.operator("&&"),
-            f.number("1"),
-            f.bracket(")"),
-            f.operator("||"),
-            f.number("0"),
-            f.bracket(")")
-        )));
+        for (int i = 0; i < LOOPS; i++) {
+            Assert.assertEquals(true, evaluator.evaluate(new List<>(
+                f.number("1"),
+                f.operator("=="),
+                f.number("1"),
+                f.operator("&&"),
+                f.bracket("("),
+                f.bracket("("),
+                f.number("1"),
+                f.operator("&&"),
+                f.number("1"),
+                f.operator("&&"),
+                f.number("1"),
+                f.bracket(")"),
+                f.operator("||"),
+                f.number("0"),
+                f.bracket(")"),
+                f.operator("+"),
+                f.number("69"),
+                f.operator("+"),
+                f.number("0"),
+                f.operator("*"),
+                f.bracket("("),
+                f.number("11"),
+                f.operator("*"),
+                f.number("11"),
+                f.bracket(")")
+            )));
+        }
     }
 }
