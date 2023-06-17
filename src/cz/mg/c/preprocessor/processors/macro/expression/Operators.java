@@ -8,7 +8,7 @@ public @Static class Operators {
         new List<>(
             new Operator("+", OperatorType.LUNARY, (a, b) -> +b),
             new Operator("-", OperatorType.LUNARY, (a, b) -> -b),
-            new Operator("!", OperatorType.LUNARY, (a, b) -> b == 1 ? 0 : 1),
+            new Operator("!", OperatorType.LUNARY, (a, b) -> b == 0 ? 1 : 0),
             new Operator("~", OperatorType.LUNARY, (a, b) -> ~b)
         ),
         new List<>(

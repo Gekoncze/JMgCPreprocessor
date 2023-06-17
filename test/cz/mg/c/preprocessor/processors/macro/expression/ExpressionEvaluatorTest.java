@@ -11,6 +11,7 @@ public @Test class ExpressionEvaluatorTest {
 
         ExpressionEvaluatorTest test = new ExpressionEvaluatorTest();
         test.testSingleEvaluate();
+        test.testUnaryNotEvaluate();
         test.testBinaryAndEvaluate();
         test.testBinaryOrEvaluate();
         test.testComplexEvaluate();
@@ -22,11 +23,31 @@ public @Test class ExpressionEvaluatorTest {
     private final TokenFactory f = TokenFactory.getInstance();
 
     private void testSingleEvaluate() {
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
+            f.number("0")
+        )));
+
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1")
         )));
 
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
+            f.number("-1")
+        )));
+
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
+            f.number("7")
+        )));
+    }
+
+    private void testUnaryNotEvaluate() {
         Assert.assertEquals(false, evaluator.evaluate(new List<>(
+            f.operator("!"),
+            f.number("7")
+        )));
+
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
+            f.operator("!"),
             f.number("0")
         )));
     }
@@ -55,6 +76,12 @@ public @Test class ExpressionEvaluatorTest {
             f.operator("&&"),
             f.number("1")
         )));
+
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
+            f.number("3"),
+            f.operator("&&"),
+            f.number("7")
+        )));
     }
 
     private void testBinaryOrEvaluate() {
@@ -80,6 +107,12 @@ public @Test class ExpressionEvaluatorTest {
             f.number("1"),
             f.operator("||"),
             f.number("1")
+        )));
+
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
+            f.number("3"),
+            f.operator("||"),
+            f.number("7")
         )));
     }
 
@@ -133,6 +166,19 @@ public @Test class ExpressionEvaluatorTest {
             f.bracket(")"),
             f.operator("||"),
             f.number("0"),
+            f.bracket(")")
+        )));
+
+        Assert.assertEquals(true, evaluator.evaluate(new List<>(
+            f.number("4"),
+            f.operator("=="),
+            f.number("7"),
+            f.operator("-"),
+            f.bracket("("),
+            f.operator("-"),
+            f.number("2"),
+            f.operator("+"),
+            f.number("5"),
             f.bracket(")")
         )));
     }
