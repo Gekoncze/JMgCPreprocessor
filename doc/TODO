@@ -32,5 +32,3 @@ macros
 
     add support for vararg macros
 
-    add proper support for error and warning macro
-        error message should be text between position of first token and end of line

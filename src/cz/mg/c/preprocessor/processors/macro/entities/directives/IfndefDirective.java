@@ -10,8 +10,12 @@ public @Entity class IfndefDirective extends Directive {
 
     private Token name;
 
-    public IfndefDirective(Token token) {
+    public IfndefDirective() {
+    }
+
+    public IfndefDirective(Token token, Token name) {
         super(token);
+        this.name = name;
     }
 
     @Required @Shared

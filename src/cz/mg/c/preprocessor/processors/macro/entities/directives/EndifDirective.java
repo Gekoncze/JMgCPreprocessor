@@ -6,6 +6,9 @@ import cz.mg.tokenizer.entities.Token;
 public @Entity class EndifDirective extends Directive {
     public static final String KEYWORD = "endif";
 
+    public EndifDirective() {
+    }
+
     public EndifDirective(Token token) {
         super(token);
     }

@@ -8,6 +8,9 @@ import cz.mg.tokenizer.entities.Token;
 public abstract @Entity class Directive {
     private Token token;
 
+    public Directive() {
+    }
+
     public Directive(Token token) {
         this.token = token;
     }

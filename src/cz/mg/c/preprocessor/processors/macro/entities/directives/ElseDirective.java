@@ -6,6 +6,9 @@ import cz.mg.tokenizer.entities.Token;
 public @Entity class ElseDirective extends Directive {
     public static final String KEYWORD = "else";
 
+    public ElseDirective() {
+    }
+
     public ElseDirective(Token token) {
         super(token);
     }

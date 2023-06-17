@@ -11,8 +11,12 @@ public @Entity class DefineDirective extends Directive {
 
     private Macro macro;
 
-    public DefineDirective(Token token) {
+    public DefineDirective() {
+    }
+
+    public DefineDirective(Token token, Macro macro) {
         super(token);
+        this.macro = macro;
     }
 
     @Required @Shared

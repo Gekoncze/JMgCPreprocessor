@@ -10,8 +10,12 @@ public @Entity class UndefDirective extends Directive {
 
     private Token name;
 
-    public UndefDirective(Token token) {
+    public UndefDirective() {
+    }
+
+    public UndefDirective(Token token, Token name) {
         super(token);
+        this.name = name;
     }
 
     @Required @Shared

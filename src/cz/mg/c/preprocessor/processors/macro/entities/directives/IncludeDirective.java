@@ -6,6 +6,9 @@ import cz.mg.tokenizer.entities.Token;
 public @Entity class IncludeDirective extends Directive {
     public static final String KEYWORD = "include";
 
+    public IncludeDirective() {
+    }
+
     public IncludeDirective(Token token) {
         super(token);
     }
