@@ -28,7 +28,6 @@ public @Test class ExpressionParserTest {
             new List<>(
                 f.special("#"),
                 f.name("if"),
-                f.whitespace(" "),
                 f.number("69")
             ),
             new List<>(0, 1),
@@ -44,11 +43,8 @@ public @Test class ExpressionParserTest {
             new List<>(
                 f.special("#"),
                 f.name("if"),
-                f.whitespace(" "),
                 f.number("6"),
-                f.whitespace(" "),
                 f.special("+"),
-                f.whitespace(" "),
                 f.special("9")
             ),
             new List<>(0, 1),

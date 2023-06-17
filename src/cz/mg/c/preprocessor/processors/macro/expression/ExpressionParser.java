@@ -7,7 +7,6 @@ import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class ExpressionParser {
     private static volatile @Service ExpressionParser instance;
@@ -31,16 +30,13 @@ public @Service class ExpressionParser {
         reader.read("#", SpecialToken.class);
         int position = reader.read(NameToken.class).getPosition();
 
-        if (!reader.hasNext()) {
+        if (!reader.has()) {
             throw new ExpressionException(position, "Missing expression.");
         }
 
         List<Token> expression = new List<>();
         while (reader.has()) {
-            Token token = reader.read();
-            if (!(token instanceof WhitespaceToken)) {
-                expression.addLast(token);
-            }
+            expression.addLast(reader.read());
         }
         return expression;
     }
