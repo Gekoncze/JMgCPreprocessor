@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.tokenizer.exceptions.CodeException;
 
 public @Test class ExpressionEvaluatorTest {
     public static void main(String[] args) {
@@ -15,6 +16,7 @@ public @Test class ExpressionEvaluatorTest {
         test.testBinaryAndEvaluate();
         test.testBinaryOrEvaluate();
         test.testComplexEvaluate();
+        test.testIllegalExpression();
 
         System.out.println("OK");
     }
@@ -181,5 +183,41 @@ public @Test class ExpressionEvaluatorTest {
             f.number("5"),
             f.bracket(")")
         )));
+    }
+
+    private void testIllegalExpression() {
+        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+            f.operator("()")
+        ))).throwsException(CodeException.class);
+
+        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+            f.operator("+")
+        ))).throwsException(CodeException.class);
+
+        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+            f.bracket("("),
+            f.operator("+"),
+            f.bracket(")")
+        ))).throwsException(CodeException.class);
+
+        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+            f.operator("1")
+        ))).doesNotThrowAnyException();
+
+        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+            f.bracket("("),
+            f.operator("1"),
+            f.bracket(")")
+        ))).doesNotThrowAnyException();
+
+        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+            f.bracket("("),
+            f.operator("1")
+        ))).throwsException(CodeException.class);
+
+        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+            f.operator("1"),
+            f.bracket(")")
+        ))).throwsException(CodeException.class);
     }
 }
