@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
+import cz.mg.collections.components.Capacity;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
@@ -44,7 +45,7 @@ public @Service class PlainMacroExpansionService implements MacroExpansionServic
     }
 
     private @Mandatory Map<String, List<Token>> createMap(@Mandatory MacroCall call) {
-        Map<String, List<Token>> map = new Map<>(100);
+        Map<String, List<Token>> map = new Map<>(new Capacity(100));
         Iterator<Token> parameterIterator = Objects.requireNonNull(call.getMacro().getParameters()).iterator();
         Iterator<List<Token>> argumentIterator = Objects.requireNonNull(call.getArguments()).iterator();
         while (parameterIterator.hasNext() && argumentIterator.hasNext()) {

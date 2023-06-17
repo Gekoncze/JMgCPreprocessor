@@ -4,10 +4,11 @@ import cz.mg.annotations.classes.Entity;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Shared;
+import cz.mg.collections.components.Capacity;
 import cz.mg.collections.map.Map;
 
 public @Entity class Macros {
-    private Map<String, Macro> map = new Map<>(100);
+    private Map<String, Macro> map = new Map<>(new Capacity(100));
 
     public Macros() {
     }

@@ -8,6 +8,7 @@ import cz.mg.c.preprocessor.processors.macro.entities.system.DefinedMacro;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
 import cz.mg.c.preprocessor.processors.macro.entities.system.LineMacro;
 import cz.mg.c.preprocessor.processors.macro.services.expansion.*;
+import cz.mg.collections.components.Capacity;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
 import cz.mg.tokenizer.entities.Token;
@@ -21,11 +22,11 @@ public @Service class MacroCallExpansionService {
                 if (instance == null) {
                     instance = new MacroCallExpansionService();
                     instance.macroCallValidator = MacroCallValidator.getInstance();
-                    instance.systemMacroNames = new Map<>(10);
+                    instance.systemMacroNames = new Map<>(new Capacity(10));
                     instance.systemMacroNames.set(DefinedMacro.NAME, DefinedMacro.NAME);
                     instance.systemMacroNames.set(FileMacro.NAME, FileMacro.NAME);
                     instance.systemMacroNames.set(LineMacro.NAME, LineMacro.NAME);
-                    instance.macroExpansionServices = new Map<>(10);
+                    instance.macroExpansionServices = new Map<>(new Capacity(10));
                     instance.macroExpansionServices.set(DefinedMacro.NAME, DefinedMacroExpansionService.getInstance());
                     instance.macroExpansionServices.set(FileMacro.NAME, FileMacroExpansionService.getInstance());
                     instance.macroExpansionServices.set(LineMacro.NAME, LineMacroExpansionService.getInstance());

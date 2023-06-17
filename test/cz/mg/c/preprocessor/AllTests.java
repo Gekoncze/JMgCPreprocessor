@@ -8,6 +8,7 @@ import cz.mg.c.preprocessor.processors.macro.services.MacroParserTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
 import cz.mg.c.preprocessor.processors.CommentProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
+import cz.mg.c.preprocessor.processors.macro.services.directive.DefineDirectiveParserTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -18,6 +19,9 @@ public @Test class AllTests {
         // cz.mg.c.preprocessor.processors.macro.expression
         ExpressionEvaluatorTest.main(args);
         ExpressionParserTest.main(args);
+
+        // cz.mg.c.preprocessor.processors.macro.directive
+        DefineDirectiveParserTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.services
         MacroParserTest.main(args);

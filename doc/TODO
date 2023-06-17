@@ -9,9 +9,20 @@ add tests
         for maro processor
 
 macros
-    directive refactoring
-        create parsers for each directive
-        update MacroProcessor logic
+    ... directive refactoring
+        ... create parsers for each directive
+            elif
+            else
+            endif
+            error
+            ifdef
+            if
+            ifndef
+            include
+            undef
+            warning
+
+        update MacroProcessor logic to use directive parsers
 
     think if expression package is really necessary
         if not then move classes to upper level and delete special exception
