@@ -1,7 +1,6 @@
-package cz.mg.c.preprocessor.processors.macro.services;
+package cz.mg.c.preprocessor.processors.macro.services.directive;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.macro.services.directive.ErrorDirectiveParser;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.c.preprocessor.test.TokenMutator;
