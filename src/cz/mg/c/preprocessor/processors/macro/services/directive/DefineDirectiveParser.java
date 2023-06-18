@@ -41,8 +41,7 @@ public @Service class DefineDirectiveParser implements DirectiveParser {
         DefineDirective directive = new DefineDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
-        Token token = reader.read(DefineDirective.KEYWORD, NameToken.class);
-        directive.setToken(token);
+        directive.setToken(reader.read(DefineDirective.KEYWORD, NameToken.class));
         directive.setMacro(macroParser.parse(line));
         return directive;
     }

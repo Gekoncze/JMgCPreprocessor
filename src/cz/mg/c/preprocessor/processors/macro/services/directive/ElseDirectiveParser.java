@@ -37,8 +37,7 @@ public @Service class ElseDirectiveParser implements DirectiveParser {
         ElseDirective directive = new ElseDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
-        Token token = reader.read(ElseDirective.KEYWORD, NameToken.class);
-        directive.setToken(token);
+        directive.setToken(reader.read(ElseDirective.KEYWORD, NameToken.class));
         reader.readEnd();
         return directive;
     }

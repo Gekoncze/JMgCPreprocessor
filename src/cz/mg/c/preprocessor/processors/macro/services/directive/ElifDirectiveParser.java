@@ -41,8 +41,7 @@ public @Service class ElifDirectiveParser implements DirectiveParser {
         ElifDirective directive = new ElifDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
-        Token token = reader.read(ElifDirective.KEYWORD, NameToken.class);
-        directive.setToken(token);
+        directive.setToken(reader.read(ElifDirective.KEYWORD, NameToken.class));
         directive.setExpression(expressionParser.parse(line));
         return directive;
     }

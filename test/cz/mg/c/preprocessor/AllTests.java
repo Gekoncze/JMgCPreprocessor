@@ -27,6 +27,7 @@ public @Test class AllTests {
         ElseDirectiveParserTest.main(args);
         EndifDirectiveParserTest.main(args);
         ErrorDirectiveParserTest.main(args);
+        IfdefDirectiveParserTest.main(args);
         IfDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
         WarningDirectiveParserTest.main(args);

@@ -37,8 +37,7 @@ public @Service class IncludeDirectiveParser implements DirectiveParser {
         IncludeDirective directive = new IncludeDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
-        Token token = reader.read(IncludeDirective.KEYWORD, NameToken.class);
-        directive.setToken(token);
+        directive.setToken(reader.read(IncludeDirective.KEYWORD, NameToken.class));
         return directive;
     }
 }

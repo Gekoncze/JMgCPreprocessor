@@ -37,8 +37,7 @@ public @Service class ErrorDirectiveParser implements DirectiveParser {
         ErrorDirective directive = new ErrorDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
-        Token token = reader.read(ErrorDirective.KEYWORD, NameToken.class);
-        directive.setToken(token);
+        directive.setToken(reader.read(ErrorDirective.KEYWORD, NameToken.class));
         return directive;
     }
 }

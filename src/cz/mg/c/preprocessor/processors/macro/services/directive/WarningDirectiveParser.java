@@ -37,8 +37,7 @@ public @Service class WarningDirectiveParser implements DirectiveParser {
         WarningDirective directive = new WarningDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
-        Token token = reader.read(WarningDirective.KEYWORD, NameToken.class);
-        directive.setToken(token);
+        directive.setToken(reader.read(WarningDirective.KEYWORD, NameToken.class));
         return directive;
     }
 }

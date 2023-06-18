@@ -37,8 +37,7 @@ public @Service class EndifDirectiveParser implements DirectiveParser {
         EndifDirective directive = new EndifDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
-        Token token = reader.read(EndifDirective.KEYWORD, NameToken.class);
-        directive.setToken(token);
+        directive.setToken(reader.read(EndifDirective.KEYWORD, NameToken.class));
         reader.readEnd();
         return directive;
     }
