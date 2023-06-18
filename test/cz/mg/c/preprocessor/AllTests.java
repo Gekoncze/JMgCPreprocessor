@@ -9,6 +9,7 @@ import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
 import cz.mg.c.preprocessor.processors.CommentProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
 import cz.mg.c.preprocessor.processors.macro.services.directive.DefineDirectiveParserTest;
+import cz.mg.c.preprocessor.processors.macro.services.directive.IfDirectiveParserTest;
 import cz.mg.c.preprocessor.processors.macro.services.directive.IncludeDirectiveParserTest;
 
 public @Test class AllTests {
@@ -23,6 +24,7 @@ public @Test class AllTests {
 
         // cz.mg.c.preprocessor.processors.macro.directive
         DefineDirectiveParserTest.main(args);
+        IfDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.services

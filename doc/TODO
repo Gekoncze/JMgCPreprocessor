@@ -16,7 +16,6 @@ macros
             endif
             error
             ifdef
-            if
             ifndef
             undef
             warning
