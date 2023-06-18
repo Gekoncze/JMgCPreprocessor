@@ -8,10 +8,7 @@ import cz.mg.c.preprocessor.processors.macro.services.MacroParserTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
 import cz.mg.c.preprocessor.processors.CommentProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
-import cz.mg.c.preprocessor.processors.macro.services.directive.DefineDirectiveParserTest;
-import cz.mg.c.preprocessor.processors.macro.services.directive.ElifDirectiveParserTest;
-import cz.mg.c.preprocessor.processors.macro.services.directive.IfDirectiveParserTest;
-import cz.mg.c.preprocessor.processors.macro.services.directive.IncludeDirectiveParserTest;
+import cz.mg.c.preprocessor.processors.macro.services.directive.*;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -26,6 +23,7 @@ public @Test class AllTests {
         // cz.mg.c.preprocessor.processors.macro.directive
         DefineDirectiveParserTest.main(args);
         ElifDirectiveParserTest.main(args);
+        ElseDirectiveParserTest.main(args);
         IfDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
 
