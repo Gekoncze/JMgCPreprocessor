@@ -1,13 +1,13 @@
 package cz.mg.c.preprocessor;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.backslash.BackslashPositionServiceTest;
-import cz.mg.c.preprocessor.processors.macro.expression.ExpressionParserTest;
-import cz.mg.c.preprocessor.processors.macro.expression.ExpressionEvaluatorTest;
-import cz.mg.c.preprocessor.processors.macro.services.MacroParserTest;
-import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
 import cz.mg.c.preprocessor.processors.CommentProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
+import cz.mg.c.preprocessor.processors.backslash.BackslashPositionServiceTest;
+import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
+import cz.mg.c.preprocessor.processors.macro.expression.ExpressionEvaluatorTest;
+import cz.mg.c.preprocessor.processors.macro.expression.ExpressionParserTest;
+import cz.mg.c.preprocessor.processors.macro.services.MacroParserTest;
 import cz.mg.c.preprocessor.processors.macro.services.directive.*;
 
 public @Test class AllTests {
@@ -24,6 +24,7 @@ public @Test class AllTests {
         DefineDirectiveParserTest.main(args);
         ElifDirectiveParserTest.main(args);
         ElseDirectiveParserTest.main(args);
+        EndifDirectiveParserTest.main(args);
         IfDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
 
