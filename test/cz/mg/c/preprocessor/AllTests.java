@@ -7,6 +7,7 @@ import cz.mg.c.preprocessor.processors.backslash.BackslashPositionServiceTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
 import cz.mg.c.preprocessor.processors.macro.expression.ExpressionEvaluatorTest;
 import cz.mg.c.preprocessor.processors.macro.expression.ExpressionParserTest;
+import cz.mg.c.preprocessor.processors.macro.services.ErrorDirectiveParserTest;
 import cz.mg.c.preprocessor.processors.macro.services.MacroParserTest;
 import cz.mg.c.preprocessor.processors.macro.services.directive.*;
 
@@ -25,6 +26,7 @@ public @Test class AllTests {
         ElifDirectiveParserTest.main(args);
         ElseDirectiveParserTest.main(args);
         EndifDirectiveParserTest.main(args);
+        ErrorDirectiveParserTest.main(args);
         IfDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
 
