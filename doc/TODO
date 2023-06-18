@@ -14,7 +14,6 @@ macros
             ifdef
             ifndef
             undef
-            warning
 
         update MacroProcessor logic to use directive parsers
 
