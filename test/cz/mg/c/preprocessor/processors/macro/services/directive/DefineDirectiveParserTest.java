@@ -2,7 +2,6 @@ package cz.mg.c.preprocessor.processors.macro.services.directive;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.DefineDirective;
 import cz.mg.c.preprocessor.test.*;
 import cz.mg.collections.list.List;
 
@@ -29,8 +28,8 @@ public @Test class DefineDirectiveParserTest {
         mutator.mutate(
             new List<>(f.special("#"), f.name("define"), f.name("TEST")),
             new List<>(0, 1, 2),
-            tokens -> {
-                DefineDirective directive = parser.parse(tokens);
+            tokens -> parser.parse(tokens),
+            directive -> {
                 tokenValidator.assertEquals(f.name("define"), directive.getToken());
                 macroValidator.assertEquals(new Macro(f.name("TEST"), null, new List<>()), directive.getMacro());
             }

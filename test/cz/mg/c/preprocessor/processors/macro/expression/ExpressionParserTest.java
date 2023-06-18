@@ -31,12 +31,11 @@ public @Test class ExpressionParserTest {
                 f.number("69")
             ),
             new List<>(0, 1),
-            tokens -> {
-                validator.assertEquals(
-                    new List<>(f.number("69")),
-                    parser.parse(tokens)
-                );
-            }
+            tokens -> parser.parse(tokens),
+            expression -> validator.assertEquals(
+                new List<>(f.number("69")),
+                expression
+            )
         );
 
         mutator.mutate(
@@ -44,39 +43,55 @@ public @Test class ExpressionParserTest {
                 f.special("#"),
                 f.name("if"),
                 f.number("6"),
-                f.special("+"),
-                f.special("9")
+                f.operator("+"),
+                f.number("9")
             ),
             new List<>(0, 1),
-            tokens -> {
-                validator.assertEquals(
-                    new List<>(f.number("6"), f.special("+"), f.special("9")),
-                    parser.parse(tokens)
-                );
-            }
+            tokens -> parser.parse(tokens),
+            expression -> validator.assertEquals(
+                new List<>(f.number("6"), f.operator("+"), f.number("9")),
+                expression
+            )
+        );
+
+        mutator.mutate(
+            new List<>(
+                f.special("#"),
+                f.name("if"),
+                f.number("69"),
+                f.operator("*"),
+                f.bracket("("),
+                f.number("1"),
+                f.operator("&&"),
+                f.number("0"),
+                f.bracket(")")
+            ),
+            new List<>(0, 1),
+            tokens -> parser.parse(tokens),
+            expression -> validator.assertEquals(
+                new List<>(
+                    f.number("69"),
+                    f.operator("*"),
+                    f.bracket("("),
+                    f.number("1"),
+                    f.operator("&&"),
+                    f.number("0"),
+                    f.bracket(")")
+                ),
+                expression
+            )
         );
 
         Assert
-            .assertThatCode(() -> {
-                parser.parse(new List<>());
-            })
+            .assertThatCode(() -> parser.parse(new List<>()))
             .throwsException(PreprocessorException.class);
 
         Assert
-            .assertThatCode(() -> {
-                parser.parse(new List<>(
-                    f.special("#")
-                ));
-            })
+            .assertThatCode(() -> parser.parse(new List<>(f.special("#"))))
             .throwsException(PreprocessorException.class);
 
         Assert
-            .assertThatCode(() -> {
-                parser.parse(new List<>(
-                    f.special("#"),
-                    f.name("if")
-                ));
-            })
+            .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.name("if"))))
             .throwsException(PreprocessorException.class);
     }
 }

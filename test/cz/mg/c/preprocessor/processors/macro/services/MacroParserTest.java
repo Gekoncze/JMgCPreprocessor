@@ -36,12 +36,11 @@ public @Test class MacroParserTest {
                 f.name("LOREM_IPSUM")
             ),
             new List<>(0, 1, 2),
-            tokens -> {
-                validator.assertEquals(
-                    new Macro(f.name("LOREM_IPSUM"), null, new List<>()),
-                    parser.parse(tokens)
-                );
-            }
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(f.name("LOREM_IPSUM"), null, new List<>()),
+                macro
+            )
         );
     }
 
@@ -54,13 +53,12 @@ public @Test class MacroParserTest {
                 f.bracket("("),
                 f.bracket(")")
             ),
-            new List<>(0, 1, 2, 3, 4),
-            tokens -> {
-                validator.assertEquals(
-                    new Macro(f.name("LOREM_IPSUM"), new List<>(), new List<>()),
-                    parser.parse(tokens)
-                );
-            }
+            new List<>(0, 1, 2, 4),
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(f.name("LOREM_IPSUM"), new List<>(), new List<>()),
+                macro
+            )
         );
     }
 
@@ -74,12 +72,11 @@ public @Test class MacroParserTest {
                 f.name("bar")
             ),
             new List<>(0, 1, 2),
-            tokens -> {
-                validator.assertEquals(
-                    new Macro(f.name("TEST"), null, new List<>(f.name("foo"), f.name("bar"))),
-                    parser.parse(tokens)
-                );
-            }
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(f.name("TEST"), null, new List<>(f.name("foo"), f.name("bar"))),
+                macro
+            )
         );
     }
 
@@ -98,17 +95,16 @@ public @Test class MacroParserTest {
                 f.operator("+"),
                 f.name("y")
             ),
-            new List<>(0, 1, 2, 3, 4, 5, 6, 7),
-            tokens -> {
-                validator.assertEquals(
-                    new Macro(
-                        f.name("PLUS"),
-                        new List<>(f.name("x"), f.name("y")),
-                        new List<>(f.name("x"), f.operator("+"), f.name("y"))
-                    ),
-                    parser.parse(tokens)
-                );
-            }
+            new List<>(0, 1, 2, 4, 5, 6, 7),
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(
+                    f.name("PLUS"),
+                    new List<>(f.name("x"), f.name("y")),
+                    new List<>(f.name("x"), f.operator("+"), f.name("y"))
+                ),
+                macro
+            )
         );
     }
 

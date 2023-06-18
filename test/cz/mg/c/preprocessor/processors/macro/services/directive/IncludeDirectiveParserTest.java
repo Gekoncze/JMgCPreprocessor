@@ -1,8 +1,10 @@
 package cz.mg.c.preprocessor.processors.macro.services.directive;
 
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.IncludeDirective;
-import cz.mg.c.preprocessor.test.*;
+import cz.mg.c.preprocessor.test.DirectiveParserValidator;
+import cz.mg.c.preprocessor.test.TokenFactory;
+import cz.mg.c.preprocessor.test.TokenMutator;
+import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 
 public @Test class IncludeDirectiveParserTest {
@@ -27,10 +29,8 @@ public @Test class IncludeDirectiveParserTest {
         mutator.mutate(
             new List<>(f.special("#"), f.name("include"), f.doubleQuote("stdio.h")),
             new List<>(0, 1),
-            tokens -> {
-                IncludeDirective directive = parser.parse(tokens);
-                tokenValidator.assertEquals(f.name("include"), directive.getToken());
-            }
+            tokens -> parser.parse(tokens),
+            directive -> tokenValidator.assertEquals(f.name("include"), directive.getToken())
         );
     }
 }
