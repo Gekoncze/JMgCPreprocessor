@@ -34,11 +34,11 @@ public @Service class IncludeDirectiveParser implements DirectiveParser {
 
     @Override
     public @Mandatory IncludeDirective parse(@Mandatory List<Token> line) {
-        IncludeDirective includeDirective = new IncludeDirective();
+        IncludeDirective directive = new IncludeDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
         Token token = reader.read(IncludeDirective.KEYWORD, NameToken.class);
-        includeDirective.setToken(token);
-        return includeDirective;
+        directive.setToken(token);
+        return directive;
     }
 }

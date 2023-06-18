@@ -38,12 +38,12 @@ public @Service class DefineDirectiveParser implements DirectiveParser {
 
     @Override
     public @Mandatory DefineDirective parse(@Mandatory List<Token> line) {
-        DefineDirective defineDirective = new DefineDirective();
+        DefineDirective directive = new DefineDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.read("#", SpecialToken.class);
         Token token = reader.read(DefineDirective.KEYWORD, NameToken.class);
-        defineDirective.setToken(token);
-        defineDirective.setMacro(macroParser.parse(line));
-        return defineDirective;
+        directive.setToken(token);
+        directive.setMacro(macroParser.parse(line));
+        return directive;
     }
 }
