@@ -1,3 +1,12 @@
+MacroProcessor and directive refactoring
+    update MacroProcessor logic to use directive parsers
+        add DirectiveParsers service
+            return optional directive if not starts with #
+            throw exception when no matching parser found
+
+        add DirectiveProcessor interface and implementations for each
+        refactor classes for condition nesting if necessary
+
 add tests
     add test for undef
     add test for infinite recursive macro expansion
@@ -6,12 +15,9 @@ add tests
     for macro package
         for components package
         for services package
-        for maro processor
+        for MacroProcessor
 
 macros
-    ... directive refactoring
-        update MacroProcessor logic to use directive parsers
-
     think if expression package is really necessary
         if not then move classes to upper level and delete special exception
 
