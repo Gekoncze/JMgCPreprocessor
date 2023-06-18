@@ -31,6 +31,7 @@ public @Test class AllTests {
         IfDirectiveParserTest.main(args);
         IfndefDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
+        UndefDirectiveParserTest.main(args);
         WarningDirectiveParserTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.services

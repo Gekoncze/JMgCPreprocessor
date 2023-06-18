@@ -10,9 +10,6 @@ add tests
 
 macros
     ... directive refactoring
-        ... create parsers for each directive
-            undef
-
         update MacroProcessor logic to use directive parsers
 
     think if expression package is really necessary
