@@ -11,7 +11,6 @@ add tests
 macros
     ... directive refactoring
         ... create parsers for each directive
-            ifndef
             undef
 
         update MacroProcessor logic to use directive parsers

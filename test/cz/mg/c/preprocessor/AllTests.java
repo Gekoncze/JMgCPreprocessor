@@ -29,6 +29,7 @@ public @Test class AllTests {
         ErrorDirectiveParserTest.main(args);
         IfdefDirectiveParserTest.main(args);
         IfDirectiveParserTest.main(args);
+        IfndefDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
         WarningDirectiveParserTest.main(args);
 
