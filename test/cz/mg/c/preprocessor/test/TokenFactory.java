@@ -30,6 +30,10 @@ public @Service class TokenFactory {
         return new CommentToken(text, 0);
     }
 
+    public @Mandatory DoubleQuoteToken doubleQuote(@Mandatory String text) {
+        return new DoubleQuoteToken(text, 0);
+    }
+
     public @Mandatory NameToken name(@Mandatory String text) {
         return new NameToken(text, 0);
     }

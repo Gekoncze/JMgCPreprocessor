@@ -18,7 +18,6 @@ macros
             ifdef
             if
             ifndef
-            include
             undef
             warning
 
@@ -42,4 +41,5 @@ macros
         looks like spaces are ignored as if they didn't exist
 
     add support for vararg macros
+    add support for include directive
 
