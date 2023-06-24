@@ -1,9 +1,5 @@
 MacroProcessor and directive refactoring
     update MacroProcessor logic to use directive parsers
-        add DirectiveParsers service
-            return optional directive if not starts with #
-            throw exception when no matching parser found
-
         add DirectiveProcessor interface and implementations for each
         refactor classes for condition nesting if necessary
 

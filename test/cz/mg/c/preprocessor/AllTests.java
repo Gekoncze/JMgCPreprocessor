@@ -23,6 +23,7 @@ public @Test class AllTests {
 
         // cz.mg.c.preprocessor.processors.macro.directive
         DefineDirectiveParserTest.main(args);
+        DirectiveParsersTest.main(args);
         ElifDirectiveParserTest.main(args);
         ElseDirectiveParserTest.main(args);
         EndifDirectiveParserTest.main(args);
