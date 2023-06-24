@@ -1,36 +1,39 @@
-MacroProcessor and directive refactoring
-    update MacroProcessor logic to use directive parsers
-        add DirectiveProcessor interface and implementations for each
-        refactor classes for condition nesting if necessary
+### NOW ###
+    MacroProcessor and directive refactoring
+        update MacroProcessor logic to use directive parsers
+            add DirectiveProcessor interface and implementations for each
+            refactor classes for condition nesting if necessary
 
-add tests
-    add test for undef
-    add test for infinite recursive macro expansion
-        during recursion, macro can be expanded only once
-
-    for macro package
-        for components package
-        for services package
-        for MacroProcessor
-
-macros
-    think if expression package is really necessary
-        if not then move classes to upper level and delete special exception
-
+### SOON ###
     think about MacroConditions and MacroExpander refactoring
         they use the same principle (stateful + validation at the end)
         so they should probably have similar *kind* of implementation
 
-    add possibility to collect macro calls
-        maybe as optional parameter to Preprocessor ?
+    add tests
+        add test for infinite recursive macro expansion
+            during recursion, macro can be expanded only once
 
-    add support for ## macro joining operation
-        it can join tokens of different types
-        some combination of token types are invalid
-        result should always form a single token
-        otherwise warning or error should be thrown
-        looks like spaces are ignored as if they didn't exist
+        for macro package
+            for components package
+            for services package
+            for expansion package
+            for MacroProcessor
+                add test for nesting and unnesting ?
+                add test for undef ?
+                add test for error ?
 
-    add support for vararg macros
-    add support for include directive
+### LATER ###
+    macros
+        add possibility to collect macro calls
+            maybe as optional parameter to Preprocessor ?
+
+        add support for ## macro joining operation
+            it can join tokens of different types
+            some combination of token types are invalid
+            result should always form a single token
+            otherwise warning or error should be thrown
+            looks like spaces are ignored as if they didn't exist
+
+        add support for vararg macros
+        add support for include directive
 
