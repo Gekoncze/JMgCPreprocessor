@@ -1,24 +1,24 @@
 ### NOW ###
-    add test for infinite recursive macro expansion
-        during recursion, macro can be expanded only once
+    fix error reported by MacroExpanderTest
+    fix error reported by MacroProcessorTest
+        note: macro can be expanded only once during recursion
 
 ### SOON ###
-    add tests
-        for macro package
-            for MacroProcessor
-                add test for nesting and unnesting ?
-                add test for undef ?
-                add test for error ?
+    add or extend tests
+        for MacroProcessor (extend test)
+            add test for nesting and unnesting ?
+            add test for undef ?
+            add test for error ?
 
-            for MacroBranches
-            for MacroExpander
-            for MacroExpressions
-            for MacroExpansionServices
-            for MacroCallValidator
-            for MacroExpansionService implementations
-            for MacroTrueBranchProcessor
-            for MacroFalseBranchProcessor
-            for MacroCompletedBranchProcessor
+        for MacroBranches
+        for MacroExpander (extend test)
+        for MacroExpressions
+        for MacroExpansionServices
+        for MacroCallValidator
+        for MacroExpansionService implementations
+        for MacroTrueBranchProcessor
+        for MacroFalseBranchProcessor
+        for MacroCompletedBranchProcessor
 
 ### LATER ###
     macros

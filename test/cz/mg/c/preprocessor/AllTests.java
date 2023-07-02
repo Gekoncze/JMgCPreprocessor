@@ -5,6 +5,8 @@ import cz.mg.c.preprocessor.processors.CommentProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashPositionServiceTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
+import cz.mg.c.preprocessor.processors.macro.MacroProcessorTest;
+import cz.mg.c.preprocessor.processors.macro.component.MacroExpanderTest;
 import cz.mg.c.preprocessor.processors.macro.directive.*;
 import cz.mg.c.preprocessor.processors.macro.expression.ExpressionsTest;
 import cz.mg.c.preprocessor.processors.macro.directive.ExpressionParserTest;
@@ -16,8 +18,8 @@ public @Test class AllTests {
         BackslashPositionServiceTest.main(args);
         BackslashProcessorTest.main(args);
 
-        // cz.mg.c.preprocessor.processors.macro.expression
-        ExpressionsTest.main(args);
+        // cz.mg.c.preprocessor.processors.macro.component
+        MacroExpanderTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.directive
         DefineDirectiveParserTest.main(args);
@@ -34,6 +36,12 @@ public @Test class AllTests {
         MacroParserTest.main(args);
         UndefDirectiveParserTest.main(args);
         WarningDirectiveParserTest.main(args);
+
+        // cz.mg.c.preprocessor.processors.macro.expression
+        ExpressionsTest.main(args);
+
+        // cz.mg.c.preprocessor.processors.macro
+        MacroProcessorTest.main(args);
 
         // cz.mg.c.preprocessor.processors
         CommentProcessorTest.main(args);
