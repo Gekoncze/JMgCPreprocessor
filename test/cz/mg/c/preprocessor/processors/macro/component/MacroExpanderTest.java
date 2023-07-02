@@ -28,7 +28,7 @@ public @Test class MacroExpanderTest {
         Macros macros = new Macros();
         macros.define(foo);
         MacroExpander expander = new MacroExpander(macros);
-        expander.expand(new List<>(f.name("FOO"), f.bracket("("), f.bracket(")")));
+        expander.addTokens(new List<>(f.name("FOO"), f.bracket("("), f.bracket(")")));
         List<Token> actualTokens = expander.getTokens();
         List<Token> expectedTokens = new List<>(f.name("foo"));
         validator.assertEquals(expectedTokens, actualTokens);

@@ -49,7 +49,7 @@ public @Service class MacroTrueBranchProcessor implements MacroBranchProcessor {
 
     private void processLine(@Mandatory List<Token> line, @Mandatory MacroExpander expander) {
         for (Token token : line) {
-            expander.expand(token);
+            expander.addToken(token);
         }
     }
 

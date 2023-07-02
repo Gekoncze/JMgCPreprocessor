@@ -1,7 +1,8 @@
 ### NOW ###
-    fix error reported by MacroExpanderTest
     fix error reported by MacroProcessorTest
         note: macro can be expanded only once during recursion
+
+    ... add test cases and include them in project as reference + make sure all are covered or included in to do
 
 ### SOON ###
     add or extend tests
@@ -11,7 +12,11 @@
             add test for error ?
 
         for MacroBranches
-        for MacroExpander (extend test)
+
+        for MacroExpander (extend test, maybe also mutate tokens)
+            test case 19 (macro precedence when macro call itself is constructed inside a macro from parameter)
+            test case 20 (macro call is missing arguments, but macro require arguments, so token is added as is)
+
         for MacroExpressions
         for MacroExpansionServices
         for MacroCallValidator

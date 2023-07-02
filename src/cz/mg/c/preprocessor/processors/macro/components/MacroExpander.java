@@ -10,6 +10,11 @@ import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.processors.macro.expansion.MacroExpansionServices;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.BracketToken;
+import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.SeparatorToken;
+
+import java.util.Objects;
 
 public @Component class MacroExpander {
     private final MacroExpansionServices macroExpansionServices = MacroExpansionServices.getInstance();
@@ -27,60 +32,55 @@ public @Component class MacroExpander {
         return tokens;
     }
 
-    public void expand(@Mandatory List<Token> tokens) {
+    public void addTokens(@Mandatory List<Token> tokens) {
         for (Token token : tokens) {
-            expand(token);
+            addToken(token);
         }
     }
 
-    public void expand(@Mandatory Token token) {
+    public void addToken(@Mandatory Token token) {
         if (call == null || nesting == null) {
-            Macro macro = macros.getMap().getOptional(token.getText());
-            if (macro != null) {
-                if (macro.getParameters() == null) {
-                    call = new MacroCall(macro, token, null);
-                    tokens.addCollectionLast(expandRecursively(call, macros));
-                    call = null;
-                } else {
-                    call = new MacroCall(macro, token, new List<>());
-                    nesting = 0;
-                }
-            } else {
+            if (!isName(token)) {
                 tokens.addLast(token);
+            } else {
+                Macro macro = macros.getMap().getOptional(token.getText());
+                if (macro == null) {
+                    tokens.addLast(token);
+                } else {
+                    call = new MacroCall(macro, token, null);
+                    nesting = 0;
+                    if (macro.getParameters() == null) {
+                        expandCall();
+                    }
+                }
+            }
+        } else if (call.getArguments() == null) {
+            if (isOpeningBracket(token)) {
+                call.setArguments(new List<>());
+            } else {
+                cancelCall();
             }
         } else if (call.getArguments() != null) {
-            if (call.getArguments().isEmpty()) {
-                if (token.getText().equals("(")) {
-                    call.getArguments().addLast(new List<>());
+            if (nesting == 0) {
+                if (isOpeningBracket(token)) {
+                    nesting++;
+                    addArgumentToken(token);
+                } else if (isComma(token)) {
+                    addArgument();
+                } else if (isClosingBracket(token)) {
+                    expandCall();
                 } else {
-                    tokens.addLast(call.getToken());
-                    call = null;
-                    nesting = null;
+                    addArgumentToken(token);
                 }
             } else {
-                if (nesting > 0) {
-                    if (token.getText().equals("(")) {
-                        call.getArguments().getLast().addLast(token);
-                        nesting++;
-                    } else if (token.getText().equals(")")) {
-                        call.getArguments().getLast().addLast(token);
-                        nesting--;
-                    } else {
-                        call.getArguments().getLast().addLast(token);
-                    }
+                if (isOpeningBracket(token)) {
+                    nesting++;
+                    addArgumentToken(token);
+                } else if (isClosingBracket(token)) {
+                    nesting--;
+                    addArgumentToken(token);
                 } else {
-                    if (token.getText().equals("(")) {
-                        call.getArguments().getLast().addLast(token);
-                        nesting++;
-                    } else if (token.getText().equals(")")) {
-                        tokens.addCollectionLast(expandRecursively(call, macros));
-                        call = null;
-                        nesting = null;
-                    } else if (token.getText().equals(",")) {
-                        call.getArguments().addLast(new List<>());
-                    } else {
-                        call.getArguments().getLast().addLast(token);
-                    }
+                    addArgumentToken(token);
                 }
             }
         } else {
@@ -88,25 +88,65 @@ public @Component class MacroExpander {
         }
     }
 
-    private @Mandatory List<Token> expandRecursively(@Mandatory MacroCall call, @Mandatory Macros macros) {
-        return MacroExpander.expand(
-            macroExpansionServices.expand(call, macros),
-            macros
-        );
+    private void expandCall() {
+        Objects.requireNonNull(call);
+        // TODO - check if not already expanding macro in question
+        List<Token> expandedTokens = macroExpansionServices.expand(call, macros);
+        call = null;
+        nesting = null;
+        addTokens(expandedTokens);
+    }
+
+    private void cancelCall() {
+        Objects.requireNonNull(call);
+        tokens.addLast(call.getToken());
+        call = null;
+        nesting = null;
+    }
+
+    private void addArgument() {
+        Objects.requireNonNull(call);
+        Objects.requireNonNull(call.getArguments());
+        call.getArguments().addLast(new List<>());
+    }
+
+    private void addArgumentToken(@Mandatory Token token) {
+        Objects.requireNonNull(call);
+        Objects.requireNonNull(call.getArguments());
+        if (call.getArguments().isEmpty()) {
+            call.getArguments().addLast(new List<>());
+        }
+        call.getArguments().getLast().addLast(token);
+    }
+
+    private boolean isName(@Mandatory Token token) {
+        return token instanceof NameToken;
+    }
+
+    private boolean isOpeningBracket(@Mandatory Token token) {
+        return token instanceof BracketToken && token.getText().equals("(");
+    }
+
+    private boolean isClosingBracket(@Mandatory Token token) {
+        return token instanceof BracketToken && token.getText().equals(")");
+    }
+
+    private boolean isComma(@Mandatory Token token) {
+        return token instanceof SeparatorToken && token.getText().equals(",");
     }
 
     public void validateNotExpanding() {
         if (call != null) {
             throw new MacroException(
                 call.getToken().getPosition(),
-                "Unfinished macro expansion."
+                "Missing right parenthesis."
             );
         }
     }
 
     public static @Mandatory List<Token> expand(@Mandatory List<Token> tokens, @Mandatory Macros macros) {
         MacroExpander expander = new MacroExpander(macros);
-        expander.expand(tokens);
+        expander.addTokens(tokens);
         expander.validateNotExpanding();
         return expander.getTokens();
     }

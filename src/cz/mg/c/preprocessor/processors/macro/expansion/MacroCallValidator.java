@@ -51,7 +51,7 @@ public @Service class MacroCallValidator {
                 throw new MacroException(
                     call.getToken().getPosition(),
                     "Wrong number of arguments for macro call." +
-                        " Expected " + actualCount + ", but got " + expectedCount + "."
+                        " Expected " + expectedCount + ", but got " + actualCount + "."
                 );
             }
 
