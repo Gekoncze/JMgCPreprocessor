@@ -1,15 +1,9 @@
 ### NOW ###
-
+    add test for infinite recursive macro expansion
+        during recursion, macro can be expanded only once
 
 ### SOON ###
-    think about MacroConditions and MacroExpander refactoring
-        they use the same principle (stateful + validation at the end)
-        so they should probably have similar *kind* of implementation
-
     add tests
-        add test for infinite recursive macro expansion
-            during recursion, macro can be expanded only once
-
         for macro package
             for MacroProcessor
                 add test for nesting and unnesting ?
