@@ -1,7 +1,4 @@
 ### NOW ###
-    fix error reported by MacroProcessorTest
-        note: macro can be expanded only once during recursion
-
     ... add test cases and include them in project as reference + make sure all are covered or included in to do
 
 ### SOON ###

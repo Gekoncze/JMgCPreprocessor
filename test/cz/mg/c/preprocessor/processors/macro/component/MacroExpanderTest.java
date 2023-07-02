@@ -16,6 +16,7 @@ public @Test class MacroExpanderTest {
 
         MacroExpanderTest test = new MacroExpanderTest();
         test.testSimpleExpansion();
+        test.testRecursiveExpansion();
 
         System.out.println("OK");
     }
@@ -31,6 +32,28 @@ public @Test class MacroExpanderTest {
         expander.addTokens(new List<>(f.name("FOO"), f.bracket("("), f.bracket(")")));
         List<Token> actualTokens = expander.getTokens();
         List<Token> expectedTokens = new List<>(f.name("foo"));
+        validator.assertEquals(expectedTokens, actualTokens);
+    }
+
+    private void testRecursiveExpansion() {
+        Macro foo = new Macro(
+            f.name("FOO"),
+            new List<>(),
+            new List<>(f.special("*"), f.name("BAR"), f.bracket("("), f.bracket(")"))
+        );
+        Macro bar = new Macro(
+            f.name("BAR"),
+            new List<>(),
+            new List<>(f.special("*"), f.name("FOO"), f.bracket("("), f.bracket(")"))
+        );
+        Macros macros = new Macros();
+        macros.define(foo);
+        macros.define(bar);
+        List<Token> line = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
+        List<Token> actualTokens = MacroExpander.expand(line, macros);
+        List<Token> expectedTokens = new List<>(
+            f.special("*"), f.special("*"), f.name("FOO"), f.bracket("("), f.bracket(")")
+        );
         validator.assertEquals(expectedTokens, actualTokens);
     }
 }

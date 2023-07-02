@@ -39,6 +39,16 @@ public @Component class MacroExpander {
     }
 
     public void addToken(@Mandatory Token token) {
+        addToken(token, new List<>());
+    }
+
+    private void addTokens(@Mandatory List<Token> tokens, @Mandatory List<Macro> path) {
+        for (Token token : tokens) {
+            addToken(token, path);
+        }
+    }
+
+    private void addToken(@Mandatory Token token, @Mandatory List<Macro> path) {
         if (call == null || nesting == null) {
             if (!isName(token)) {
                 tokens.addLast(token);
@@ -46,11 +56,13 @@ public @Component class MacroExpander {
                 Macro macro = macros.getMap().getOptional(token.getText());
                 if (macro == null) {
                     tokens.addLast(token);
+                } else if (isMacroInPath(macro, path)) {
+                    tokens.addLast(token);
                 } else {
                     call = new MacroCall(macro, token, null);
                     nesting = 0;
                     if (macro.getParameters() == null) {
-                        expandCall();
+                        expandCall(path);
                     }
                 }
             }
@@ -68,7 +80,7 @@ public @Component class MacroExpander {
                 } else if (isComma(token)) {
                     addArgument();
                 } else if (isClosingBracket(token)) {
-                    expandCall();
+                    expandCall(path);
                 } else {
                     addArgumentToken(token);
                 }
@@ -88,13 +100,15 @@ public @Component class MacroExpander {
         }
     }
 
-    private void expandCall() {
+    private void expandCall(@Mandatory List<Macro> path) {
         Objects.requireNonNull(call);
-        // TODO - check if not already expanding macro in question
+        Objects.requireNonNull(call.getMacro());
+        path.addLast(call.getMacro());
         List<Token> expandedTokens = macroExpansionServices.expand(call, macros);
         call = null;
         nesting = null;
-        addTokens(expandedTokens);
+        addTokens(expandedTokens, path);
+        path.removeLast();
     }
 
     private void cancelCall(@Mandatory Token token) {
@@ -134,6 +148,15 @@ public @Component class MacroExpander {
 
     private boolean isComma(@Mandatory Token token) {
         return token instanceof SeparatorToken && token.getText().equals(",");
+    }
+
+    private boolean isMacroInPath(@Mandatory Macro macro, @Mandatory List<Macro> path) {
+        for (Macro visitedMacro : path) {
+            if (macro == visitedMacro) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void validateNotExpanding() {
