@@ -30,7 +30,7 @@ public @Test class MacroProcessorTest {
         macros.define(foo);
         macros.define(bar);
         List<List<Token>> lines = new List<>();
-        lines.addLast(new List<>(f.name("FOO"), f.special("("), f.special(")")));
+        lines.addLast(new List<>(f.name("FOO"), f.bracket("("), f.bracket(")")));
         List<Token> actualTokens = macroProcessor.process(lines, macros);
         List<Token> expectedTokens = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
         validator.assertEquals(expectedTokens, actualTokens);
