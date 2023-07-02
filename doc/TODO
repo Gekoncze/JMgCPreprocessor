@@ -4,6 +4,8 @@
         make sure all corner cases are covered or included in to do
 
 ### SOON ###
+    consider to do in JMgTokenizer
+
     add or extend tests
         for MacroExpander (extend test)
             maybe also test mutated tokens
