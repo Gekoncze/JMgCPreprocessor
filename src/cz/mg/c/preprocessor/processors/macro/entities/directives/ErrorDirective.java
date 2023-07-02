@@ -9,7 +9,7 @@ public @Entity class ErrorDirective extends Directive {
     public ErrorDirective() {
     }
 
-    public ErrorDirective(Token token) {
-        super(token);
+    public ErrorDirective(Token keyword) {
+        super(keyword);
     }
 }

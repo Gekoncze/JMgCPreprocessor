@@ -9,7 +9,7 @@ public @Entity class EndifDirective extends Directive {
     public EndifDirective() {
     }
 
-    public EndifDirective(Token token) {
-        super(token);
+    public EndifDirective(Token keyword) {
+        super(keyword);
     }
 }

@@ -14,8 +14,8 @@ public @Entity class IfDirective extends Directive {
     public IfDirective() {
     }
 
-    public IfDirective(Token token, List<Token> expression) {
-        super(token);
+    public IfDirective(Token keyword, List<Token> expression) {
+        super(keyword);
         this.expression = expression;
     }
 

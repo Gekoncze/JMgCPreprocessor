@@ -13,8 +13,8 @@ public @Entity class UndefDirective extends Directive {
     public UndefDirective() {
     }
 
-    public UndefDirective(Token token, Token name) {
-        super(token);
+    public UndefDirective(Token keyword, Token name) {
+        super(keyword);
         this.name = name;
     }
 

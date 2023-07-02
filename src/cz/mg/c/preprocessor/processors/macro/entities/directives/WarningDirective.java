@@ -9,7 +9,7 @@ public @Entity class WarningDirective extends Directive {
     public WarningDirective() {
     }
 
-    public WarningDirective(Token token) {
-        super(token);
+    public WarningDirective(Token keyword) {
+        super(keyword);
     }
 }

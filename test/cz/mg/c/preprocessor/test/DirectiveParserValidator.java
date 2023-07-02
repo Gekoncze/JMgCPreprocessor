@@ -3,7 +3,7 @@ package cz.mg.c.preprocessor.test;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.exceptions.PreprocessorException;
-import cz.mg.c.preprocessor.processors.macro.services.directive.DirectiveParser;
+import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParser;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.tokens.NameToken;

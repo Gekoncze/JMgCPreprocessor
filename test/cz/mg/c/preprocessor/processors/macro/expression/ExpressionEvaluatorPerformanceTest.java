@@ -17,7 +17,7 @@ public @Test class ExpressionEvaluatorPerformanceTest {
         test.testPerformance();
     }
 
-    private final ExpressionEvaluator evaluator = ExpressionEvaluator.getInstance();
+    private final Expressions evaluator = Expressions.getInstance();
     private final TokenFactory f = TokenFactory.getInstance();
 
     private void testPerformance() {

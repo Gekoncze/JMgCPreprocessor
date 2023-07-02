@@ -6,21 +6,21 @@ import cz.mg.annotations.storage.Shared;
 import cz.mg.tokenizer.entities.Token;
 
 public abstract @Entity class Directive {
-    private Token token;
+    private Token keyword;
 
     public Directive() {
     }
 
-    public Directive(Token token) {
-        this.token = token;
+    public Directive(Token keyword) {
+        this.keyword = keyword;
     }
 
     @Required @Shared
-    public Token getToken() {
-        return token;
+    public Token getKeyword() {
+        return keyword;
     }
 
-    public void setToken(Token token) {
-        this.token = token;
+    public void setKeyword(Token keyword) {
+        this.keyword = keyword;
     }
 }

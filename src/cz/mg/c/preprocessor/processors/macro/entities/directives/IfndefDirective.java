@@ -13,8 +13,8 @@ public @Entity class IfndefDirective extends Directive {
     public IfndefDirective() {
     }
 
-    public IfndefDirective(Token token, Token name) {
-        super(token);
+    public IfndefDirective(Token keyword, Token name) {
+        super(keyword);
         this.name = name;
     }
 

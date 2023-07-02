@@ -1,8 +1,5 @@
 ### NOW ###
-    MacroProcessor and directive refactoring
-        update MacroProcessor logic to use directive parsers
-            add DirectiveProcessor interface and implementations for each
-            refactor classes for condition nesting if necessary
+
 
 ### SOON ###
     think about MacroConditions and MacroExpander refactoring
@@ -14,13 +11,20 @@
             during recursion, macro can be expanded only once
 
         for macro package
-            for components package
-            for services package
-            for expansion package
             for MacroProcessor
                 add test for nesting and unnesting ?
                 add test for undef ?
                 add test for error ?
+
+            for MacroBranches
+            for MacroExpander
+            for MacroExpressions
+            for MacroExpansionServices
+            for MacroCallValidator
+            for MacroExpansionService implementations
+            for MacroTrueBranchProcessor
+            for MacroFalseBranchProcessor
+            for MacroCompletedBranchProcessor
 
 ### LATER ###
     macros
@@ -36,4 +40,6 @@
 
         add support for vararg macros
         add support for include directive
+        report correct position in MacroTrueBranchProcessor for error and warning
+            maybe try to correct token positions earlier after parsing if possible
 

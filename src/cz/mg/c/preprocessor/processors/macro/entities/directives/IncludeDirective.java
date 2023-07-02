@@ -9,7 +9,7 @@ public @Entity class IncludeDirective extends Directive {
     public IncludeDirective() {
     }
 
-    public IncludeDirective(Token token) {
-        super(token);
+    public IncludeDirective(Token keyword) {
+        super(keyword);
     }
 }

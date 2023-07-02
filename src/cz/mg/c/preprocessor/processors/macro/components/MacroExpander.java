@@ -7,12 +7,12 @@ import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
-import cz.mg.c.preprocessor.processors.macro.services.MacroCallExpansionService;
+import cz.mg.c.preprocessor.processors.macro.expansion.MacroExpansionServices;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 
 public @Component class MacroExpander {
-    private final MacroCallExpansionService macroCallExpansionService = MacroCallExpansionService.getInstance();
+    private final MacroExpansionServices macroExpansionServices = MacroExpansionServices.getInstance();
 
     private final @Mandatory Macros macros;
     private final @Mandatory List<Token> tokens = new List<>();
@@ -90,7 +90,7 @@ public @Component class MacroExpander {
 
     private @Mandatory List<Token> expandRecursively(@Mandatory MacroCall call, @Mandatory Macros macros) {
         return MacroExpander.expand(
-            macroCallExpansionService.expand(call, macros),
+            macroExpansionServices.expand(call, macros),
             macros
         );
     }

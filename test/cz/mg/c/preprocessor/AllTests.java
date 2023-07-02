@@ -5,11 +5,10 @@ import cz.mg.c.preprocessor.processors.CommentProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashPositionServiceTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
-import cz.mg.c.preprocessor.processors.macro.expression.ExpressionEvaluatorTest;
-import cz.mg.c.preprocessor.processors.macro.expression.ExpressionParserTest;
-import cz.mg.c.preprocessor.processors.macro.services.directive.ErrorDirectiveParserTest;
-import cz.mg.c.preprocessor.processors.macro.services.MacroParserTest;
-import cz.mg.c.preprocessor.processors.macro.services.directive.*;
+import cz.mg.c.preprocessor.processors.macro.directive.*;
+import cz.mg.c.preprocessor.processors.macro.expression.ExpressionsTest;
+import cz.mg.c.preprocessor.processors.macro.directive.ExpressionParserTest;
+import cz.mg.c.preprocessor.processors.macro.directive.MacroParserTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -18,8 +17,7 @@ public @Test class AllTests {
         BackslashProcessorTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.expression
-        ExpressionEvaluatorTest.main(args);
-        ExpressionParserTest.main(args);
+        ExpressionsTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.directive
         DefineDirectiveParserTest.main(args);
@@ -28,15 +26,14 @@ public @Test class AllTests {
         ElseDirectiveParserTest.main(args);
         EndifDirectiveParserTest.main(args);
         ErrorDirectiveParserTest.main(args);
+        ExpressionParserTest.main(args);
         IfdefDirectiveParserTest.main(args);
         IfDirectiveParserTest.main(args);
         IfndefDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
+        MacroParserTest.main(args);
         UndefDirectiveParserTest.main(args);
         WarningDirectiveParserTest.main(args);
-
-        // cz.mg.c.preprocessor.processors.macro.services
-        MacroParserTest.main(args);
 
         // cz.mg.c.preprocessor.processors
         CommentProcessorTest.main(args);

@@ -9,7 +9,7 @@ public @Entity class ElseDirective extends Directive {
     public ElseDirective() {
     }
 
-    public ElseDirective(Token token) {
-        super(token);
+    public ElseDirective(Token keyword) {
+        super(keyword);
     }
 }

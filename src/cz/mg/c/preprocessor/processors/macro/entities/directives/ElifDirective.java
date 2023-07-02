@@ -14,8 +14,8 @@ public @Entity class ElifDirective extends Directive {
     public ElifDirective() {
     }
 
-    public ElifDirective(Token token, List<Token> expression) {
-        super(token);
+    public ElifDirective(Token keyword, List<Token> expression) {
+        super(keyword);
         this.expression = expression;
     }
 
