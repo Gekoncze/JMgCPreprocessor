@@ -58,7 +58,7 @@ public @Component class MacroExpander {
             if (isOpeningBracket(token)) {
                 call.setArguments(new List<>());
             } else {
-                cancelCall();
+                cancelCall(token);
             }
         } else if (call.getArguments() != null) {
             if (nesting == 0) {
@@ -97,9 +97,10 @@ public @Component class MacroExpander {
         addTokens(expandedTokens);
     }
 
-    private void cancelCall() {
+    private void cancelCall(@Mandatory Token token) {
         Objects.requireNonNull(call);
         tokens.addLast(call.getToken());
+        tokens.addLast(token);
         call = null;
         nesting = null;
     }
