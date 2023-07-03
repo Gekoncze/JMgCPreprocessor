@@ -1,18 +1,12 @@
 ### NOW ###
-    include corner cases in project as reference c code files
-        check if there are all corner cases and add more if necessary
-        make sure all corner cases are covered or included in to do
+    extend MacroExpanderTest
+        maybe also test mutated tokens
+        test nesting
+        test case 19 (macro precedence when macro call itself is constructed inside a macro from parameter)
+        test case 20 (macro call is missing arguments, but macro require arguments, so token is added as is)
 
 ### SOON ###
-    consider to do in JMgTokenizer
-
     add or extend tests
-        for MacroExpander (extend test)
-            maybe also test mutated tokens
-            test nesting
-            test case 19 (macro precedence when macro call itself is constructed inside a macro from parameter)
-            test case 20 (macro call is missing arguments, but macro require arguments, so token is added as is)
-
         for MacroProcessor
             add test for nesting and unnesting ?
             add test for undef ?
@@ -28,6 +22,11 @@
         for MacroCompletedBranchProcessor
 
 ### LATER ###
+    consider to do in JMgTokenizer
+
+    make sure all corner cases are covered with tests or included in to do
+        see cz.mg.c.preprocessor.cases
+
     macros
         add possibility to collect macro calls
             maybe as optional parameter to Preprocessor ?
