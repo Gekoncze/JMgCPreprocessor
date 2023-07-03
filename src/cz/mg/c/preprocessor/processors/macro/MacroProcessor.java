@@ -39,7 +39,7 @@ public @Service class MacroProcessor {
         }
 
         branches.validateIsRoot();
-        expander.validateNotExpanding();
+        expander.endExpanding();
 
         return expander.getTokens();
     }

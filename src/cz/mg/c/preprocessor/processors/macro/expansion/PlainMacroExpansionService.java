@@ -44,14 +44,26 @@ public @Service class PlainMacroExpansionService implements MacroExpansionServic
         return expandedTokens;
     }
 
+    /**
+     * Creates map where key is macro parameter name and value is list of argument tokens.
+     *
+     * Example:
+     *     #define PLUS(x, y) x + y
+     *     PLUS(3, 7!)
+     * will create map:
+     *     x -> [3]
+     *     y -> [7, !]
+     */
     private @Mandatory Map<String, List<Token>> createMap(@Mandatory MacroCall call) {
         Map<String, List<Token>> map = new Map<>(new Capacity(100));
-        Iterator<Token> parameterIterator = Objects.requireNonNull(call.getMacro().getParameters()).iterator();
-        Iterator<List<Token>> argumentIterator = Objects.requireNonNull(call.getArguments()).iterator();
-        while (parameterIterator.hasNext() && argumentIterator.hasNext()) {
-            Token parameter = parameterIterator.next();
-            List<Token> arguments = argumentIterator.next();
-            map.set(parameter.getText(), arguments);
+        if (call.getMacro().getParameters() != null && call.getArguments() != null) {
+            Iterator<Token> parameterIterator = call.getMacro().getParameters().iterator();
+            Iterator<List<Token>> argumentIterator = call.getArguments().iterator();
+            while (parameterIterator.hasNext() && argumentIterator.hasNext()) {
+                Token parameter = parameterIterator.next();
+                List<Token> arguments = argumentIterator.next();
+                map.set(parameter.getText(), arguments);
+            }
         }
         return map;
     }

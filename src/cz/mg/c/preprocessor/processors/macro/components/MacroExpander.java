@@ -119,6 +119,13 @@ public @Component class MacroExpander {
         nesting = null;
     }
 
+    private void cancelCall() {
+        Objects.requireNonNull(call);
+        tokens.addLast(call.getToken());
+        call = null;
+        nesting = null;
+    }
+
     private void addArgument() {
         Objects.requireNonNull(call);
         Objects.requireNonNull(call.getArguments());
@@ -159,19 +166,23 @@ public @Component class MacroExpander {
         return false;
     }
 
-    public void validateNotExpanding() {
+    public void endExpanding() {
         if (call != null) {
-            throw new MacroException(
-                call.getToken().getPosition(),
-                "Missing right parenthesis."
-            );
+            if (call.getArguments() == null) {
+                cancelCall();
+            } else {
+                throw new MacroException(
+                    call.getToken().getPosition(),
+                    "Missing right parenthesis."
+                );
+            }
         }
     }
 
     public static @Mandatory List<Token> expand(@Mandatory List<Token> tokens, @Mandatory Macros macros) {
         MacroExpander expander = new MacroExpander(macros);
         expander.addTokens(tokens);
-        expander.validateNotExpanding();
+        expander.endExpanding();
         return expander.getTokens();
     }
 }

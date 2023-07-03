@@ -1,9 +1,5 @@
 ### NOW ###
-    extend MacroExpanderTest
-        maybe also test mutated tokens
-        test nesting
-        test case 19 (macro precedence when macro call itself is constructed inside a macro from parameter)
-        test case 20 (macro call is missing arguments, but macro require arguments, so token is added as is)
+...
 
 ### SOON ###
     add or extend tests
@@ -20,6 +16,10 @@
         for MacroTrueBranchProcessor
         for MacroFalseBranchProcessor
         for MacroCompletedBranchProcessor
+        for PlainMacroExpansionService
+        for DefinedMacroExpansionService
+        for FileMacroExpansionService
+        for LineMacroExpansionService
 
 ### LATER ###
     consider to do in JMgTokenizer
@@ -37,9 +37,11 @@
             result should always form a single token
             otherwise warning or error should be thrown
             looks like spaces are ignored as if they didn't exist
+            test case 19
 
         add support for vararg macros
         add support for include directive
+
         report correct position in MacroTrueBranchProcessor for error and warning
             maybe try to correct token positions earlier after parsing if possible
 
