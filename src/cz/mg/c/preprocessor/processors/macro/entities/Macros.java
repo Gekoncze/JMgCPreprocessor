@@ -3,12 +3,15 @@ package cz.mg.c.preprocessor.processors.macro.entities;
 import cz.mg.annotations.classes.Entity;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Required;
+import cz.mg.annotations.storage.Part;
 import cz.mg.annotations.storage.Shared;
 import cz.mg.collections.components.Capacity;
+import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
 
 public @Entity class Macros {
     private Map<String, Macro> map = new Map<>(new Capacity(100));
+    private List<MacroCall> calls = new List<>();
 
     public Macros() {
     }
@@ -20,6 +23,15 @@ public @Entity class Macros {
 
     public void setMap(Map<String, Macro> map) {
         this.map = map;
+    }
+
+    @Required @Part
+    public List<MacroCall> getCalls() {
+        return calls;
+    }
+
+    public void setCalls(List<MacroCall> calls) {
+        this.calls = calls;
     }
 
     public void define(@Mandatory Macro definition) {

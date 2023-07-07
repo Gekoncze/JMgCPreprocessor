@@ -48,6 +48,7 @@ public @Service class MacroExpansionServices {
         String macroName = call.getMacro().getName().getText();
         String systemMacroName = systemMacroNames.getOptional(macroName);
         MacroExpansionService macroExpansionService = macroExpansionServices.get(systemMacroName);
+        macros.getCalls().addLast(call);
         return macroExpansionService.expand(macros, call);
     }
 }

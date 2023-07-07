@@ -1,6 +1,7 @@
 package cz.mg.c.preprocessor;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.test.MacroValidator;
 import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
@@ -82,6 +83,14 @@ public @Test class PreprocessorTest {
             ),
             tokens
         );
+
+        Assert.assertEquals(3, macros.getCalls().count());
+        MacroCall call = macros.getCalls().get(2);
+        Assert.assertNotNull(call.getArguments());
+        Assert.assertEquals(2, call.getArguments().count());
+        Assert.assertEquals("PLUS", call.getToken().getText());
+        Assert.assertEquals("7", call.getArguments().get(0).get(0).getText());
+        Assert.assertEquals("3", call.getArguments().get(1).get(0).getText());
     }
 
     private void testNestedMacros() {
