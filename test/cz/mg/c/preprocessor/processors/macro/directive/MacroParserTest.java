@@ -18,6 +18,7 @@ public @Test class MacroParserTest {
         test.testParametersAndNoImplementation();
         test.testNoParametersAndImplementation();
         test.testParametersAndImplementation();
+        test.testVarargParameters();
         test.testErrors();
 
         System.out.println("OK");
@@ -108,6 +109,98 @@ public @Test class MacroParserTest {
         );
     }
 
+    private void testVarargParameters() {
+        mutator.mutate(
+            new List<>(
+                f.special("#"),
+                f.name("define"),
+                f.name("PLUS"),
+                f.bracket("("),
+                f.operator("..."),
+                f.bracket(")")
+            ),
+            new List<>(0, 1, 2, 4, 5),
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(
+                    f.name("PLUS"),
+                    new List<>(f.name(""), f.operator("...")),
+                    new List<>()
+                ),
+                macro
+            )
+        );
+
+        mutator.mutate(
+            new List<>(
+                f.special("#"),
+                f.name("define"),
+                f.name("PLUS"),
+                f.bracket("("),
+                f.name("x"),
+                f.operator("..."),
+                f.bracket(")")
+            ),
+            new List<>(0, 1, 2, 4, 5, 6),
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(
+                    f.name("PLUS"),
+                    new List<>(f.name("x"), f.operator("...")),
+                    new List<>()
+                ),
+                macro
+            )
+        );
+
+        mutator.mutate(
+            new List<>(
+                f.special("#"),
+                f.name("define"),
+                f.name("PLUS"),
+                f.bracket("("),
+                f.name("x"),
+                f.separator(","),
+                f.operator("..."),
+                f.bracket(")")
+            ),
+            new List<>(0, 1, 2, 4, 5, 6, 7),
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(
+                    f.name("PLUS"),
+                    new List<>(f.name("x"), f.name(""), f.operator("...")),
+                    new List<>()
+                ),
+                macro
+            )
+        );
+
+        mutator.mutate(
+            new List<>(
+                f.special("#"),
+                f.name("define"),
+                f.name("PLUS"),
+                f.bracket("("),
+                f.name("x"),
+                f.separator(","),
+                f.name("y"),
+                f.operator("..."),
+                f.bracket(")")
+            ),
+            new List<>(0, 1, 2, 4, 5, 6, 7, 8),
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(
+                    f.name("PLUS"),
+                    new List<>(f.name("x"), f.name("y"), f.operator("...")),
+                    new List<>()
+                ),
+                macro
+            )
+        );
+    }
+
     private void testErrors() {
         Assert.assertThatCode(() -> {
             parser.parse(new List<>(
@@ -125,6 +218,18 @@ public @Test class MacroParserTest {
                 f.name("PLUS"),
                 f.bracket("("),
                 f.separator(","),
+                f.bracket(")")
+            ));
+        }).throwsException(PreprocessorException.class);
+
+        Assert.assertThatCode(() -> {
+            parser.parse(new List<>(
+                f.special("#"),
+                f.name("define"),
+                f.name("PLUS"),
+                f.bracket("("),
+                f.name("x"),
+                f.name("y"),
                 f.bracket(")")
             ));
         }).throwsException(PreprocessorException.class);

@@ -9,10 +9,7 @@ import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.BracketToken;
-import cz.mg.tokenizer.entities.tokens.NameToken;
-import cz.mg.tokenizer.entities.tokens.SeparatorToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
+import cz.mg.tokenizer.entities.tokens.*;
 
 public @Service class MacroParser {
     private static volatile @Service MacroParser instance;
@@ -61,18 +58,27 @@ public @Service class MacroParser {
                         );
                     }
                     break;
-                } else if (!reader.has()) {
-                    throw new MacroException(
-                        startPosition,
-                        "Missing right parenthesis for macro parameter list."
-                    );
-                } else {
+                } else if (reader.has()) {
                     if (expectedName) {
-                        parameters.addLast(reader.read(NameToken.class));
+                        if (reader.has("...", OperatorToken.class)) {
+                            Token varargs = reader.read();
+                            parameters.addLast(new NameToken("", varargs.getPosition()));
+                            parameters.addLast(varargs);
+                        } else {
+                            parameters.addLast(reader.read(NameToken.class));
+                            if (reader.has("...", OperatorToken.class)) {
+                                parameters.addLast(reader.read());
+                            }
+                        }
                     } else {
                         reader.read(",", SeparatorToken.class);
                     }
                     expectedName = !expectedName;
+                } else {
+                    throw new MacroException(
+                        startPosition,
+                        "Missing right parenthesis for macro parameter list."
+                    );
                 }
             }
             return parameters;
