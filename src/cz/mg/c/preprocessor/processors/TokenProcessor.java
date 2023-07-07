@@ -38,20 +38,9 @@ public @Service class TokenProcessor {
             backslashPositionProcessor.process(content, backslashedContent, tokens);
             return tokens;
         } catch (TokenizeException e) {
-            throw correctExceptionPosition(content, backslashedContent, e);
+            e.setPosition(correctPosition(content, backslashedContent, e.getPosition()));
+            throw e;
         }
-    }
-
-    private @Mandatory TokenizeException correctExceptionPosition(
-        @Mandatory String originalContent,
-        @Mandatory String backslashedContent,
-        @Mandatory TokenizeException e
-    ) {
-        return new TokenizeException(
-            correctPosition(originalContent, backslashedContent, e.getPosition()),
-            e.getMessage(),
-            e
-        );
     }
 
     private int correctPosition(
