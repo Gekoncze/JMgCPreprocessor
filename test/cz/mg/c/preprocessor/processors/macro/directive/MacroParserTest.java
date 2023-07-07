@@ -233,5 +233,29 @@ public @Test class MacroParserTest {
                 f.bracket(")")
             ));
         }).throwsException(PreprocessorException.class);
+
+        Assert.assertThatCode(() -> {
+            parser.parse(new List<>(
+                f.special("#"),
+                f.name("define"),
+                f.name("PLUS"),
+                f.bracket("("),
+                f.operator("..."),
+                f.name("x"),
+                f.bracket(")")
+            ));
+        }).throwsException(PreprocessorException.class);
+
+        Assert.assertThatCode(() -> {
+            parser.parse(new List<>(
+                f.special("#"),
+                f.name("define"),
+                f.name("PLUS"),
+                f.bracket("("),
+                f.operator("..."),
+                f.operator("..."),
+                f.bracket(")")
+            ));
+        }).throwsException(PreprocessorException.class);
     }
 }
