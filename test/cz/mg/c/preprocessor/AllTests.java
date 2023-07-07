@@ -10,6 +10,7 @@ import cz.mg.c.preprocessor.processors.macro.directive.*;
 import cz.mg.c.preprocessor.processors.macro.expression.ExpressionsTest;
 import cz.mg.c.preprocessor.processors.macro.directive.ExpressionParserTest;
 import cz.mg.c.preprocessor.processors.macro.directive.MacroParserTest;
+import cz.mg.c.preprocessor.processors.macro.expression.MacroExpressionsTest;
 
 public @Test class AllTests {
     public static void main(String[] args) {
@@ -38,6 +39,7 @@ public @Test class AllTests {
 
         // cz.mg.c.preprocessor.processors.macro.expression
         ExpressionsTest.main(args);
+        MacroExpressionsTest.main(args);
 
         // cz.mg.c.preprocessor.processors
         CommentProcessorTest.main(args);
