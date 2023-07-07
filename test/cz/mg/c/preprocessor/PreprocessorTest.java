@@ -53,32 +53,32 @@ public @Test class PreprocessorTest {
             new Macro(
                 new NameToken("PLUS", 28),
                 new List<>(new NameToken("x", 33), new NameToken("y", 36)),
-                new List<>(new NameToken("x", 45 - 2), new OperatorToken("+", 47 - 2), new NameToken("y", 49 - 2))
+                new List<>(new NameToken("x", 45), new OperatorToken("+", 47), new NameToken("y", 49))
             ),
             macros.getMap().get("PLUS")
         );
 
         tokenValidator.assertEquals(
             new List<>(
-                new NameToken("int", 52 - 2),
-                new NameToken("main", 56 - 2),
-                new BracketToken("(", 60 - 2),
-                new BracketToken(")", 61 - 2),
-                new BracketToken("{", 63 - 2),
-                new NameToken("printf", 69 - 2),
-                new BracketToken("(", 75 - 2),
-                new DoubleQuoteToken("%s at line %i: %i\\n", 85 - 2),
-                new SeparatorToken(",", 106 - 2),
-                new DoubleQuoteToken("/test/file/main.c", 116 - 2),
-                new SeparatorToken(",", 124 - 2),
-                new NumberToken("9", 126 - 2),
-                new SeparatorToken(",", 134 - 2),
-                new NumberToken("7", 141 - 2),
-                new OperatorToken("+", 47 - 2),
-                new NumberToken("3", 144 - 2),
-                new BracketToken(")", 151 - 2),
-                new SeparatorToken(";", 152 - 2),
-                new BracketToken("}", 154 - 2)
+                new NameToken("int", 52),
+                new NameToken("main", 56),
+                new BracketToken("(", 60),
+                new BracketToken(")", 61),
+                new BracketToken("{", 63),
+                new NameToken("printf", 69),
+                new BracketToken("(", 75),
+                new DoubleQuoteToken("%s at line %i: %i\\n", 85),
+                new SeparatorToken(",", 106),
+                new DoubleQuoteToken("/test/file/main.c", 116),
+                new SeparatorToken(",", 124),
+                new NumberToken("9", 126),
+                new SeparatorToken(",", 134),
+                new NumberToken("7", 141),
+                new OperatorToken("+", 47),
+                new NumberToken("3", 144),
+                new BracketToken(")", 151),
+                new SeparatorToken(";", 152),
+                new BracketToken("}", 154)
             ),
             tokens
         );

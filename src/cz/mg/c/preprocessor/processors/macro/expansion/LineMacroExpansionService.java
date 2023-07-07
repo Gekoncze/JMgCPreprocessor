@@ -5,7 +5,6 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
-import cz.mg.c.preprocessor.processors.backslash.BackslashPositionService;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
@@ -20,7 +19,6 @@ public @Service class LineMacroExpansionService implements MacroExpansionService
                 if (instance == null) {
                     instance = new LineMacroExpansionService();
                     instance.positionService = PositionService.getInstance();
-                    instance.backslashPositionService = BackslashPositionService.getInstance();
                 }
             }
         }
@@ -28,7 +26,6 @@ public @Service class LineMacroExpansionService implements MacroExpansionService
     }
 
     private @Service PositionService positionService;
-    private @Service BackslashPositionService backslashPositionService;
 
     private LineMacroExpansionService() {
     }
@@ -38,8 +35,7 @@ public @Service class LineMacroExpansionService implements MacroExpansionService
         FileMacro fileMacro = (FileMacro) macros.getMap().get(FileMacro.NAME);
         String content = fileMacro.getFile().getContent();
         int position = call.getToken().getPosition();
-        int correctedPosition = backslashPositionService.correct(content, position);
-        int row = positionService.find(content, correctedPosition).getRow();
+        int row = positionService.find(content, position).getRow();
         return new List<>(new NumberToken("" + row, position));
     }
 }

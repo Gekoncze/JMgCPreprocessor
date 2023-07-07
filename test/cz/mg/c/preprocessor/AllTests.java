@@ -3,7 +3,7 @@ package cz.mg.c.preprocessor;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.processors.CommentProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
-import cz.mg.c.preprocessor.processors.backslash.BackslashPositionServiceTest;
+import cz.mg.c.preprocessor.processors.backslash.BackslashPositionProcessorTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
 import cz.mg.c.preprocessor.processors.macro.component.MacroExpanderTest;
 import cz.mg.c.preprocessor.processors.macro.directive.*;
@@ -14,7 +14,7 @@ import cz.mg.c.preprocessor.processors.macro.directive.MacroParserTest;
 public @Test class AllTests {
     public static void main(String[] args) {
         // cz.mg.c.preprocessor.processors.backslash
-        BackslashPositionServiceTest.main(args);
+        BackslashPositionProcessorTest.main(args);
         BackslashProcessorTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.component
