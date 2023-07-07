@@ -13,7 +13,7 @@ public @Entity class DefinedMacro extends Macro implements SystemMacro {
         super(
             new NameToken(NAME, -1),
             new List<>(new NameToken("x", -1)),
-            null
+            new List<>()
         );
     }
 }

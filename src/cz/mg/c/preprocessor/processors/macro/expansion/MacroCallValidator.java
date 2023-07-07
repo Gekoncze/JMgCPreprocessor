@@ -2,10 +2,11 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
+import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.SpecialToken;
 
 public @Service class MacroCallValidator {
     private static volatile @Service MacroCallValidator instance;
@@ -60,6 +61,28 @@ public @Service class MacroCallValidator {
                     throw new MacroException(
                         call.getToken().getPosition(),
                         "Unexpected empty argument list in macro call."
+                    );
+                }
+            }
+        }
+
+        validateUnsupportedOperations(call);
+    }
+
+    private void validateUnsupportedOperations(@Mandatory MacroCall call) {
+        for (Token token : call.getMacro().getTokens()) {
+            if (token instanceof SpecialToken) {
+                if (token.getText().equals("#")) {
+                    throw new MacroException(
+                        token.getPosition(),
+                        "Macro stringizing operator is not supported yet."
+                    );
+                }
+
+                if (token.getText().equals("##")) {
+                    throw new MacroException(
+                        token.getPosition(),
+                        "Macro concatenation operator is not supported yet."
                     );
                 }
             }

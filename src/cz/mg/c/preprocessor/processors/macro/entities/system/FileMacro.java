@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Link;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 
@@ -17,7 +18,7 @@ public @Entity class FileMacro extends Macro implements SystemMacro {
         super(
             new NameToken(NAME, -1),
             null,
-            null
+            new List<>()
         );
     }
 

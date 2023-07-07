@@ -3,6 +3,7 @@ package cz.mg.c.preprocessor.processors.macro.entities.system;
 import cz.mg.annotations.classes.Entity;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 
 public @Entity class LineMacro extends Macro implements SystemMacro {
@@ -12,7 +13,7 @@ public @Entity class LineMacro extends Macro implements SystemMacro {
         super(
             new NameToken(NAME, -1),
             null,
-            null
+            new List<>()
         );
     }
 }
