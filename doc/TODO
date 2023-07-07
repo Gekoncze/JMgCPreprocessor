@@ -24,10 +24,11 @@
 
 ### LATER ###
     make sure all corner cases are covered with tests or included in to do
-        see cz.mg.c.preprocessor.cases
+        see cz.mg.c.preprocessor.cases in test folder
 
     macros
-        add support for macro concatenation operator
+        add support for macro stringification operator (#)
+        add support for macro concatenation operator (##)
             it can join tokens of different types
             some combination of token types are invalid
             result should always form a single token
