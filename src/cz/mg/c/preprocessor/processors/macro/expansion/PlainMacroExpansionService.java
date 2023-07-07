@@ -5,12 +5,11 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.collections.components.Capacity;
-import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
+import cz.mg.tokenizer.entities.Token;
 
 import java.util.Iterator;
-import java.util.Objects;
 
 public @Service class PlainMacroExpansionService implements MacroExpansionService {
     private static volatile @Service PlainMacroExpansionService instance;

@@ -1,5 +1,9 @@
 ### NOW ###
-    ...
+    add tests
+        for PlainMacroExpansionService
+        for DefinedMacroExpansionService
+        for FileMacroExpansionService
+        for LineMacroExpansionService
 
 ### SOON ###
     add or extend tests
@@ -14,10 +18,6 @@
         for MacroTrueBranchProcessor
         for MacroFalseBranchProcessor
         for MacroCompletedBranchProcessor
-        for PlainMacroExpansionService
-        for DefinedMacroExpansionService
-        for FileMacroExpansionService
-        for LineMacroExpansionService
         for TokenProcessor
 
 ### LATER ###
