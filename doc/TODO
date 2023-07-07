@@ -10,7 +10,6 @@
 
         for MacroBranches
         for MacroExpansionServices
-        for MacroCallValidator
         for MacroExpansionService implementations
         for MacroTrueBranchProcessor
         for MacroFalseBranchProcessor

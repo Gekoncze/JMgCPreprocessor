@@ -6,7 +6,6 @@ import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.OperatorToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 
 public @Service class MacroCallValidator {
