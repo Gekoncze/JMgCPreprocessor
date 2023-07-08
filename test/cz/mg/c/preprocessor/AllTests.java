@@ -43,6 +43,7 @@ public @Test class AllTests {
         FileMacroExpansionServiceTest.main(args);
         LineMacroExpansionServiceTest.main(args);
         MacroCallValidatorTest.main(args);
+        MacroExpansionServicesTest.main(args);
         PlainMacroExpansionServiceTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.expression
