@@ -2,6 +2,7 @@ package cz.mg.c.preprocessor;
 
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.processors.CommentProcessorTest;
+import cz.mg.c.preprocessor.processors.TokenProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashPositionProcessorTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
@@ -52,6 +53,7 @@ public @Test class AllTests {
 
         // cz.mg.c.preprocessor.processors
         CommentProcessorTest.main(args);
+        TokenProcessorTest.main(args);
         WhitespaceProcessorTest.main(args);
 
         // cz.mg.c.preprocessor

@@ -9,7 +9,6 @@
         for MacroTrueBranchProcessor
         for MacroFalseBranchProcessor
         for MacroCompletedBranchProcessor
-        for TokenProcessor
 
 ### LATER ###
     make sure all corner cases are covered with tests or included in to do
