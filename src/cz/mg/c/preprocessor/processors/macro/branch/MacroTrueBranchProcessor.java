@@ -8,6 +8,7 @@ import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.*;
+import cz.mg.c.preprocessor.processors.macro.exceptions.ErrorException;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.processors.macro.expression.MacroExpressions;
 import cz.mg.collections.list.List;
@@ -107,7 +108,7 @@ public @Service class MacroTrueBranchProcessor implements MacroBranchProcessor {
     }
 
     private void error(@Mandatory Directive directive) {
-        throw new MacroException(
+        throw new ErrorException(
             directive.getKeyword().getPosition(),
             "Error directive reached at position " + directive.getKeyword().getPosition() + "."
         );
