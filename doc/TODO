@@ -3,7 +3,6 @@
         for PlainMacroExpansionService
         for DefinedMacroExpansionService
         for FileMacroExpansionService
-        for LineMacroExpansionService
 
 ### SOON ###
     add or extend tests
