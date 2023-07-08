@@ -7,10 +7,7 @@ import cz.mg.c.preprocessor.processors.backslash.BackslashPositionProcessorTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
 import cz.mg.c.preprocessor.processors.macro.component.MacroExpanderTest;
 import cz.mg.c.preprocessor.processors.macro.directive.*;
-import cz.mg.c.preprocessor.processors.macro.expansion.DefinedMacroExpansionServiceTest;
-import cz.mg.c.preprocessor.processors.macro.expansion.FileMacroExpansionServiceTest;
-import cz.mg.c.preprocessor.processors.macro.expansion.LineMacroExpansionServiceTest;
-import cz.mg.c.preprocessor.processors.macro.expansion.MacroCallValidatorTest;
+import cz.mg.c.preprocessor.processors.macro.expansion.*;
 import cz.mg.c.preprocessor.processors.macro.expression.ExpressionsTest;
 import cz.mg.c.preprocessor.processors.macro.directive.ExpressionParserTest;
 import cz.mg.c.preprocessor.processors.macro.directive.MacroParserTest;
@@ -46,6 +43,7 @@ public @Test class AllTests {
         FileMacroExpansionServiceTest.main(args);
         LineMacroExpansionServiceTest.main(args);
         MacroCallValidatorTest.main(args);
+        PlainMacroExpansionServiceTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.expression
         ExpressionsTest.main(args);

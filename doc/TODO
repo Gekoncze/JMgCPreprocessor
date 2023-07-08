@@ -1,14 +1,12 @@
 ### NOW ###
     add tests
-        for PlainMacroExpansionService
-
-### SOON ###
-    add or extend tests
         for MacroProcessor
             add test for nesting and unnesting ?
             add test for undef ?
             add test for error ?
 
+### SOON ###
+    add or extend tests
         for MacroBranches
         for MacroExpansionServices
         for MacroExpansionService implementations
