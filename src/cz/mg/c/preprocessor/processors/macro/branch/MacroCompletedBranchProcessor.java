@@ -4,12 +4,10 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.components.MacroBranches;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
+import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.Directive;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.ElifDirective;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.ElseDirective;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.EndifDirective;
-import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 

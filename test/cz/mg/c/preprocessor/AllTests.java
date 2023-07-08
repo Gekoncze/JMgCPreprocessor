@@ -6,6 +6,8 @@ import cz.mg.c.preprocessor.processors.TokenProcessorTest;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessorTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashPositionProcessorTest;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessorTest;
+import cz.mg.c.preprocessor.processors.macro.MacroProcessorTest;
+import cz.mg.c.preprocessor.processors.macro.component.MacroBranchesTest;
 import cz.mg.c.preprocessor.processors.macro.component.MacroExpanderTest;
 import cz.mg.c.preprocessor.processors.macro.directive.*;
 import cz.mg.c.preprocessor.processors.macro.expansion.*;
@@ -21,6 +23,7 @@ public @Test class AllTests {
         BackslashProcessorTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.component
+        MacroBranchesTest.main(args);
         MacroExpanderTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.directive
@@ -50,6 +53,9 @@ public @Test class AllTests {
         // cz.mg.c.preprocessor.processors.macro.expression
         ExpressionsTest.main(args);
         MacroExpressionsTest.main(args);
+
+        // cz.mg.c.preprocessor.processors.macro
+        MacroProcessorTest.main(args);
 
         // cz.mg.c.preprocessor.processors
         CommentProcessorTest.main(args);

@@ -3,9 +3,7 @@
 
 ### SOON ###
     add or extend tests
-        for MacroProcessor
-        for MacroBranches
-        for MacroExpansionService implementations
+        for MacroProcessor (extend)
         for MacroTrueBranchProcessor
         for MacroFalseBranchProcessor
         for MacroCompletedBranchProcessor

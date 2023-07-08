@@ -87,6 +87,7 @@ public @Service class MacroTrueBranchProcessor implements MacroBranchProcessor {
             branches.unnest(directive);
         } else if (directive instanceof EndifDirective) {
             branches.unnest(directive);
+            branches.end();
         } else if (directive instanceof DefineDirective) {
             Macro macro = ((DefineDirective) directive).getMacro();
             macros.define(macro);
