@@ -1,7 +1,6 @@
 ### NOW ###
     add tests
         for PlainMacroExpansionService
-        for DefinedMacroExpansionService
 
 ### SOON ###
     add or extend tests
