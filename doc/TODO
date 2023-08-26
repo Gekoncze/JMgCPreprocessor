@@ -2,7 +2,7 @@
     ...
 
 ### SOON ###
-    ...
+    it looks like macro parameter list only counts when where is no space between bracket and macro name
 
 ### LATER ###
     consider whether Preprocessor should be stateful
