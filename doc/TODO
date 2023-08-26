@@ -1,16 +1,19 @@
 ### NOW ###
-    ...
+    add support for macro concatenation operator (##)
+            it can join tokens of different types
+            some combination of token types are invalid
+            result should always form a single token
+            otherwise warning or error should be thrown
+            looks like spaces are ignored as if they didn't exist
+            test case 19s
 
 ### SOON ###
-    add support for macro concatenation operator (##)
-        it can join tokens of different types
-        some combination of token types are invalid
-        result should always form a single token
-        otherwise warning or error should be thrown
-        looks like spaces are ignored as if they didn't exist
-        test case 19
+    ...
 
 ### LATER ###
+    consider whether Preprocessor should be stateful
+        Tokenizer could be passed as parameter
+
     add tests
         for MacroTrueBranchProcessor
         for MacroFalseBranchProcessor

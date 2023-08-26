@@ -10,10 +10,10 @@ import cz.mg.c.preprocessor.processors.macro.MacroProcessorTest;
 import cz.mg.c.preprocessor.processors.macro.component.MacroBranchesTest;
 import cz.mg.c.preprocessor.processors.macro.component.MacroExpanderTest;
 import cz.mg.c.preprocessor.processors.macro.directive.*;
+import cz.mg.c.preprocessor.processors.macro.directive.special.OperatorConcatenationServiceTest;
+import cz.mg.c.preprocessor.processors.macro.directive.special.TokenConcatenationServiceTest;
 import cz.mg.c.preprocessor.processors.macro.expansion.*;
 import cz.mg.c.preprocessor.processors.macro.expression.ExpressionsTest;
-import cz.mg.c.preprocessor.processors.macro.directive.ExpressionParserTest;
-import cz.mg.c.preprocessor.processors.macro.directive.MacroParserTest;
 import cz.mg.c.preprocessor.processors.macro.expression.MacroExpressionsTest;
 
 public @Test class AllTests {
@@ -25,6 +25,10 @@ public @Test class AllTests {
         // cz.mg.c.preprocessor.processors.macro.component
         MacroBranchesTest.main(args);
         MacroExpanderTest.main(args);
+
+        // cz.mg.c.preprocessor.processors.macro.directive.special
+        OperatorConcatenationServiceTest.main(args);
+        TokenConcatenationServiceTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.directive
         DefineDirectiveParserTest.main(args);
