@@ -3,6 +3,7 @@ package cz.mg.c.preprocessor.processors.macro.directive;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.exceptions.PreprocessorException;
+import cz.mg.c.preprocessor.processors.macro.directive.special.SpecialMacroParser;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.DefineDirective;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
@@ -18,14 +19,14 @@ public @Service class DefineDirectiveParser implements DirectiveParser {
             synchronized (Service.class) {
                 if (instance == null) {
                     instance = new DefineDirectiveParser();
-                    instance.macroParser = MacroParser.getInstance();
+                    instance.macroParser = SpecialMacroParser.getInstance();
                 }
             }
         }
         return instance;
     }
 
-    private @Service MacroParser macroParser;
+    private @Service SpecialMacroParser macroParser;
 
     private DefineDirectiveParser() {
     }
