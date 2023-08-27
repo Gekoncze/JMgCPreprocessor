@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.CommentProcessor;
 import cz.mg.c.preprocessor.processors.TokenProcessor;
+import cz.mg.c.preprocessor.processors.NewlineProcessor;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessor;
 import cz.mg.c.preprocessor.processors.macro.MacroProcessor;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
@@ -24,6 +25,7 @@ public @Service class Preprocessor {
                     instance.commentProcessor = CommentProcessor.getInstance();
                     instance.macroProcessor = MacroProcessor.getInstance();
                     instance.tokenProcessor = TokenProcessor.getInstance();
+                    instance.newlineProcessor = NewlineProcessor.getInstance();
                     instance.whitespaceProcessor = WhitespaceProcessor.getInstance();
                 }
             }
@@ -34,6 +36,7 @@ public @Service class Preprocessor {
     private @Service CommentProcessor commentProcessor;
     private @Service MacroProcessor macroProcessor;
     private @Service TokenProcessor tokenProcessor;
+    private @Service NewlineProcessor newlineProcessor;
     private @Service WhitespaceProcessor whitespaceProcessor;
 
     private Preprocessor() {
@@ -47,8 +50,11 @@ public @Service class Preprocessor {
             return Macros.temporary(macros, new LineMacro(), () -> {
                 List<Token> tokens = tokenProcessor.process(file.getContent());
                 commentProcessor.process(tokens);
-                List<List<Token>> lines = whitespaceProcessor.process(tokens);
-                return macroProcessor.process(lines, macros);
+                List<List<Token>> lines = newlineProcessor.process(tokens);
+                tokens = macroProcessor.process(lines, macros);
+                whitespaceProcessor.process(tokens);
+                whitespaceProcessor.process(macros);
+                return tokens;
             });
         });
     }

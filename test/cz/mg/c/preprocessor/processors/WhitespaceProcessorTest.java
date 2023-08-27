@@ -1,10 +1,12 @@
 package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
-import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 
 public @Test class WhitespaceProcessorTest {
@@ -12,11 +14,8 @@ public @Test class WhitespaceProcessorTest {
         System.out.print("Running " + WhitespaceProcessorTest.class.getSimpleName() + " ... ");
 
         WhitespaceProcessorTest test = new WhitespaceProcessorTest();
-        test.testProcessingWhitespaces();
-        test.testProcessingNewlines();
-        test.testProcessingFirst();
-        test.testProcessingMiddle();
-        test.testProcessingLast();
+        test.testProcessing();
+        test.testMacroProcessing();
 
         System.out.println("OK");
     }
@@ -25,72 +24,97 @@ public @Test class WhitespaceProcessorTest {
     private final TokenFactory f = TokenFactory.getInstance();
     private final WhitespaceProcessor processor = WhitespaceProcessor.getInstance();
 
-    private void testProcessingWhitespaces() {
-        List<Token> tokens = new List<>(
-            f.name("a"),
-            f.whitespace(" "),
-            f.number("11"),
-            f.whitespace("\t"),
-            f.separator(";")
+    private void testProcessing() {
+        testProcessing(
+            new List<>(),
+            new List<>()
         );
-        List<List<Token>> lines = processor.process(tokens);
-        Assert.assertEquals(1, lines.count());
-        validator.assertEquals(new List<>(f.name("a"), f.number("11"), f.separator(";")), lines.get(0));
+
+        testProcessing(
+            new List<>(f.whitespace(" ")),
+            new List<>()
+        );
+
+        testProcessing(
+            new List<>(f.name("a")),
+            new List<>(f.name("a"))
+        );
+
+        testProcessing(
+            new List<>(
+                f.name("a"),
+                f.whitespace(" "),
+                f.number("11"),
+                f.whitespace("\t"),
+                f.separator(";")
+            ),
+            new List<>(
+                f.name("a"),
+                f.number("11"),
+                f.separator(";")
+            )
+        );
+
+        testProcessing(
+            new List<>(
+                f.whitespace("\t"),
+                f.name("a"),
+                f.whitespace(" ")
+            ),
+            new List<>(
+                f.name("a")
+            )
+        );
     }
 
-    private void testProcessingNewlines() {
-        List<Token> tokens = new List<>(
-            f.name("a"),
-            f.whitespace("\n"),
-            f.number("11"),
-            f.number("69"),
-            f.whitespace("\n"),
-            f.separator(";")
-        );
-        List<List<Token>> lines = processor.process(tokens);
-        Assert.assertEquals(3, lines.count());
-        validator.assertEquals(new List<>(f.name("a")), lines.get(0));
-        validator.assertEquals(new List<>(f.number("11"), f.number("69")), lines.get(1));
-        validator.assertEquals(new List<>(f.separator(";")), lines.get(2));
+    private void testProcessing(@Mandatory List<Token> tokens, @Mandatory List<Token> result) {
+        processor.process(tokens);
+        validator.assertEquals(result, tokens);
     }
 
-    private void testProcessingFirst() {
-        List<Token> tokens = new List<>(
-            f.whitespace("\n"),
-            f.number("3"),
-            f.name("foo"),
-            f.whitespace(" ")
+    private void testMacroProcessing() {
+        testMacroProcessing(
+            new Macro(f.name("FOO"), null, new List<>()),
+            new List<>()
         );
-        List<List<Token>> lines = processor.process(tokens);
-        Assert.assertEquals(2, lines.count());
-        validator.assertEquals(new List<>(), lines.get(0));
-        validator.assertEquals(new List<>(f.number("3"), f.name("foo")), lines.get(1));
+
+        testMacroProcessing(
+            new Macro(f.name("FOO"), null, new List<>(f.whitespace(" "))),
+            new List<>()
+        );
+
+        testMacroProcessing(
+            new Macro(
+                f.name("FOO"),
+                null,
+                new List<>(f.whitespace(" "), f.name("x"), f.number("7"))
+            ),
+            new List<>(f.name("x"), f.number("7"))
+        );
+
+        testMacroProcessing(
+            new Macro(
+                f.name("FOO"),
+                null,
+                new List<>(f.name("x"), f.whitespace(" "), f.number("7"))
+            ),
+            new List<>(f.name("x"), f.number("7"))
+        );
+
+        testMacroProcessing(
+            new Macro(
+                f.name("FOO"),
+                null,
+                new List<>(f.name("x"), f.number("7"), f.whitespace(" "))
+            ),
+            new List<>(f.name("x"), f.number("7"))
+        );
     }
 
-    private void testProcessingMiddle() {
-        List<Token> tokens = new List<>(
-            f.name("foo"),
-            f.whitespace("\n"),
-            f.whitespace(" "),
-            f.whitespace("\t"),
-            f.name("bar")
-        );
-        List<List<Token>> lines = processor.process(tokens);
-        Assert.assertEquals(2, lines.count());
-        validator.assertEquals(new List<>(f.name("foo")), lines.get(0));
-        validator.assertEquals(new List<>(f.name("bar")), lines.get(1));
-    }
-
-    private void testProcessingLast() {
-        List<Token> tokens = new List<>(
-            f.whitespace("\t"),
-            f.name("Pony"),
-            f.operator("!"),
-            f.whitespace("\n")
-        );
-        List<List<Token>> lines = processor.process(tokens);
-        Assert.assertEquals(2, lines.count());
-        validator.assertEquals(new List<>(f.name("Pony"), f.operator("!")), lines.get(0));
-        validator.assertEquals(new List<>(), lines.get(1));
+    private void testMacroProcessing(@Mandatory Macro macro, @Mandatory List<Token> result) {
+        Macros macros = new Macros();
+        macros.define(macro);
+        processor.process(macros);
+        validator.assertEquals(result, macro.getTokens());
     }
 }

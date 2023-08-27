@@ -1,6 +1,7 @@
 package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
@@ -11,9 +12,7 @@ public @Test class CommentProcessorTest {
         System.out.print("Running " + CommentProcessorTest.class.getSimpleName() + " ... ");
 
         CommentProcessorTest test = new CommentProcessorTest();
-        test.testProcessingFirst();
-        test.testProcessingMiddle();
-        test.testProcessingLast();
+        test.testProcessing();
 
         System.out.println("OK");
     }
@@ -22,33 +21,68 @@ public @Test class CommentProcessorTest {
     private final TokenFactory f = TokenFactory.getInstance();
     private final CommentProcessor processor = CommentProcessor.getInstance();
 
-    private void testProcessingFirst() {
-        List<Token> tokens = new List<>(f.comment("foo bar"), f.plain("a"), f.whitespace(" "), f.plain("bb"));
-        processor.process(tokens);
-        validator.assertEquals(new List<>(f.plain("a"), f.whitespace(" "), f.plain("bb")), tokens);
-    }
-
-    private void testProcessingMiddle() {
-        List<Token> tokens = new List<>(
-            f.plain("foo"),
-            f.comment("="),
-            f.whitespace("\t"),
-            f.plain("bar"),
-            f.comment(" "),
-            f.number("69")
+    private void testProcessing() {
+        testProcessing(
+            new List<>(),
+            new List<>()
         );
-        processor.process(tokens);
-        validator.assertEquals(new List<>(
-            f.plain("foo"),
-            f.whitespace("\t"),
-            f.plain("bar"),
-            f.number("69")
-        ), tokens);
+
+        testProcessing(
+            new List<>(f.comment("")),
+            new List<>()
+        );
+
+        testProcessing(
+            new List<>(f.name("a")),
+            new List<>(f.name("a"))
+        );
+
+        testProcessing(
+            new List<>(
+                f.comment("foo bar"),
+                f.plain("a"),
+                f.whitespace(" "),
+                f.plain("bb")
+            ),
+            new List<>(
+                f.plain("a"),
+                f.whitespace(" "),
+                f.plain("bb")
+            )
+        );
+
+        testProcessing(
+            new List<>(
+                f.plain("foo"),
+                f.comment("="),
+                f.whitespace("\t"),
+                f.plain("bar"),
+                f.comment(" "),
+                f.number("69")
+            ),
+            new List<>(
+                f.plain("foo"),
+                f.whitespace("\t"),
+                f.plain("bar"),
+                f.number("69")
+            )
+        );
+
+        testProcessing(
+            new List<>(
+                f.plain("~"),
+                f.whitespace(" "),
+                f.comment("yay\nmay")
+            ),
+            new List<>(
+                f.plain("~"),
+                f.whitespace(" ")
+            )
+        );
     }
 
-    private void testProcessingLast() {
-        List<Token> tokens = new List<>(f.plain("~"), f.whitespace(" "), f.comment("yay\nmay"));
+    private void testProcessing(@Mandatory List<Token> tokens, @Mandatory List<Token> result) {
         processor.process(tokens);
-        validator.assertEquals(new List<>(f.plain("~"), f.whitespace(" ")), tokens);
+        validator.assertEquals(result, tokens);
     }
 }
