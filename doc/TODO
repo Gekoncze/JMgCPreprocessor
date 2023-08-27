@@ -2,7 +2,9 @@
     ...
 
 ### SOON ###
-    it looks like macro parameter list only counts when where is no space between bracket and macro name
+    so it looks like that macro processing requires spaces
+        macro parameter list only counts when where is no space between bracket and macro name
+        change concatenation operator to check for space tokens instead
 
 ### LATER ###
     consider whether Preprocessor should be stateful
