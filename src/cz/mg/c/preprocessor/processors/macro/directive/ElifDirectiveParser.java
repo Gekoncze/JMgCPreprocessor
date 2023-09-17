@@ -9,6 +9,7 @@ import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class ElifDirectiveParser implements DirectiveParser {
     private static volatile @Service ElifDirectiveParser instance;
@@ -39,7 +40,9 @@ public @Service class ElifDirectiveParser implements DirectiveParser {
     public @Mandatory ElifDirective parse(@Mandatory List<Token> line) {
         ElifDirective directive = new ElifDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
+        reader.skip(WhitespaceToken.class);
         reader.read("#", SpecialToken.class);
+        reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(ElifDirective.KEYWORD, NameToken.class));
         directive.setExpression(expressionParser.parse(line));
         return directive;

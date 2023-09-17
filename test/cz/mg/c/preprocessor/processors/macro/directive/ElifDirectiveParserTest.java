@@ -38,5 +38,38 @@ public @Test class ElifDirectiveParserTest {
                 );
             }
         );
+
+        mutator.mutate(
+            new List<>(
+                f.whitespace(" "),
+                f.special("#"),
+                f.whitespace(" "),
+                f.name("elif"),
+                f.whitespace(" "),
+                f.number("1"),
+                f.whitespace(" "),
+                f.operator("<"),
+                f.whitespace(" "),
+                f.number("2"),
+                f.whitespace(" ")
+            ),
+            new List<>(1, 3),
+            tokens -> parser.parse(tokens),
+            directive -> {
+                tokenValidator.assertEquals(f.name("elif"), directive.getKeyword());
+                tokenValidator.assertEquals(
+                    new List<>(
+                        f.whitespace(" "),
+                        f.number("1"),
+                        f.whitespace(" "),
+                        f.operator("<"),
+                        f.whitespace(" "),
+                        f.number("2"),
+                        f.whitespace(" ")
+                    ),
+                    directive.getExpression()
+                );
+            }
+        );
     }
 }
