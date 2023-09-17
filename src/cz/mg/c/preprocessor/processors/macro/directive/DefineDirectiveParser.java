@@ -10,6 +10,7 @@ import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class DefineDirectiveParser implements DirectiveParser {
     private static volatile @Service DefineDirectiveParser instance;
@@ -40,8 +41,11 @@ public @Service class DefineDirectiveParser implements DirectiveParser {
     public @Mandatory DefineDirective parse(@Mandatory List<Token> line) {
         DefineDirective directive = new DefineDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
+        reader.skip(WhitespaceToken.class);
         reader.read("#", SpecialToken.class);
+        reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(DefineDirective.KEYWORD, NameToken.class));
+        reader.skip(WhitespaceToken.class);
         directive.setMacro(macroParser.parse(line));
         return directive;
     }

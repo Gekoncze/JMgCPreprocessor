@@ -34,5 +34,25 @@ public @Test class DefineDirectiveParserTest {
                 macroValidator.assertEquals(new Macro(f.name("TEST"), null, new List<>()), directive.getMacro());
             }
         );
+
+        mutator.mutate(
+            new List<>(
+                f.whitespace(" "),
+                f.special("#"),
+                f.whitespace(" "),
+                f.name("define"),
+                f.whitespace(" "),
+                f.name("TEST"),
+                f.whitespace(" ")
+            ),
+            new List<>(1, 3, 5),
+            tokens -> parser.parse(tokens),
+            directive -> {
+                tokenValidator.assertEquals(f.name("define"), directive.getKeyword());
+                macroValidator.assertEquals(
+                    new Macro(f.name("TEST"), null, new List<>(f.whitespace(" "))), directive.getMacro()
+                );
+            }
+        );
     }
 }
