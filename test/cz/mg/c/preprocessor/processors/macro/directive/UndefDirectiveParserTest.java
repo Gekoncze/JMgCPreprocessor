@@ -49,7 +49,7 @@ public @Test class UndefDirectiveParserTest {
                 f.name("TEST"),
                 f.whitespace(" ")
             ),
-            new List<>(0, 1, 2),
+            new List<>(0, 1, 2, 3, 4, 5),
             tokens -> parser.parse(tokens),
             directive -> {
                 tokenValidator.assertEquals(f.name("undef"), directive.getKeyword());

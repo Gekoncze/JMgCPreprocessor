@@ -1,8 +1,6 @@
 ### NOW ###
     so it looks like that macro processing requires spaces
         adapt remaining code to count with whitespaces during macro processing
-            fixing directive parsers one by one from top to bottom (order by name)
-                ... next to do is UndefDirectiveParser
 
 ### SOON ###
     ...
