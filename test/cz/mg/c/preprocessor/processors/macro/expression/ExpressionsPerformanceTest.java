@@ -6,14 +6,14 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.test.Performance;
 
-public @Test class ExpressionEvaluatorPerformanceTest {
+public @Test class ExpressionsPerformanceTest {
     private static final int ITERATIONS = 10;
     private static final int LOOPS = 100000;
 
     public static void main(String[] args) {
-        System.out.print("Running " + ExpressionEvaluatorPerformanceTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + ExpressionsPerformanceTest.class.getSimpleName() + " ... ");
 
-        ExpressionEvaluatorPerformanceTest test = new ExpressionEvaluatorPerformanceTest();
+        ExpressionsPerformanceTest test = new ExpressionsPerformanceTest();
         test.testPerformance();
     }
 
