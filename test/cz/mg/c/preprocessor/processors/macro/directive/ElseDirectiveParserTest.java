@@ -15,6 +15,7 @@ public @Test class ElseDirectiveParserTest {
 
         ElseDirectiveParserTest test = new ElseDirectiveParserTest();
         test.testParse();
+        test.testUnexpectedTrailingTokens();
 
         System.out.println("OK");
     }
@@ -35,8 +36,39 @@ public @Test class ElseDirectiveParserTest {
             directive -> tokenValidator.assertEquals(f.name("else"), directive.getKeyword())
         );
 
+        mutator.mutate(
+            new List<>(f.whitespace(" "), f.special("#"), f.whitespace(" "), f.name("else"), f.whitespace(" ")),
+            new List<>(0, 1),
+            tokens -> parser.parse(tokens),
+            directive -> tokenValidator.assertEquals(f.name("else"), directive.getKeyword())
+        );
+    }
+
+    private void testUnexpectedTrailingTokens() {
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.name("else"), f.whitespace(" "))))
+            .doesNotThrowAnyException();
+
         Assert
             .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.name("else"), f.name("unexpected"))))
+            .throwsException(CodeException.class);
+
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(
+                f.special("#"),
+                f.name("else"),
+                f.whitespace(" "),
+                f.name("unexpected")
+            )))
+            .throwsException(CodeException.class);
+
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(
+                f.special("#"),
+                f.name("else"),
+                f.name("unexpected"),
+                f.whitespace(" ")
+            )))
             .throwsException(CodeException.class);
     }
 }
