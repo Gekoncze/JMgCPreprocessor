@@ -131,7 +131,7 @@ public @Test class MacroParserTest {
                 f.operator("..."),
                 f.bracket(")")
             ),
-            new List<>(0, 1, 3, 5, 6),
+            new List<>(0, 1, 2, 3, 5, 6),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(
