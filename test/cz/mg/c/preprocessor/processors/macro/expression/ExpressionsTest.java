@@ -16,6 +16,7 @@ public @Test class ExpressionsTest {
         test.testBinaryAndEvaluate();
         test.testBinaryOrEvaluate();
         test.testComplexEvaluate();
+        test.testWhitespaceEvaluate();
         test.testIllegalExpression();
 
         System.out.println("OK");
@@ -182,6 +183,38 @@ public @Test class ExpressionsTest {
             f.operator("+"),
             f.number("5"),
             f.bracket(")")
+        )));
+    }
+
+    private void testWhitespaceEvaluate() {
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
+            f.whitespace(" "),
+            f.number("1"),
+            f.whitespace(" "),
+            f.operator("&&"),
+            f.whitespace(" "),
+            f.bracket("("),
+            f.whitespace(" "),
+            f.bracket("("),
+            f.whitespace(" "),
+            f.number("1"),
+            f.whitespace(" "),
+            f.operator("&&"),
+            f.whitespace(" "),
+            f.number("1"),
+            f.whitespace(" "),
+            f.operator("&&"),
+            f.whitespace(" "),
+            f.number("0"),
+            f.whitespace(" "),
+            f.bracket(")"),
+            f.whitespace(" "),
+            f.operator("||"),
+            f.whitespace(" "),
+            f.number("0"),
+            f.whitespace(" "),
+            f.bracket(")"),
+            f.whitespace(" ")
         )));
     }
 

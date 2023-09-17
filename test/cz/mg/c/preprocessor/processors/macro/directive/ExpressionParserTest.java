@@ -56,6 +56,36 @@ public @Test class ExpressionParserTest {
 
         mutator.mutate(
             new List<>(
+                f.whitespace(" "),
+                f.special("#"),
+                f.whitespace(" "),
+                f.name("if"),
+                f.whitespace(" "),
+                f.number("6"),
+                f.whitespace(" "),
+                f.operator("+"),
+                f.whitespace(" "),
+                f.number("9"),
+                f.whitespace(" ")
+            ),
+            new List<>(0, 1, 2, 3),
+            tokens -> parser.parse(tokens),
+            expression -> validator.assertEquals(
+                new List<>(
+                    f.whitespace(" "),
+                    f.number("6"),
+                    f.whitespace(" "),
+                    f.operator("+"),
+                    f.whitespace(" "),
+                    f.number("9"),
+                    f.whitespace(" ")
+                ),
+                expression
+            )
+        );
+
+        mutator.mutate(
+            new List<>(
                 f.special("#"),
                 f.name("if"),
                 f.number("69"),

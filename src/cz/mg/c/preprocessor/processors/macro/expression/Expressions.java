@@ -11,6 +11,7 @@ import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.BracketToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.entities.tokens.OperatorToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class Expressions {
     private static volatile @Service Expressions instance;
@@ -30,6 +31,20 @@ public @Service class Expressions {
     }
 
     public boolean evaluate(@Mandatory List<Token> tokens) {
+        return evaluateWithSpaces(tokens);
+    }
+
+    public boolean evaluateWithSpaces(@Mandatory List<Token> tokens) {
+        List<Token> tokensWithoutSpaces = new List<>();
+        for (Token token : tokens) {
+            if (!(token instanceof WhitespaceToken)) {
+                tokensWithoutSpaces.addLast(token);
+            }
+        }
+        return evaluateWithoutSpaces(tokensWithoutSpaces);
+    }
+
+    public boolean evaluateWithoutSpaces(@Mandatory List<Token> tokens) {
         return evaluateResult(evaluateExpression(new TokenReader(tokens, MacroException::new), false));
     }
 
