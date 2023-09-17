@@ -30,7 +30,9 @@ public @Service class MacroParser {
 
     public @Mandatory Macro parse(@Mandatory List<Token> line) {
         TokenReader reader = new TokenReader(line, MacroException::new);
+        reader.skip(WhitespaceToken.class);
         reader.read("#", SpecialToken.class);
+        reader.skip(WhitespaceToken.class);
         reader.read(DefineDirective.KEYWORD, NameToken.class);
         reader.skip(WhitespaceToken.class);
         return new Macro(

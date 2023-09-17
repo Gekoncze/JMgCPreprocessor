@@ -33,7 +33,9 @@ public @Test class MacroParserTest {
     private void testNoParametersAndNoImplementation() {
         mutator.mutate(
             new List<>(
+                f.whitespace(" "),
                 f.special("#"),
+                f.whitespace(" "),
                 f.name("define"),
                 f.whitespace(" "),
                 f.name("LOREM_IPSUM")
