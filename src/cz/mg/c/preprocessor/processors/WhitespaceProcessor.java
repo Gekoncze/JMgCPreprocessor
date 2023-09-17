@@ -3,6 +3,7 @@ package cz.mg.c.preprocessor.processors;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.collections.pair.ReadablePair;
@@ -40,6 +41,14 @@ public @Service class WhitespaceProcessor {
         for (ReadablePair<String, Macro> pair : macros.getMap()) {
             Macro macro = pair.getValue();
             process(macro.getTokens());
+        }
+
+        for (MacroCall call : macros.getCalls()) {
+            if (call.getArguments() != null) {
+                for (List<Token> argument : call.getArguments()) {
+                    process(argument);
+                }
+            }
         }
     }
 }
