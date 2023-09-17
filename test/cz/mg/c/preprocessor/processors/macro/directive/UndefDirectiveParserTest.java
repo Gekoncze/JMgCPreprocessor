@@ -15,6 +15,7 @@ public @Test class UndefDirectiveParserTest {
 
         UndefDirectiveParserTest test = new UndefDirectiveParserTest();
         test.testParse();
+        test.testUnexpectedTrailingTokens();
 
         System.out.println("OK");
     }
@@ -38,12 +39,61 @@ public @Test class UndefDirectiveParserTest {
             }
         );
 
+        mutator.mutate(
+            new List<>(
+                f.whitespace(" "),
+                f.special("#"),
+                f.whitespace(" "),
+                f.name("undef"),
+                f.whitespace(" "),
+                f.name("TEST"),
+                f.whitespace(" ")
+            ),
+            new List<>(0, 1, 2),
+            tokens -> parser.parse(tokens),
+            directive -> {
+                tokenValidator.assertEquals(f.name("undef"), directive.getKeyword());
+                tokenValidator.assertEquals(f.name("TEST"), directive.getName());
+            }
+        );
+    }
+
+    private void testUnexpectedTrailingTokens() {
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(
+                f.special("#"),
+                f.name("undef"),
+                f.name("TEST"),
+                f.whitespace(" ")
+            )))
+            .doesNotThrowAnyException();
+
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
                 f.special("#"),
                 f.name("undef"),
                 f.name("TEST"),
                 f.name("unexpected")
+            )))
+            .throwsException(CodeException.class);
+
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(
+                f.special("#"),
+                f.name("undef"),
+                f.name("TEST"),
+                f.whitespace(" "),
+                f.name("unexpected")
+            )))
+            .throwsException(CodeException.class);
+
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(
+                f.special("#"),
+                f.name("undef"),
+                f.name("TEST"),
+                f.name("unexpected"),
+                f.whitespace(" ")
             )))
             .throwsException(CodeException.class);
     }
