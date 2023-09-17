@@ -32,5 +32,20 @@ public @Test class IncludeDirectiveParserTest {
             tokens -> parser.parse(tokens),
             directive -> tokenValidator.assertEquals(f.name("include"), directive.getKeyword())
         );
+
+        mutator.mutate(
+            new List<>(
+                f.whitespace(" "),
+                f.special("#"),
+                f.whitespace(" "),
+                f.name("include"),
+                f.whitespace(" "),
+                f.doubleQuote("stdio.h"),
+                f.whitespace(" ")
+            ),
+            new List<>(0, 1, 2, 3),
+            tokens -> parser.parse(tokens),
+            directive -> tokenValidator.assertEquals(f.name("include"), directive.getKeyword())
+        );
     }
 }
