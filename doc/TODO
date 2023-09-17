@@ -1,6 +1,5 @@
 ### NOW ###
     so it looks like that macro processing requires spaces
-        change concatenation operator to check for space tokens instead
         adapt remaining code to count with whitespaces during macro processing
 
 ### SOON ###

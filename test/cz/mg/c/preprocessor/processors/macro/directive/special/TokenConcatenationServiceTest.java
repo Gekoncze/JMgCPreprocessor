@@ -54,6 +54,31 @@ public @Test class TokenConcatenationServiceTest {
             new List<>(f.name("f"), f.name("foo"), f.special("##"), f.name("bar"), f.name("b")),
             new List<>(f.name("f"), f.name("foobar"), f.name("b"))
         );
+
+        testConcatenate(
+            new List<>(
+                f.whitespace(" "),
+                f.name("f"),
+                f.whitespace(" "),
+                f.name("foo"),
+                f.whitespace(" "),
+                f.special("##"),
+                f.whitespace(" "),
+                f.name("bar"),
+                f.whitespace(" "),
+                f.name("b"),
+                f.whitespace(" ")
+            ),
+            new List<>(
+                f.whitespace(" "),
+                f.name("f"),
+                f.whitespace(" "),
+                f.name("foobar"),
+                f.whitespace(" "),
+                f.name("b"),
+                f.whitespace(" ")
+            )
+        );
     }
 
     private void testConcatenate(@Mandatory List<Token> input, @Mandatory List<Token> output) {

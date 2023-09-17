@@ -2,12 +2,14 @@ package cz.mg.c.preprocessor.processors.macro.directive.special;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class TokenConcatenationService {
     private static volatile @Service TokenConcatenationService instance;
@@ -30,13 +32,25 @@ public @Service class TokenConcatenationService {
         for (ListItem<Token> item = tokens.getFirstItem(); item != null; item = item.getNextItem()) {
             if (isDoubleNumberSign(item.get())) {
                 if (item.getPreviousItem() != null && item.getNextItem() != null) {
-                    evaluate(item);
+                    evaluateWithSpaces(item);
                 }
             }
         }
     }
 
-    private void evaluate(@Mandatory ListItem<Token> operator) {
+    private void evaluateWithSpaces(@Mandatory ListItem<Token> operator) {
+        while (isWhitespace(operator.getPreviousItem())) {
+            operator.removePrevious();
+        }
+
+        while (isWhitespace(operator.getNextItem())) {
+            operator.removeNext();
+        }
+
+        evaluateWithoutSpaces(operator);
+    }
+
+    private void evaluateWithoutSpaces(@Mandatory ListItem<Token> operator) {
         operator.set(concatenate(operator.removePrevious(), operator.removeNext()));
     }
 
@@ -68,5 +82,9 @@ public @Service class TokenConcatenationService {
 
     private boolean isDoubleNumberSign(@Mandatory Token token) {
         return token instanceof SpecialToken && token.getText().equals("##");
+    }
+
+    private boolean isWhitespace(@Optional ListItem<Token> item) {
+        return item != null && item.get() instanceof WhitespaceToken;
     }
 }
