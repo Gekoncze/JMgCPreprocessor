@@ -6,6 +6,9 @@
     ...
 
 ### LATER ###
+    add support for message parsing for error and warning directive
+        it should be possible now that spaces are kept
+
     consider whether Preprocessor should be stateful
         Tokenizer could be passed as parameter
 

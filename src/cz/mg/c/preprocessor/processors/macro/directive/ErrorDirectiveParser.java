@@ -9,6 +9,7 @@ import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class ErrorDirectiveParser implements DirectiveParser {
     private static volatile @Service ErrorDirectiveParser instance;
@@ -36,7 +37,9 @@ public @Service class ErrorDirectiveParser implements DirectiveParser {
     public @Mandatory ErrorDirective parse(@Mandatory List<Token> line) {
         ErrorDirective directive = new ErrorDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
+        reader.skip(WhitespaceToken.class);
         reader.read("#", SpecialToken.class);
+        reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(ErrorDirective.KEYWORD, NameToken.class));
         return directive;
     }

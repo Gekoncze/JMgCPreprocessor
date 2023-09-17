@@ -32,5 +32,24 @@ public @Test class ErrorDirectiveParserTest {
             tokens -> parser.parse(tokens),
             directive -> tokenValidator.assertEquals(f.name("error"), directive.getKeyword())
         );
+
+        mutator.mutate(
+            new List<>(
+                f.whitespace(" "),
+                f.special("#"),
+                f.whitespace(" "),
+                f.name("error"),
+                f.whitespace(" "),
+                f.name("oi"),
+                f.whitespace(" "),
+                f.name("oi"),
+                f.whitespace(" "),
+                f.name("oi"),
+                f.whitespace(" ")
+            ),
+            new List<>(0, 1, 2, 3),
+            tokens -> parser.parse(tokens),
+            directive -> tokenValidator.assertEquals(f.name("error"), directive.getKeyword())
+        );
     }
 }
