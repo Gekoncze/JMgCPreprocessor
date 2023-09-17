@@ -32,6 +32,7 @@ public @Service class MacroParser {
         TokenReader reader = new TokenReader(line, MacroException::new);
         reader.read("#", SpecialToken.class);
         reader.read(DefineDirective.KEYWORD, NameToken.class);
+        reader.skip(WhitespaceToken.class);
         return new Macro(
             readName(reader),
             readParameters(reader),
@@ -49,6 +50,7 @@ public @Service class MacroParser {
             int startPosition = reader.read().getPosition();
             boolean expectedName = true;
             while (true) {
+                reader.skip(WhitespaceToken.class);
                 if (reader.has(")", BracketToken.class)) {
                     int endPosition = reader.read().getPosition();
                     if (expectedName && !parameters.isEmpty()) {

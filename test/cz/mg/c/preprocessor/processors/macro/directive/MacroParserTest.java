@@ -19,6 +19,7 @@ public @Test class MacroParserTest {
         test.testNoParametersAndImplementation();
         test.testParametersAndImplementation();
         test.testVarargParameters();
+        test.testLeadingBracketsExpression();
         test.testErrors();
 
         System.out.println("OK");
@@ -34,9 +35,10 @@ public @Test class MacroParserTest {
             new List<>(
                 f.special("#"),
                 f.name("define"),
+                f.whitespace(" "),
                 f.name("LOREM_IPSUM")
             ),
-            new List<>(0, 1, 2),
+            new List<>(0, 1, 3),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(f.name("LOREM_IPSUM"), null, new List<>()),
@@ -50,11 +52,12 @@ public @Test class MacroParserTest {
             new List<>(
                 f.special("#"),
                 f.name("define"),
+                f.whitespace(" "),
                 f.name("LOREM_IPSUM"),
                 f.bracket("("),
                 f.bracket(")")
             ),
-            new List<>(0, 1, 2, 4),
+            new List<>(0, 1, 3, 5),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(f.name("LOREM_IPSUM"), new List<>(), new List<>()),
@@ -68,11 +71,12 @@ public @Test class MacroParserTest {
             new List<>(
                 f.special("#"),
                 f.name("define"),
+                f.whitespace(" "),
                 f.name("TEST"),
                 f.name("foo"),
                 f.name("bar")
             ),
-            new List<>(0, 1, 2),
+            new List<>(0, 1, 3),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(f.name("TEST"), null, new List<>(f.name("foo"), f.name("bar"))),
@@ -86,17 +90,22 @@ public @Test class MacroParserTest {
             new List<>(
                 f.special("#"),
                 f.name("define"),
+                f.whitespace(" "),
                 f.name("PLUS"),
                 f.bracket("("),
+                f.whitespace(" "),
                 f.name("x"),
+                f.whitespace(" "),
                 f.separator(","),
+                f.whitespace(" "),
                 f.name("y"),
+                f.whitespace(" "),
                 f.bracket(")"),
                 f.name("x"),
                 f.operator("+"),
                 f.name("y")
             ),
-            new List<>(0, 1, 2, 4, 5, 6, 7),
+            new List<>(0, 1, 3, 5, 6, 11, 12),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(
@@ -114,12 +123,13 @@ public @Test class MacroParserTest {
             new List<>(
                 f.special("#"),
                 f.name("define"),
+                f.whitespace(" "),
                 f.name("PLUS"),
                 f.bracket("("),
                 f.operator("..."),
                 f.bracket(")")
             ),
-            new List<>(0, 1, 2, 4, 5),
+            new List<>(0, 1, 3, 5, 6),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(
@@ -196,6 +206,34 @@ public @Test class MacroParserTest {
                     new List<>(f.name("x"), f.name("y"), f.operator("...")),
                     new List<>()
                 ),
+                macro
+            )
+        );
+    }
+
+    private void testLeadingBracketsExpression() {
+        mutator.mutate(
+            new List<>(
+                f.special("#"),
+                f.name("define"),
+                f.whitespace(" "),
+                f.name("LOREM_IPSUM"),
+                f.whitespace(" "),
+                f.bracket("("),
+                f.whitespace(" "),
+                f.bracket(")"),
+                f.whitespace(" ")
+            ),
+            new List<>(0, 1, 3),
+            tokens -> parser.parse(tokens),
+            macro -> validator.assertEquals(
+                new Macro(f.name("LOREM_IPSUM"), null, new List<>(
+                    f.whitespace(" "),
+                    f.bracket("("),
+                    f.whitespace(" "),
+                    f.bracket(")"),
+                    f.whitespace(" ")
+                )),
                 macro
             )
         );

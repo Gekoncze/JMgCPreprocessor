@@ -1,6 +1,5 @@
 ### NOW ###
     so it looks like that macro processing requires spaces
-        macro parameter list only counts when where is no space between bracket and macro name
         change concatenation operator to check for space tokens instead
         adapt remaining code to count with whitespaces during macro processing
 
