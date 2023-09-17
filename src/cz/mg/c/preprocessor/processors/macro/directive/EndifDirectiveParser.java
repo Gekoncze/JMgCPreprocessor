@@ -9,6 +9,7 @@ import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class EndifDirectiveParser implements DirectiveParser {
     private static volatile @Service EndifDirectiveParser instance;
@@ -36,8 +37,11 @@ public @Service class EndifDirectiveParser implements DirectiveParser {
     public @Mandatory EndifDirective parse(@Mandatory List<Token> line) {
         EndifDirective directive = new EndifDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
+        reader.skip(WhitespaceToken.class);
         reader.read("#", SpecialToken.class);
+        reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(EndifDirective.KEYWORD, NameToken.class));
+        reader.skip(WhitespaceToken.class);
         reader.readEnd();
         return directive;
     }

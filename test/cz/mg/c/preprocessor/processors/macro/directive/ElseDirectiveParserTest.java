@@ -38,7 +38,7 @@ public @Test class ElseDirectiveParserTest {
 
         mutator.mutate(
             new List<>(f.whitespace(" "), f.special("#"), f.whitespace(" "), f.name("else"), f.whitespace(" ")),
-            new List<>(0, 1),
+            new List<>(0, 1, 2, 3, 4),
             tokens -> parser.parse(tokens),
             directive -> tokenValidator.assertEquals(f.name("else"), directive.getKeyword())
         );

@@ -45,7 +45,7 @@ public @Test class DefineDirectiveParserTest {
                 f.name("TEST"),
                 f.whitespace(" ")
             ),
-            new List<>(1, 3, 5),
+            new List<>(0, 1, 2, 3, 4, 5),
             tokens -> parser.parse(tokens),
             directive -> {
                 tokenValidator.assertEquals(f.name("define"), directive.getKeyword());

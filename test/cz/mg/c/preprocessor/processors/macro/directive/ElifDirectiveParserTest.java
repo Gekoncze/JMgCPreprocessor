@@ -53,7 +53,7 @@ public @Test class ElifDirectiveParserTest {
                 f.number("2"),
                 f.whitespace(" ")
             ),
-            new List<>(1, 3),
+            new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
             directive -> {
                 tokenValidator.assertEquals(f.name("elif"), directive.getKeyword());

@@ -15,6 +15,7 @@ public @Test class EndifDirectiveParserTest {
 
         EndifDirectiveParserTest test = new EndifDirectiveParserTest();
         test.testParse();
+        test.testUnexpectedTrailingTokens();
 
         System.out.println("OK");
     }
@@ -35,8 +36,39 @@ public @Test class EndifDirectiveParserTest {
             directive -> tokenValidator.assertEquals(f.name("endif"), directive.getKeyword())
         );
 
+        mutator.mutate(
+            new List<>(f.whitespace(" "), f.special("#"), f.whitespace(" "), f.name("endif"), f.whitespace(" ")),
+            new List<>(0, 1, 2, 3),
+            tokens -> parser.parse(tokens),
+            directive -> tokenValidator.assertEquals(f.name("endif"), directive.getKeyword())
+        );
+    }
+
+    private void testUnexpectedTrailingTokens() {
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.name("endif"), f.whitespace(" "))))
+            .doesNotThrowAnyException();
+
         Assert
             .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.name("endif"), f.name("unexpected"))))
+            .throwsException(CodeException.class);
+
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(
+                f.special("#"),
+                f.name("endif"),
+                f.whitespace(" "),
+                f.name("unexpected")
+            )))
+            .throwsException(CodeException.class);
+
+        Assert
+            .assertThatCode(() -> parser.parse(new List<>(
+                f.special("#"),
+                f.name("endif"),
+                f.name("unexpected"),
+                f.whitespace(" ")
+            )))
             .throwsException(CodeException.class);
     }
 }
