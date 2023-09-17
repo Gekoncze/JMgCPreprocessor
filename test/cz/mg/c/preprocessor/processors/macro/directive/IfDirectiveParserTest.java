@@ -38,5 +38,38 @@ public @Test class IfDirectiveParserTest {
                 );
             }
         );
+
+        mutator.mutate(
+            new List<>(
+                f.whitespace(" "),
+                f.special("#"),
+                f.whitespace(" "),
+                f.name("if"),
+                f.whitespace(" "),
+                f.number("1"),
+                f.whitespace(" "),
+                f.operator(">"),
+                f.whitespace(" "),
+                f.number("2"),
+                f.whitespace(" ")
+            ),
+            new List<>(0, 1, 2, 3),
+            tokens -> parser.parse(tokens),
+            directive -> {
+                tokenValidator.assertEquals(f.name("if"), directive.getKeyword());
+                tokenValidator.assertEquals(
+                    new List<>(
+                        f.whitespace(" "),
+                        f.number("1"),
+                        f.whitespace(" "),
+                        f.operator(">"),
+                        f.whitespace(" "),
+                        f.number("2"),
+                        f.whitespace(" ")
+                    ),
+                    directive.getExpression()
+                );
+            }
+        );
     }
 }
