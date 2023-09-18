@@ -12,6 +12,7 @@ import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.BracketToken;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.SeparatorToken;
+import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 import java.util.Objects;
 
@@ -68,7 +69,7 @@ public @Component class MacroExpander {
         } else if (call.getArguments() == null) {
             if (isOpeningBracket(token)) {
                 call.setArguments(new List<>());
-            } else {
+            } else if (!isWhitespace(token)) {
                 cancelCall(token);
             }
         } else if (call.getArguments() != null) {
@@ -142,6 +143,10 @@ public @Component class MacroExpander {
 
     private boolean isName(@Mandatory Token token) {
         return token instanceof NameToken;
+    }
+
+    private boolean isWhitespace(@Mandatory Token token) {
+        return token instanceof WhitespaceToken;
     }
 
     private boolean isOpeningBracket(@Mandatory Token token) {

@@ -2,17 +2,13 @@
     ...
 
 ### SOON ###
-    so it looks like there are more cases uncovered (case 27)
-        for defined operator spaces are ignored, so the following is valid
-            #if defined (xyz)
-            #if defined xyz
-
-        for macro calls spaces are also ignored, so the following is valid
-            #define FOO() 1
-            printf(FOO (), "%i")
-
+    ...
 
 ### LATER ###
+    so it looks like there are more cases uncovered (case 27)
+        brackets for defined operator are optional for some reason
+        #if defined xyz
+
     add support for message parsing for error and warning directive
         it should be possible now that spaces are kept
 

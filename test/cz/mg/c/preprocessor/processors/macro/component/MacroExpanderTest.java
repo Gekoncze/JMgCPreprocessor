@@ -26,6 +26,7 @@ public @Test class MacroExpanderTest {
         test.testSimpleExpansionWithMoreTokens();
         test.testNoParametersAndNoImplementation();
         test.testParametersAndNoImplementation();
+        test.testParametersAndNoImplementationWithSpaces();
         test.testNoParametersAndImplementation();
         test.testParametersAndImplementation();
         test.testBracketNesting();
@@ -109,6 +110,15 @@ public @Test class MacroExpanderTest {
         MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOO"), new List<>(), new List<>()));
         List<Token> line = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
+        List<Token> actualTokens = MacroExpander.expand(line, macros);
+        List<Token> expectedTokens = new List<>();
+        validator.assertEquals(expectedTokens, actualTokens);
+    }
+
+    private void testParametersAndNoImplementationWithSpaces() {
+        MacroManager macros = new MacroManager(new Macros());
+        macros.define(new Macro(f.name("FOO"), new List<>(), new List<>()));
+        List<Token> line = new List<>(f.name("FOO"), f.whitespace(" "), f.bracket("("), f.bracket(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>();
         validator.assertEquals(expectedTokens, actualTokens);

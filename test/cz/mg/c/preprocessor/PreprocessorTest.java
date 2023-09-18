@@ -23,6 +23,7 @@ public @Test class PreprocessorTest {
         test.testProcessing();
         test.testNestedMacros();
         test.testNestedConditions();
+        test.testWhitespaces();
 
         System.out.println("OK");
     }
@@ -97,10 +98,10 @@ public @Test class PreprocessorTest {
     private void testNestedMacros() {
         File file = new File(
             Path.of("/test/file/main.c"),
-                "#define OPERATION(x, o, y) x o y\n" +
-                "#define MINUS(x, y) OPERATION(x, -, y)\n" +
-                "#define OPERATION(x, o, y) y o x\n" +
-                "MINUS(2, 7)"
+            "#define OPERATION(x, o, y) x o y\n" +
+            "#define MINUS(x, y) OPERATION(x, -, y)\n" +
+            "#define OPERATION(x, o, y) y o x\n" +
+            "MINUS(2, 7)"
         );
 
         Macros macros = new Macros();
@@ -141,29 +142,29 @@ public @Test class PreprocessorTest {
     private void testNestedConditions() {
         File file = new File(
             Path.of("/test/file/main.c"),
-                "0\n" +
-                "#ifdef straw\n" +
-                "1\n" +
-                "#if defined(apple)\n" +
-                "2\n" +
-                "#define STRAWAPPLE\n" +
-                "3\n" +
-                "#elif defined(berry)\n" +
-                "4\n" +
-                "#define STRAWBERRY\n" +
-                "5\n" +
-                "#else\n" +
-                "6\n" +
-                "#define STRAW\n" +
-                "7\n" +
-                "#endif\n" +
-                "8\n" +
-                "#else\n" +
-                "9\n" +
-                "#define NONE\n" +
-                "10\n" +
-                "#endif\n" +
-                "11\n"
+            "0\n" +
+            "#ifdef straw\n" +
+            "1\n" +
+            "#if defined(apple)\n" +
+            "2\n" +
+            "#define STRAWAPPLE\n" +
+            "3\n" +
+            "#elif defined(berry)\n" +
+            "4\n" +
+            "#define STRAWBERRY\n" +
+            "5\n" +
+            "#else\n" +
+            "6\n" +
+            "#define STRAW\n" +
+            "7\n" +
+            "#endif\n" +
+            "8\n" +
+            "#else\n" +
+            "9\n" +
+            "#define NONE\n" +
+            "10\n" +
+            "#endif\n" +
+            "11\n"
         );
 
         Macros macros = new Macros();
@@ -192,5 +193,46 @@ public @Test class PreprocessorTest {
             ),
             tokens
         );
+    }
+
+    private void testWhitespaces() {
+        File file = new File(
+            Path.of("/test/file/main.c"),
+            " # define PLUS( a ) a + a \n" +
+            " PLUS ( 7 ) "
+        );
+
+        Macros macros = new Macros();
+
+        List<Token> tokens =  preprocessor.preprocess(file, macros);
+
+        MacroManager manager = new MacroManager(macros);
+        Assert.assertEquals(true, manager.defined("PLUS"));
+
+        tokenValidator.assertEquals(
+            new List<>(
+                new NumberToken("7", 35),
+                new OperatorToken("+", 22),
+                new NumberToken("7", 35)
+            ),
+            tokens
+        );
+
+        Assert.assertEquals(false, macros.getDefinitions().isEmpty());
+        Macro macro = macros.getDefinitions().getFirst();
+        Assert.assertEquals("PLUS", macro.getName().getText());
+        Assert.assertNotNull(macro.getParameters());
+        Assert.assertNotNull(macro.getTokens());
+        Assert.assertEquals(1, macro.getParameters().count());
+        Assert.assertEquals("a", macro.getParameters().getFirst().getText());
+
+        Assert.assertEquals(false, macros.getCalls().isEmpty());
+        MacroCall call = macros.getCalls().getFirst();
+        Assert.assertSame(macro, call.getMacro());
+        Assert.assertEquals("PLUS", call.getToken().getText());
+        Assert.assertNotNull(call.getArguments());
+        Assert.assertEquals(1, call.getArguments().count());
+        Assert.assertEquals(1, call.getArguments().getFirst().count());
+        Assert.assertEquals("7", call.getArguments().getFirst().getFirst().getText());
     }
 }
