@@ -113,7 +113,7 @@ public @Test class WhitespaceProcessorTest {
 
     private void testMacroProcessing(@Mandatory Macro macro, @Mandatory List<Token> result) {
         Macros macros = new Macros();
-        macros.define(macro);
+        macros.getDefinitions().addLast(macro);
         processor.process(macros);
         validator.assertEquals(result, macro.getTokens());
     }

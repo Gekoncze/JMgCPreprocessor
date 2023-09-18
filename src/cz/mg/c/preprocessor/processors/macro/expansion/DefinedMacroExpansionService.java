@@ -2,10 +2,10 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
+import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.system.DefinedMacro;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
-import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
@@ -30,7 +30,7 @@ public @Service class DefinedMacroExpansionService implements MacroExpansionServ
     }
 
     @Override
-    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroCall call) {
+    public @Mandatory List<Token> expand(@Mandatory MacroManager macros, @Mandatory MacroCall call) {
         validate(call);
         Objects.requireNonNull(call.getArguments());
         String name = call.getArguments().getFirst().getFirst().getText();

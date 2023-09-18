@@ -1,11 +1,12 @@
 package cz.mg.c.preprocessor;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
+import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
+import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.test.MacroValidator;
 import cz.mg.c.preprocessor.test.TokenValidator;
-import cz.mg.c.preprocessor.processors.macro.entities.Macro;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.test.Assert;
@@ -49,14 +50,14 @@ public @Test class PreprocessorTest {
         Macros macros = new Macros();
         List<Token> tokens = preprocessor.preprocess(file, macros);
 
-        Assert.assertEquals(true, macros.defined("PLUS"));
+        Assert.assertEquals(1, macros.getDefinitions().count());
         macroValidator.assertEquals(
             new Macro(
                 new NameToken("PLUS", 28),
                 new List<>(new NameToken("x", 33), new NameToken("y", 36)),
                 new List<>(new NameToken("x", 45), new OperatorToken("+", 47), new NameToken("y", 49))
             ),
-            macros.getMap().get("PLUS")
+            macros.getDefinitions().getFirst()
         );
 
         tokenValidator.assertEquals(
@@ -105,8 +106,9 @@ public @Test class PreprocessorTest {
         Macros macros = new Macros();
         List<Token> tokens = preprocessor.preprocess(file, macros);
 
-        Assert.assertEquals(true, macros.defined("OPERATION"));
-        Assert.assertEquals(true, macros.defined("MINUS"));
+        Assert.assertEquals(2, macros.getDefinitions().count());
+        Assert.assertEquals("OPERATION", macros.getDefinitions().getFirst().getName().getText());
+        Assert.assertEquals("MINUS", macros.getDefinitions().getLast().getName().getText());
 
         macroValidator.assertEquals(
             new Macro(
@@ -123,7 +125,7 @@ public @Test class PreprocessorTest {
                     new BracketToken(")", 70)
                 )
             ),
-            macros.getMap().get("MINUS")
+            macros.getDefinitions().getLast()
         );
 
         tokenValidator.assertEquals(
@@ -165,18 +167,19 @@ public @Test class PreprocessorTest {
         );
 
         Macros macros = new Macros();
-        macros.define(new Macro(new NameToken("straw", -1), null, new List<>()));
-        macros.define(new Macro(new NameToken("berry", -1), null, new List<>()));
+        macros.getDefinitions().addLast(new Macro(new NameToken("straw", -1), null, new List<>()));
+        macros.getDefinitions().addLast(new Macro(new NameToken("berry", -1), null, new List<>()));
 
         List<Token> tokens = preprocessor.preprocess(file, macros);
 
-        Assert.assertEquals(true, macros.defined("straw"));
-        Assert.assertEquals(true, macros.defined("berry"));
-        Assert.assertEquals(true, macros.defined("STRAWBERRY"));
-        Assert.assertEquals(false, macros.defined("apple"));
-        Assert.assertEquals(false, macros.defined("STRAWAPPLE"));
-        Assert.assertEquals(false, macros.defined("STRAW"));
-        Assert.assertEquals(false, macros.defined("NONE"));
+        MacroManager manager = new MacroManager(macros);
+        Assert.assertEquals(true, manager.defined("straw"));
+        Assert.assertEquals(true, manager.defined("berry"));
+        Assert.assertEquals(true, manager.defined("STRAWBERRY"));
+        Assert.assertEquals(false, manager.defined("apple"));
+        Assert.assertEquals(false, manager.defined("STRAWAPPLE"));
+        Assert.assertEquals(false, manager.defined("STRAW"));
+        Assert.assertEquals(false, manager.defined("NONE"));
 
         tokenValidator.assertEquals(
             new List<>(

@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.components.MacroBranches;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
@@ -32,10 +33,11 @@ public @Service class MacroProcessor {
      */
     public @Mandatory List<Token> process(@Mandatory List<List<Token>> lines, @Mandatory Macros macros) {
         MacroBranches branches = new MacroBranches();
-        MacroExpander expander = new MacroExpander(macros);
+        MacroManager manager = new MacroManager(macros);
+        MacroExpander expander = new MacroExpander(manager);
 
         for (List<Token> line : lines) {
-            branches.getBranch().process(line, macros, branches, expander);
+            branches.getBranch().process(line, manager, branches, expander);
         }
 
         branches.validateIsRoot();

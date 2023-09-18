@@ -4,9 +4,9 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.components.MacroBranches;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.*;
 import cz.mg.c.preprocessor.processors.macro.exceptions.ErrorException;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
@@ -36,7 +36,7 @@ public @Service class MacroTrueBranchProcessor implements MacroBranchProcessor {
     @Override
     public void process(
         @Mandatory List<Token> line,
-        @Mandatory Macros macros,
+        @Mandatory MacroManager macros,
         @Mandatory MacroBranches branches,
         @Mandatory MacroExpander expander
     ) {
@@ -56,7 +56,7 @@ public @Service class MacroTrueBranchProcessor implements MacroBranchProcessor {
 
     private void processDirective(
         @Mandatory Directive directive,
-        @Mandatory Macros macros,
+        @Mandatory MacroManager macros,
         @Mandatory MacroBranches branches
     ) {
         if (directive instanceof IncludeDirective) {

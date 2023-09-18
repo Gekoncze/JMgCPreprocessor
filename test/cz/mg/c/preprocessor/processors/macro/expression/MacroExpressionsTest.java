@@ -1,6 +1,7 @@
 package cz.mg.c.preprocessor.processors.macro.expression;
 
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.test.TokenFactory;
@@ -25,14 +26,14 @@ public @Test class MacroExpressionsTest {
     private final TokenFactory f = TokenFactory.getInstance();
 
     private void testEvaluateNotDefined() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         List<Token> tokens = new List<>(f.name("defined"), f.bracket("("), f.name("FOOBAR"), f.bracket(")"));
         Assert.assertEquals(false, expressions.evaluate(tokens, macros));
         Assert.assertEquals(false, macros.defined("defined"));
     }
 
     private void testEvaluateDefined() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOOBAR"), null, new List<>()));
         List<Token> tokens = new List<>(f.name("defined"), f.bracket("("), f.name("FOOBAR"), f.bracket(")"));
         Assert.assertEquals(true, expressions.evaluate(tokens, macros));
@@ -40,7 +41,7 @@ public @Test class MacroExpressionsTest {
     }
 
     private void testEvaluateCombination1() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOOBAR"), null, new List<>()));
         List<Token> tokens = new List<>(
             f.name("defined"),
@@ -58,7 +59,7 @@ public @Test class MacroExpressionsTest {
     }
 
     private void testEvaluateCombination2() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOOBAR"), null, new List<>()));
         List<Token> tokens = new List<>(
             f.name("defined"),

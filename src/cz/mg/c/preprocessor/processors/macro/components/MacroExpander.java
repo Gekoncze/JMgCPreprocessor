@@ -19,12 +19,12 @@ import java.util.Objects;
 public @Component class MacroExpander {
     private final MacroExpansionServices macroExpansionServices = MacroExpansionServices.getInstance();
 
-    private final @Mandatory Macros macros;
+    private final @Mandatory MacroManager macros;
     private final @Mandatory List<Token> tokens = new List<>();
     private @Optional MacroCall call;
     private @Optional Integer nesting;
 
-    public MacroExpander(@Mandatory Macros macros) {
+    public MacroExpander(@Mandatory MacroManager macros) {
         this.macros = macros;
     }
 
@@ -53,7 +53,7 @@ public @Component class MacroExpander {
             if (!isName(token)) {
                 tokens.addLast(token);
             } else {
-                Macro macro = macros.getMap().getOptional(token.getText());
+                Macro macro = macros.getOptional(token.getText());
                 if (macro == null) {
                     tokens.addLast(token);
                 } else if (isMacroInPath(macro, path)) {
@@ -179,7 +179,7 @@ public @Component class MacroExpander {
         }
     }
 
-    public static @Mandatory List<Token> expand(@Mandatory List<Token> tokens, @Mandatory Macros macros) {
+    public static @Mandatory List<Token> expand(@Mandatory List<Token> tokens, @Mandatory MacroManager macros) {
         MacroExpander expander = new MacroExpander(macros);
         expander.addTokens(tokens);
         expander.endExpanding();

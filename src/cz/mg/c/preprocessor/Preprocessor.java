@@ -7,6 +7,7 @@ import cz.mg.c.preprocessor.processors.TokenProcessor;
 import cz.mg.c.preprocessor.processors.NewlineProcessor;
 import cz.mg.c.preprocessor.processors.WhitespaceProcessor;
 import cz.mg.c.preprocessor.processors.macro.MacroProcessor;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
 import cz.mg.c.preprocessor.processors.macro.entities.system.LineMacro;
@@ -46,16 +47,15 @@ public @Service class Preprocessor {
      * Preprocessing of c source code before parsing.
      */
     public @Mandatory List<Token> preprocess(@Mandatory File file, @Mandatory Macros macros) {
-        return Macros.temporary(macros, new FileMacro(file), () -> {
-            return Macros.temporary(macros, new LineMacro(), () -> {
-                List<Token> tokens = tokenProcessor.process(file.getContent());
-                commentProcessor.process(tokens);
-                List<List<Token>> lines = newlineProcessor.process(tokens);
-                tokens = macroProcessor.process(lines, macros);
-                whitespaceProcessor.process(tokens);
-                whitespaceProcessor.process(macros);
-                return tokens;
-            });
-        });
+        MacroManager macroManager = new MacroManager(macros);
+        return macroManager.temporary(() -> {
+            List<Token> tokens = tokenProcessor.process(file.getContent());
+            commentProcessor.process(tokens);
+            List<List<Token>> lines = newlineProcessor.process(tokens);
+            tokens = macroProcessor.process(lines, macros);
+            whitespaceProcessor.process(tokens);
+            whitespaceProcessor.process(macros);
+            return tokens;
+        }, new FileMacro(file), new LineMacro());
     }
 }

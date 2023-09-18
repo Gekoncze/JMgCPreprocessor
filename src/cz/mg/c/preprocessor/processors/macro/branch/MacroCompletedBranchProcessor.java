@@ -4,8 +4,8 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.components.MacroBranches;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.Directive;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.EndifDirective;
 import cz.mg.collections.list.List;
@@ -31,7 +31,7 @@ public @Service class MacroCompletedBranchProcessor implements MacroBranchProces
     @Override
     public void process(
         @Mandatory List<Token> line,
-        @Mandatory Macros macros,
+        @Mandatory MacroManager macros,
         @Mandatory MacroBranches branches,
         @Mandatory MacroExpander expander
     ) {

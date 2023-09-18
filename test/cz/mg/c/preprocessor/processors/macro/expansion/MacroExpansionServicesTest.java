@@ -2,6 +2,7 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
@@ -33,7 +34,7 @@ public @Test class MacroExpansionServicesTest {
     private final @Service TokenValidator validator = TokenValidator.getInstance();
 
     private void testExpandPlainMacro() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         Macro macro = new Macro(f.name("MACRO"), new List<>(), new List<>(f.name("Aki")));
         macros.define(macro);
         MacroCall call = new MacroCall(macro, f.name("MACRO"), new List<>());
@@ -43,7 +44,7 @@ public @Test class MacroExpansionServicesTest {
     }
 
     private void testExpandSystemMacro() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         File file = new File(Path.of("chan"), "");
         FileMacro fileMacro = new FileMacro(file);
         macros.define(fileMacro);
@@ -55,7 +56,7 @@ public @Test class MacroExpansionServicesTest {
 
     private void testValidation() {
         Assert.assertThatCode(() -> {
-            Macros macros = new Macros();
+            MacroManager macros = new MacroManager(new Macros());
             Macro macro = new Macro(f.name("FAIL"), null, null);
             macros.define(macro);
             MacroCall call = new MacroCall(macro, f.name("FAIL"), new List<>());

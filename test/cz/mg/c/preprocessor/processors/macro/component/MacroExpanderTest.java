@@ -3,6 +3,7 @@ package cz.mg.c.preprocessor.processors.macro.component;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.test.TokenFactory;
@@ -38,20 +39,20 @@ public @Test class MacroExpanderTest {
     private final @Service TokenValidator validator = TokenValidator.getInstance();
 
     private void testNoMacroNoExpansionNoTokens() {
-        List<Token> actualTokens = MacroExpander.expand(new List<>(), new Macros());
+        List<Token> actualTokens = MacroExpander.expand(new List<>(), new MacroManager(new Macros()));
         List<Token> expectedTokens = new List<>();
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoMacroNoExpansion() {
         List<Token> line = new List<>(f.name("bar"));
-        List<Token> actualTokens = MacroExpander.expand(line, new Macros());
+        List<Token> actualTokens = MacroExpander.expand(line, new MacroManager(new Macros()));
         List<Token> expectedTokens = new List<>(f.name("bar"));
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoExpansion() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOO"), new List<>(), new List<>(f.name("foo"))));
         List<Token> line = new List<>(f.name("bar"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
@@ -60,7 +61,7 @@ public @Test class MacroExpanderTest {
     }
 
     private void testNoExpansionBrackets() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOO"), new List<>(), new List<>(f.name("foobar"))));
         List<Token> line = new List<>(f.name("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
@@ -69,7 +70,7 @@ public @Test class MacroExpanderTest {
     }
 
     private void testSimpleExpansion() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOO"), new List<>(), new List<>(f.name("foo"))));
         List<Token> line = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
@@ -83,7 +84,7 @@ public @Test class MacroExpanderTest {
             new List<>(),
             new List<>(f.name("foo"), f.operator("+"), f.name("bar"))
         );
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(foobar);
         List<Token> line = new List<>(
             f.whitespace("\t"), f.name("FOOBAR"), f.bracket("("), f.bracket(")"), f.separator(";")
@@ -96,7 +97,7 @@ public @Test class MacroExpanderTest {
     }
 
     private void testNoParametersAndNoImplementation() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOO"), null, new List<>()));
         List<Token> line = new List<>(f.name("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
@@ -105,7 +106,7 @@ public @Test class MacroExpanderTest {
     }
 
     private void testParametersAndNoImplementation() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOO"), new List<>(), new List<>()));
         List<Token> line = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
@@ -114,7 +115,7 @@ public @Test class MacroExpanderTest {
     }
 
     private void testNoParametersAndImplementation() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOO"), null, new List<>(f.name("_foo_"))));
         List<Token> line = new List<>(f.name("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
@@ -128,7 +129,7 @@ public @Test class MacroExpanderTest {
             new List<>(f.name("x"), f.name("y")),
             new List<>(f.name("x"), f.operator("+"), f.name("y"))
         );
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(foobar);
         List<Token> line = new List<>(
             f.whitespace("\t"),
@@ -148,7 +149,7 @@ public @Test class MacroExpanderTest {
     }
 
     private void testBracketNesting() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.name("FOO"), new List<>(f.name("x")), new List<>(f.name("x"))));
         List<Token> line = new List<>(
             f.name("FOO"),
@@ -186,7 +187,7 @@ public @Test class MacroExpanderTest {
             new List<>(),
             new List<>(f.special("*"), f.name("FOO"), f.bracket("("), f.bracket(")"))
         );
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(foo);
         macros.define(bar);
         List<Token> line = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
@@ -199,7 +200,7 @@ public @Test class MacroExpanderTest {
 
     private void testMissingRightParenthesis() {
         Assert.assertThatCode(() -> {
-            Macros macros = new Macros();
+            MacroManager macros = new MacroManager(new Macros());
             macros.define(new Macro(f.name("FOO"), new List<>(), new List<>()));
             List<Token> line = new List<>(f.name("FOO"), f.bracket("("));
             MacroExpander.expand(line, macros);

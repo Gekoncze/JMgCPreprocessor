@@ -28,11 +28,8 @@ public @Test class MacroProcessorTest {
 
     private void testProcessing() {
         Macros macros = new Macros();
-        macros.define(new Macro(f.name("FOO"), null, new List<>()));
-        macros.define(new Macro(f.name("DELETE_ME_NOW"), null, new List<>()));
-
-        Assert.assertEquals(true, macros.defined("FOO"));
-        Assert.assertEquals(true, macros.defined("DELETE_ME_NOW"));
+        macros.getDefinitions().addLast(new Macro(f.name("FOO"), null, new List<>()));
+        macros.getDefinitions().addLast(new Macro(f.name("DELETE_ME_NOW"), null, new List<>()));
 
         List<List<Token>> lines = new List<>(
             new List<>(f.number("1")),
@@ -50,7 +47,9 @@ public @Test class MacroProcessorTest {
             new List<>(f.number("7")),
             new List<>(f.special("#"), f.name("undef"), f.name("DELETE_ME_NOW"))
         );
+
         List<Token> actualTokens = macroProcessor.process(lines, macros);
+
         List<Token> expectedTokens = new List<>(
             f.number("1"),
             f.number("2"),
@@ -58,10 +57,11 @@ public @Test class MacroProcessorTest {
             f.number("5"),
             f.number("7")
         );
+
         validator.assertEquals(expectedTokens, actualTokens);
 
-        Assert.assertEquals(true, macros.defined("FOO"));
-        Assert.assertEquals(false, macros.defined("DELETE_ME_NOW"));
+        Assert.assertEquals(1, macros.getDefinitions().count());
+        Assert.assertEquals("FOO", macros.getDefinitions().getFirst().getName().getText());
     }
 
     private void testProcessingError() {

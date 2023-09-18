@@ -2,6 +2,7 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
@@ -35,7 +36,7 @@ public @Test class FileMacroExpansionServiceTest {
                 "\treturn 0;\n" +
                 "}"
         );
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         FileMacro fileMacro = new FileMacro(file);
         macros.define(fileMacro);
         MacroCall call = new MacroCall(fileMacro, new NameToken("__FILE__", 48), new List<>());

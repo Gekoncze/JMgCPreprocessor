@@ -2,8 +2,8 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
@@ -31,8 +31,8 @@ public @Service class LineMacroExpansionService implements MacroExpansionService
     }
 
     @Override
-    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroCall call) {
-        FileMacro fileMacro = (FileMacro) macros.getMap().get(FileMacro.NAME);
+    public @Mandatory List<Token> expand(@Mandatory MacroManager macros, @Mandatory MacroCall call) {
+        FileMacro fileMacro = (FileMacro) macros.get(FileMacro.NAME);
         String content = fileMacro.getFile().getContent();
         int position = call.getToken().getPosition();
         int row = positionService.find(content, position).getRow();

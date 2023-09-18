@@ -2,8 +2,8 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.collections.components.Capacity;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
@@ -29,7 +29,7 @@ public @Service class PlainMacroExpansionService implements MacroExpansionServic
     }
 
     @Override
-    public @Mandatory List<Token> expand(@Mandatory Macros macros, @Mandatory MacroCall call) {
+    public @Mandatory List<Token> expand(@Mandatory MacroManager macros, @Mandatory MacroCall call) {
         Map<String, List<Token>> map = createMap(call);
         List<Token> expandedTokens = new List<>();
         for (Token macroToken : call.getMacro().getTokens()) {

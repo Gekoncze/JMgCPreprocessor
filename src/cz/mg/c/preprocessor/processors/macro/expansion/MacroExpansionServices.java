@@ -2,6 +2,7 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.DefinedMacro;
@@ -43,12 +44,12 @@ public @Service class MacroExpansionServices {
     private MacroExpansionServices() {
     }
 
-    public @Mandatory List<Token> expand(@Mandatory MacroCall call, @Mandatory Macros macros) {
+    public @Mandatory List<Token> expand(@Mandatory MacroCall call, @Mandatory MacroManager macros) {
         macroCallValidator.validate(call);
         String macroName = call.getMacro().getName().getText();
         String systemMacroName = systemMacroNames.getOptional(macroName);
         MacroExpansionService macroExpansionService = macroExpansionServices.get(systemMacroName);
-        macros.getCalls().addLast(call);
+        macros.called(call);
         return macroExpansionService.expand(macros, call);
     }
 }

@@ -6,7 +6,6 @@ import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.collections.list.List;
-import cz.mg.collections.pair.ReadablePair;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
@@ -38,8 +37,7 @@ public @Service class WhitespaceProcessor {
      * Removes whitespace tokens from macro definitions.
      */
     public void process(@Mandatory Macros macros) {
-        for (ReadablePair<String, Macro> pair : macros.getMap()) {
-            Macro macro = pair.getValue();
+        for (Macro macro : macros.getDefinitions()) {
             process(macro.getTokens());
         }
 

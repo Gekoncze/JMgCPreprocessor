@@ -2,6 +2,7 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
@@ -30,7 +31,7 @@ public @Test class PlainMacroExpansionServiceTest {
     private void testExpandNoParametersNoImplementation() {
         Macro macro = new Macro(f.name("FOOBAR"), null, new List<>());
 
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(macro);
 
         MacroCall call = new MacroCall(macro, f.name("FOOBAR"), null);
@@ -56,7 +57,7 @@ public @Test class PlainMacroExpansionServiceTest {
             )
         );
 
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(macro);
 
         MacroCall call = new MacroCall(macro, f.name("FOO"), null);
@@ -82,7 +83,7 @@ public @Test class PlainMacroExpansionServiceTest {
             new List<>()
         );
 
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(macro);
 
         MacroCall call = new MacroCall(
@@ -115,7 +116,7 @@ public @Test class PlainMacroExpansionServiceTest {
             )
         );
 
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         macros.define(macro);
 
         MacroCall call = new MacroCall(

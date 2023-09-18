@@ -2,6 +2,7 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
@@ -26,7 +27,7 @@ public @Test class DefinedMacroExpansionServiceTest {
     private final @Service TokenValidator validator = TokenValidator.getInstance();
 
     private void testExpand() {
-        Macros macros = new Macros();
+        MacroManager macros = new MacroManager(new Macros());
         DefinedMacro definedMacro = new DefinedMacro();
         macros.define(definedMacro);
 
