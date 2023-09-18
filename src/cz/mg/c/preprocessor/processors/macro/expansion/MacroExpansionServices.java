@@ -4,7 +4,6 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.DefinedMacro;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
 import cz.mg.c.preprocessor.processors.macro.entities.system.LineMacro;
