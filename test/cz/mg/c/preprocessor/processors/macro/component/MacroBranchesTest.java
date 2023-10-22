@@ -11,9 +11,9 @@ import cz.mg.c.preprocessor.processors.macro.entities.directives.Directive;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.ElseDirective;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.EndifDirective;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.IfdefDirective;
-import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.test.TokenFactory;
 
 public @Test class MacroBranchesTest {
     public static void main(String[] args) {

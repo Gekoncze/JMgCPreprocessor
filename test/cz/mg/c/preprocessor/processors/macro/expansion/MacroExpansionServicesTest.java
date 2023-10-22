@@ -7,13 +7,13 @@ import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
-import cz.mg.c.preprocessor.test.TokenFactory;
-import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.tokenizer.test.TokenValidator;
 
 import java.nio.file.Path;
 

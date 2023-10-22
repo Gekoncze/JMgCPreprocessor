@@ -1,11 +1,12 @@
 package cz.mg.c.preprocessor.processors.macro.directive;
 
+import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
-import cz.mg.c.preprocessor.test.TokenFactory;
-import cz.mg.c.preprocessor.test.TokenMutator;
-import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
+import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.tokenizer.test.TokenMutator;
+import cz.mg.tokenizer.test.TokenValidator;
 
 public @Test class IfDirectiveParserTest {
     public static void main(String[] args) {
@@ -17,11 +18,11 @@ public @Test class IfDirectiveParserTest {
         System.out.println("OK");
     }
 
-    private final IfDirectiveParser parser = IfDirectiveParser.getInstance();
-    private final DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
-    private final TokenMutator mutator = TokenMutator.getInstance();
-    private final TokenValidator tokenValidator = TokenValidator.getInstance();
-    private final TokenFactory f = TokenFactory.getInstance();
+    private final @Service IfDirectiveParser parser = IfDirectiveParser.getInstance();
+    private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
+    private final @Service TokenMutator mutator = TokenMutator.getInstance();
+    private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
+    private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
         parserValidator.validate(IfDirectiveParser.getInstance());

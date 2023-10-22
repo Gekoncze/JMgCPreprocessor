@@ -1,13 +1,14 @@
 package cz.mg.c.preprocessor.processors;
 
+import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
-import cz.mg.c.preprocessor.test.TokenFactory;
-import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.tokenizer.test.TokenValidator;
 
 public @Test class WhitespaceProcessorTest {
     public static void main(String[] args) {
@@ -20,9 +21,9 @@ public @Test class WhitespaceProcessorTest {
         System.out.println("OK");
     }
 
-    private final TokenValidator validator = TokenValidator.getInstance();
-    private final TokenFactory f = TokenFactory.getInstance();
-    private final WhitespaceProcessor processor = WhitespaceProcessor.getInstance();
+    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenFactory f = TokenFactory.getInstance();
+    private final @Service WhitespaceProcessor processor = WhitespaceProcessor.getInstance();
 
     private void testProcessing() {
         testProcessing(

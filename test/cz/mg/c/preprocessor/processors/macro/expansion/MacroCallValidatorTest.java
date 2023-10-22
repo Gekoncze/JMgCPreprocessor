@@ -4,11 +4,11 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
-import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.test.TokenFactory;
 
 public @Test class MacroCallValidatorTest {
     public static void main(String[] args) {

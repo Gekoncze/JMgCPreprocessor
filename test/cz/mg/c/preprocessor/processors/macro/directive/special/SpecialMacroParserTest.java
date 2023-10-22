@@ -1,12 +1,13 @@
 package cz.mg.c.preprocessor.processors.macro.directive.special;
 
+import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.test.MacroValidator;
-import cz.mg.c.preprocessor.test.TokenMutator;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.tokens.NameToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
+import cz.mg.tokenizer.test.TokenMutator;
 
 public @Test class SpecialMacroParserTest {
     public static void main(String[] args) {
@@ -18,9 +19,9 @@ public @Test class SpecialMacroParserTest {
         System.out.println("OK");
     }
 
-    private final SpecialMacroParser parser = SpecialMacroParser.getInstance();
-    private final MacroValidator validator = MacroValidator.getInstance();
-    private final TokenMutator mutator = TokenMutator.getInstance();
+    private final @Service SpecialMacroParser parser = SpecialMacroParser.getInstance();
+    private final @Service MacroValidator validator = MacroValidator.getInstance();
+    private final @Service TokenMutator mutator = TokenMutator.getInstance();
 
     private void testConcatenation() {
         mutator.mutate(

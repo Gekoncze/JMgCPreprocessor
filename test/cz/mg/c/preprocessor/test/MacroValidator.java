@@ -3,6 +3,7 @@ package cz.mg.c.preprocessor.test;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.tokenizer.test.TokenValidator;
 
 public @Service class MacroValidator {
     private static volatile @Service MacroValidator instance;

@@ -6,12 +6,12 @@ import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
 import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.FileMacro;
-import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
 import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.test.TokenValidator;
 
 import java.nio.file.Path;
 

@@ -1,10 +1,11 @@
 package cz.mg.c.preprocessor.processors.macro.expression;
 
+import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.test.TokenFactory;
 
 public @Test class ExpressionsTest {
     public static void main(String[] args) {
@@ -22,8 +23,8 @@ public @Test class ExpressionsTest {
         System.out.println("OK");
     }
 
-    private final Expressions evaluator = Expressions.getInstance();
-    private final TokenFactory f = TokenFactory.getInstance();
+    private final @Service Expressions evaluator = Expressions.getInstance();
+    private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testSingleEvaluate() {
         Assert.assertEquals(false, evaluator.evaluate(new List<>(

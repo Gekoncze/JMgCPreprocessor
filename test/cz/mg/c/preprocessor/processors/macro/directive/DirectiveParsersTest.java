@@ -1,12 +1,13 @@
 package cz.mg.c.preprocessor.processors.macro.directive;
 
+import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.processors.macro.entities.directives.DefineDirective;
-import cz.mg.c.preprocessor.test.TokenFactory;
-import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.tokenizer.test.TokenValidator;
 
 public @Test class DirectiveParsersTest {
     public static void main(String[] args) {
@@ -20,9 +21,9 @@ public @Test class DirectiveParsersTest {
         System.out.println("OK");
     }
 
-    private final DirectiveParsers parsers = DirectiveParsers.getInstance();
-    private final TokenFactory f = TokenFactory.getInstance();
-    private final TokenValidator validator = TokenValidator.getInstance();
+    private final @Service DirectiveParsers parsers = DirectiveParsers.getInstance();
+    private final @Service TokenFactory f = TokenFactory.getInstance();
+    private final @Service TokenValidator validator = TokenValidator.getInstance();
 
     private void testParseDirectiveLine() {
         DefineDirective directive = (DefineDirective) parsers.parse(

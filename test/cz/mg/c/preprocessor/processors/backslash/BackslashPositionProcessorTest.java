@@ -3,10 +3,10 @@ package cz.mg.c.preprocessor.processors.backslash;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.test.TokenValidator;
 
 public @Test class BackslashPositionProcessorTest {
     public static void main(String[] args) {

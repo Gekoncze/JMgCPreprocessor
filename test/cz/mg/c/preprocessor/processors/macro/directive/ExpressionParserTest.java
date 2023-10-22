@@ -1,12 +1,13 @@
 package cz.mg.c.preprocessor.processors.macro.directive;
 
+import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.exceptions.PreprocessorException;
-import cz.mg.c.preprocessor.test.TokenFactory;
-import cz.mg.c.preprocessor.test.TokenMutator;
-import cz.mg.c.preprocessor.test.TokenValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.tokenizer.test.TokenMutator;
+import cz.mg.tokenizer.test.TokenValidator;
 
 public @Test class ExpressionParserTest {
     public static void main(String[] args) {
@@ -18,10 +19,10 @@ public @Test class ExpressionParserTest {
         System.out.println("OK");
     }
 
-    private final ExpressionParser parser = ExpressionParser.getInstance();
-    private final TokenValidator validator = TokenValidator.getInstance();
-    private final TokenMutator mutator = TokenMutator.getInstance();
-    private final TokenFactory f = TokenFactory.getInstance();
+    private final @Service ExpressionParser parser = ExpressionParser.getInstance();
+    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenMutator mutator = TokenMutator.getInstance();
+    private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
         mutator.mutate(

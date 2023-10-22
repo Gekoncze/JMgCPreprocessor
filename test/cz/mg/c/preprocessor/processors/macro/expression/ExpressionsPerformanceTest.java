@@ -1,10 +1,11 @@
 package cz.mg.c.preprocessor.processors.macro.expression;
 
+import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.test.TokenFactory;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.test.Performance;
+import cz.mg.tokenizer.test.TokenFactory;
 
 public @Test class ExpressionsPerformanceTest {
     private static final int ITERATIONS = 10;
@@ -17,8 +18,8 @@ public @Test class ExpressionsPerformanceTest {
         test.testPerformance();
     }
 
-    private final Expressions evaluator = Expressions.getInstance();
-    private final TokenFactory f = TokenFactory.getInstance();
+    private final @Service Expressions evaluator = Expressions.getInstance();
+    private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testPerformance() {
         System.out.println(Performance.measure(this::testCase, ITERATIONS) + " ms");
