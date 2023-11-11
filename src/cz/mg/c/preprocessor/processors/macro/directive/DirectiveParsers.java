@@ -8,7 +8,7 @@ import cz.mg.c.preprocessor.processors.macro.entities.directives.Directive;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
@@ -50,7 +50,7 @@ public @Service class DirectiveParsers {
         if (reader.has("#", SpecialToken.class)) {
             reader.read();
             reader.skip(WhitespaceToken.class);
-            Token name = reader.read(NameToken.class);
+            Token name = reader.read(WordToken.class);
             return findParser(name).parse(line);
         } else {
             return null;

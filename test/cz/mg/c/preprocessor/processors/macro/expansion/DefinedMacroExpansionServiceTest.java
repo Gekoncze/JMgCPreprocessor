@@ -9,7 +9,7 @@ import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.c.preprocessor.processors.macro.entities.system.DefinedMacro;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.test.TokenValidator;
 
@@ -33,8 +33,8 @@ public @Test class DefinedMacroExpansionServiceTest {
 
         MacroCall call = new MacroCall(
             definedMacro,
-            new NameToken("defined", 10),
-            new List<List<Token>>(new List<>(new NameToken("FOOBAR", 20)))
+            new WordToken("defined", 10),
+            new List<List<Token>>(new List<>(new WordToken("FOOBAR", 20)))
         );
 
         validator.assertEquals(
@@ -42,7 +42,7 @@ public @Test class DefinedMacroExpansionServiceTest {
             service.expand(macros, call)
         );
 
-        macros.define(new Macro(new NameToken("FOOBAR", 5), null, new List<>()));
+        macros.define(new Macro(new WordToken("FOOBAR", 5), null, new List<>()));
 
         validator.assertEquals(
             new List<>(new NumberToken("1", 10)),

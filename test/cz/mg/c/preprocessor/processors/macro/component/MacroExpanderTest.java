@@ -46,61 +46,61 @@ public @Test class MacroExpanderTest {
     }
 
     private void testNoMacroNoExpansion() {
-        List<Token> line = new List<>(f.name("bar"));
+        List<Token> line = new List<>(f.word("bar"));
         List<Token> actualTokens = MacroExpander.expand(line, new MacroManager(new Macros()));
-        List<Token> expectedTokens = new List<>(f.name("bar"));
+        List<Token> expectedTokens = new List<>(f.word("bar"));
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoExpansion() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOO"), new List<>(), new List<>(f.name("foo"))));
-        List<Token> line = new List<>(f.name("bar"));
+        macros.define(new Macro(f.word("FOO"), new List<>(), new List<>(f.word("foo"))));
+        List<Token> line = new List<>(f.word("bar"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
-        List<Token> expectedTokens = new List<>(f.name("bar"));
+        List<Token> expectedTokens = new List<>(f.word("bar"));
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoExpansionBrackets() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOO"), new List<>(), new List<>(f.name("foobar"))));
-        List<Token> line = new List<>(f.name("FOO"));
+        macros.define(new Macro(f.word("FOO"), new List<>(), new List<>(f.word("foobar"))));
+        List<Token> line = new List<>(f.word("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
-        List<Token> expectedTokens = new List<>(f.name("FOO"));
+        List<Token> expectedTokens = new List<>(f.word("FOO"));
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testSimpleExpansion() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOO"), new List<>(), new List<>(f.name("foo"))));
-        List<Token> line = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
+        macros.define(new Macro(f.word("FOO"), new List<>(), new List<>(f.word("foo"))));
+        List<Token> line = new List<>(f.word("FOO"), f.bracket("("), f.bracket(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
-        List<Token> expectedTokens = new List<>(f.name("foo"));
+        List<Token> expectedTokens = new List<>(f.word("foo"));
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testSimpleExpansionWithMoreTokens() {
         Macro foobar = new Macro(
-            f.name("FOOBAR"),
+            f.word("FOOBAR"),
             new List<>(),
-            new List<>(f.name("foo"), f.operator("+"), f.name("bar"))
+            new List<>(f.word("foo"), f.operator("+"), f.word("bar"))
         );
         MacroManager macros = new MacroManager(new Macros());
         macros.define(foobar);
         List<Token> line = new List<>(
-            f.whitespace("\t"), f.name("FOOBAR"), f.bracket("("), f.bracket(")"), f.separator(";")
+            f.whitespace("\t"), f.word("FOOBAR"), f.bracket("("), f.bracket(")"), f.separator(";")
         );
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>(
-            f.whitespace("\t"), f.name("foo"), f.operator("+"), f.name("bar"), f.separator(";")
+            f.whitespace("\t"), f.word("foo"), f.operator("+"), f.word("bar"), f.separator(";")
         );
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoParametersAndNoImplementation() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOO"), null, new List<>()));
-        List<Token> line = new List<>(f.name("FOO"));
+        macros.define(new Macro(f.word("FOO"), null, new List<>()));
+        List<Token> line = new List<>(f.word("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>();
         validator.assertEquals(expectedTokens, actualTokens);
@@ -108,8 +108,8 @@ public @Test class MacroExpanderTest {
 
     private void testParametersAndNoImplementation() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOO"), new List<>(), new List<>()));
-        List<Token> line = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
+        macros.define(new Macro(f.word("FOO"), new List<>(), new List<>()));
+        List<Token> line = new List<>(f.word("FOO"), f.bracket("("), f.bracket(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>();
         validator.assertEquals(expectedTokens, actualTokens);
@@ -117,8 +117,8 @@ public @Test class MacroExpanderTest {
 
     private void testParametersAndNoImplementationWithSpaces() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOO"), new List<>(), new List<>()));
-        List<Token> line = new List<>(f.name("FOO"), f.whitespace(" "), f.bracket("("), f.bracket(")"));
+        macros.define(new Macro(f.word("FOO"), new List<>(), new List<>()));
+        List<Token> line = new List<>(f.word("FOO"), f.whitespace(" "), f.bracket("("), f.bracket(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>();
         validator.assertEquals(expectedTokens, actualTokens);
@@ -126,47 +126,47 @@ public @Test class MacroExpanderTest {
 
     private void testNoParametersAndImplementation() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOO"), null, new List<>(f.name("_foo_"))));
-        List<Token> line = new List<>(f.name("FOO"));
+        macros.define(new Macro(f.word("FOO"), null, new List<>(f.word("_foo_"))));
+        List<Token> line = new List<>(f.word("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
-        List<Token> expectedTokens = new List<>(f.name("_foo_"));
+        List<Token> expectedTokens = new List<>(f.word("_foo_"));
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testParametersAndImplementation() {
         Macro foobar = new Macro(
-            f.name("PLUS"),
-            new List<>(f.name("x"), f.name("y")),
-            new List<>(f.name("x"), f.operator("+"), f.name("y"))
+            f.word("PLUS"),
+            new List<>(f.word("x"), f.word("y")),
+            new List<>(f.word("x"), f.operator("+"), f.word("y"))
         );
         MacroManager macros = new MacroManager(new Macros());
         macros.define(foobar);
         List<Token> line = new List<>(
             f.whitespace("\t"),
-            f.name("PLUS"),
+            f.word("PLUS"),
             f.bracket("("),
-            f.name("foo"),
+            f.word("foo"),
             f.separator(","),
-            f.name("bar"),
+            f.word("bar"),
             f.bracket(")"),
             f.separator(";")
         );
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>(
-            f.whitespace("\t"), f.name("foo"), f.operator("+"), f.name("bar"), f.separator(";")
+            f.whitespace("\t"), f.word("foo"), f.operator("+"), f.word("bar"), f.separator(";")
         );
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testBracketNesting() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOO"), new List<>(f.name("x")), new List<>(f.name("x"))));
+        macros.define(new Macro(f.word("FOO"), new List<>(f.word("x")), new List<>(f.word("x"))));
         List<Token> line = new List<>(
-            f.name("FOO"),
+            f.word("FOO"),
             f.bracket("("),
-            f.name("print"),
+            f.word("print"),
             f.bracket("("),
-            f.name("factorial"),
+            f.word("factorial"),
             f.bracket("("),
             f.number("5"),
             f.bracket(")"),
@@ -175,9 +175,9 @@ public @Test class MacroExpanderTest {
         );
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>(
-            f.name("print"),
+            f.word("print"),
             f.bracket("("),
-            f.name("factorial"),
+            f.word("factorial"),
             f.bracket("("),
             f.number("5"),
             f.bracket(")"),
@@ -188,22 +188,22 @@ public @Test class MacroExpanderTest {
 
     private void testRecursiveExpansion() {
         Macro foo = new Macro(
-            f.name("FOO"),
+            f.word("FOO"),
             new List<>(),
-            new List<>(f.special("*"), f.name("BAR"), f.bracket("("), f.bracket(")"))
+            new List<>(f.special("*"), f.word("BAR"), f.bracket("("), f.bracket(")"))
         );
         Macro bar = new Macro(
-            f.name("BAR"),
+            f.word("BAR"),
             new List<>(),
-            new List<>(f.special("*"), f.name("FOO"), f.bracket("("), f.bracket(")"))
+            new List<>(f.special("*"), f.word("FOO"), f.bracket("("), f.bracket(")"))
         );
         MacroManager macros = new MacroManager(new Macros());
         macros.define(foo);
         macros.define(bar);
-        List<Token> line = new List<>(f.name("FOO"), f.bracket("("), f.bracket(")"));
+        List<Token> line = new List<>(f.word("FOO"), f.bracket("("), f.bracket(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>(
-            f.special("*"), f.special("*"), f.name("FOO"), f.bracket("("), f.bracket(")")
+            f.special("*"), f.special("*"), f.word("FOO"), f.bracket("("), f.bracket(")")
         );
         validator.assertEquals(expectedTokens, actualTokens);
     }
@@ -211,8 +211,8 @@ public @Test class MacroExpanderTest {
     private void testMissingRightParenthesis() {
         Assert.assertThatCode(() -> {
             MacroManager macros = new MacroManager(new Macros());
-            macros.define(new Macro(f.name("FOO"), new List<>(), new List<>()));
-            List<Token> line = new List<>(f.name("FOO"), f.bracket("("));
+            macros.define(new Macro(f.word("FOO"), new List<>(), new List<>()));
+            List<Token> line = new List<>(f.word("FOO"), f.bracket("("));
             MacroExpander.expand(line, macros);
         }).throwsException(CodeException.class);
     }

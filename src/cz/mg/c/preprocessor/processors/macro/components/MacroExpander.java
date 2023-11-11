@@ -10,7 +10,7 @@ import cz.mg.c.preprocessor.processors.macro.expansion.MacroExpansionServices;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.BracketToken;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.SeparatorToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
@@ -142,7 +142,7 @@ public @Component class MacroExpander {
     }
 
     private boolean isName(@Mandatory Token token) {
-        return token instanceof NameToken;
+        return token instanceof WordToken;
     }
 
     private boolean isWhitespace(@Mandatory Token token) {

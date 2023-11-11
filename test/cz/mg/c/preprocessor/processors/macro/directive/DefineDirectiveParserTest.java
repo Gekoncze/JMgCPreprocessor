@@ -30,12 +30,12 @@ public @Test class DefineDirectiveParserTest {
         parserValidator.validate(DefineDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.name("define"), f.name("TEST")),
+            new List<>(f.special("#"), f.word("define"), f.word("TEST")),
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.name("define"), directive.getKeyword());
-                macroValidator.assertEquals(new Macro(f.name("TEST"), null, new List<>()), directive.getMacro());
+                tokenValidator.assertEquals(f.word("define"), directive.getKeyword());
+                macroValidator.assertEquals(new Macro(f.word("TEST"), null, new List<>()), directive.getMacro());
             }
         );
 
@@ -44,17 +44,17 @@ public @Test class DefineDirectiveParserTest {
                 f.whitespace(" "),
                 f.special("#"),
                 f.whitespace(" "),
-                f.name("define"),
+                f.word("define"),
                 f.whitespace(" "),
-                f.name("TEST"),
+                f.word("TEST"),
                 f.whitespace(" ")
             ),
             new List<>(0, 1, 2, 3, 4, 5),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.name("define"), directive.getKeyword());
+                tokenValidator.assertEquals(f.word("define"), directive.getKeyword());
                 macroValidator.assertEquals(
-                    new Macro(f.name("TEST"), null, new List<>(f.whitespace(" "))), directive.getMacro()
+                    new Macro(f.word("TEST"), null, new List<>(f.whitespace(" "))), directive.getMacro()
                 );
             }
         );

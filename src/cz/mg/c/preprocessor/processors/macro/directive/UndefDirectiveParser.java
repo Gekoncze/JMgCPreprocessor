@@ -7,7 +7,7 @@ import cz.mg.c.preprocessor.processors.macro.entities.directives.UndefDirective;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
@@ -40,9 +40,9 @@ public @Service class UndefDirectiveParser implements DirectiveParser {
         reader.skip(WhitespaceToken.class);
         reader.read("#", SpecialToken.class);
         reader.skip(WhitespaceToken.class);
-        directive.setKeyword(reader.read(UndefDirective.KEYWORD, NameToken.class));
+        directive.setKeyword(reader.read(UndefDirective.KEYWORD, WordToken.class));
         reader.skip(WhitespaceToken.class);
-        directive.setName(reader.read(NameToken.class));
+        directive.setName(reader.read(WordToken.class));
         reader.skip(WhitespaceToken.class);
         reader.readEnd();
         return directive;

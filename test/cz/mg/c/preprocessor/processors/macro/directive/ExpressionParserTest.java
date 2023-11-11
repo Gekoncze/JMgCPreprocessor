@@ -28,7 +28,7 @@ public @Test class ExpressionParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("if"),
+                f.word("if"),
                 f.number("69")
             ),
             new List<>(0, 1),
@@ -42,7 +42,7 @@ public @Test class ExpressionParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("if"),
+                f.word("if"),
                 f.number("6"),
                 f.operator("+"),
                 f.number("9")
@@ -60,7 +60,7 @@ public @Test class ExpressionParserTest {
                 f.whitespace(" "),
                 f.special("#"),
                 f.whitespace(" "),
-                f.name("if"),
+                f.word("if"),
                 f.whitespace(" "),
                 f.number("6"),
                 f.whitespace(" "),
@@ -88,7 +88,7 @@ public @Test class ExpressionParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("if"),
+                f.word("if"),
                 f.number("69"),
                 f.operator("*"),
                 f.bracket("("),
@@ -122,7 +122,7 @@ public @Test class ExpressionParserTest {
             .throwsException(PreprocessorException.class);
 
         Assert
-            .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.name("if"))))
+            .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.word("if"))))
             .throwsException(PreprocessorException.class);
     }
 }

@@ -29,12 +29,12 @@ public @Test class PlainMacroExpansionServiceTest {
     private final @Service TokenValidator validator = TokenValidator.getInstance();
 
     private void testExpandNoParametersNoImplementation() {
-        Macro macro = new Macro(f.name("FOOBAR"), null, new List<>());
+        Macro macro = new Macro(f.word("FOOBAR"), null, new List<>());
 
         MacroManager macros = new MacroManager(new Macros());
         macros.define(macro);
 
-        MacroCall call = new MacroCall(macro, f.name("FOOBAR"), null);
+        MacroCall call = new MacroCall(macro, f.word("FOOBAR"), null);
 
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>();
@@ -44,33 +44,33 @@ public @Test class PlainMacroExpansionServiceTest {
 
     private void testExpandNoParameters() {
         Macro macro = new Macro(
-            f.name("FOO"),
+            f.word("FOO"),
             null,
             new List<>(
-                f.name("y"),
+                f.word("y"),
                 f.operator("-"),
-                f.name("z"),
+                f.word("z"),
                 f.operator("+"),
-                f.name("x"),
-                f.name("x"),
-                f.name("x")
+                f.word("x"),
+                f.word("x"),
+                f.word("x")
             )
         );
 
         MacroManager macros = new MacroManager(new Macros());
         macros.define(macro);
 
-        MacroCall call = new MacroCall(macro, f.name("FOO"), null);
+        MacroCall call = new MacroCall(macro, f.word("FOO"), null);
 
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>(
-            f.name("y"),
+            f.word("y"),
             f.operator("-"),
-            f.name("z"),
+            f.word("z"),
             f.operator("+"),
-            f.name("x"),
-            f.name("x"),
-            f.name("x")
+            f.word("x"),
+            f.word("x"),
+            f.word("x")
         );
 
         validator.assertEquals(expectedTokens, actualTokens);
@@ -78,8 +78,8 @@ public @Test class PlainMacroExpansionServiceTest {
 
     private void testExpandNoImplementation() {
         Macro macro = new Macro(
-            f.name("BAR"),
-            new List<>(f.name("x"), f.name("y")),
+            f.word("BAR"),
+            new List<>(f.word("x"), f.word("y")),
             new List<>()
         );
 
@@ -88,9 +88,9 @@ public @Test class PlainMacroExpansionServiceTest {
 
         MacroCall call = new MacroCall(
             macro,
-            f.name("BAR"),
+            f.word("BAR"),
             new List<>(
-                new List<>(f.name("oi")),
+                new List<>(f.word("oi")),
                 new List<>(f.number("7"), f.operator("!"))
             )
         );
@@ -103,16 +103,16 @@ public @Test class PlainMacroExpansionServiceTest {
 
     private void testExpand() {
         Macro macro = new Macro(
-            f.name("BARFOO"),
-            new List<>(f.name("x"), f.name("y")),
+            f.word("BARFOO"),
+            new List<>(f.word("x"), f.word("y")),
             new List<>(
-                f.name("y"),
+                f.word("y"),
                 f.operator("-"),
-                f.name("z"),
+                f.word("z"),
                 f.operator("+"),
-                f.name("x"),
-                f.name("x"),
-                f.name("x")
+                f.word("x"),
+                f.word("x"),
+                f.word("x")
             )
         );
 
@@ -121,9 +121,9 @@ public @Test class PlainMacroExpansionServiceTest {
 
         MacroCall call = new MacroCall(
             macro,
-            f.name("BARFOO"),
+            f.word("BARFOO"),
             new List<>(
-                new List<>(f.name("oi")),
+                new List<>(f.word("oi")),
                 new List<>(f.number("7"), f.operator("!"))
             )
         );
@@ -133,11 +133,11 @@ public @Test class PlainMacroExpansionServiceTest {
             f.number("7"),
             f.operator("!"),
             f.operator("-"),
-            f.name("z"),
+            f.word("z"),
             f.operator("+"),
-            f.name("oi"),
-            f.name("oi"),
-            f.name("oi")
+            f.word("oi"),
+            f.word("oi"),
+            f.word("oi")
         );
 
         validator.assertEquals(expectedTokens, actualTokens);

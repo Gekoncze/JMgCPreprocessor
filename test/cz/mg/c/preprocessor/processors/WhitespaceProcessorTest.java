@@ -37,20 +37,20 @@ public @Test class WhitespaceProcessorTest {
         );
 
         testProcessing(
-            new List<>(f.name("a")),
-            new List<>(f.name("a"))
+            new List<>(f.word("a")),
+            new List<>(f.word("a"))
         );
 
         testProcessing(
             new List<>(
-                f.name("a"),
+                f.word("a"),
                 f.whitespace(" "),
                 f.number("11"),
                 f.whitespace("\t"),
                 f.separator(";")
             ),
             new List<>(
-                f.name("a"),
+                f.word("a"),
                 f.number("11"),
                 f.separator(";")
             )
@@ -59,11 +59,11 @@ public @Test class WhitespaceProcessorTest {
         testProcessing(
             new List<>(
                 f.whitespace("\t"),
-                f.name("a"),
+                f.word("a"),
                 f.whitespace(" ")
             ),
             new List<>(
-                f.name("a")
+                f.word("a")
             )
         );
     }
@@ -75,40 +75,40 @@ public @Test class WhitespaceProcessorTest {
 
     private void testMacroProcessing() {
         testMacroProcessing(
-            new Macro(f.name("FOO"), null, new List<>()),
+            new Macro(f.word("FOO"), null, new List<>()),
             new List<>()
         );
 
         testMacroProcessing(
-            new Macro(f.name("FOO"), null, new List<>(f.whitespace(" "))),
+            new Macro(f.word("FOO"), null, new List<>(f.whitespace(" "))),
             new List<>()
         );
 
         testMacroProcessing(
             new Macro(
-                f.name("FOO"),
+                f.word("FOO"),
                 null,
-                new List<>(f.whitespace(" "), f.name("x"), f.number("7"))
+                new List<>(f.whitespace(" "), f.word("x"), f.number("7"))
             ),
-            new List<>(f.name("x"), f.number("7"))
+            new List<>(f.word("x"), f.number("7"))
         );
 
         testMacroProcessing(
             new Macro(
-                f.name("FOO"),
+                f.word("FOO"),
                 null,
-                new List<>(f.name("x"), f.whitespace(" "), f.number("7"))
+                new List<>(f.word("x"), f.whitespace(" "), f.number("7"))
             ),
-            new List<>(f.name("x"), f.number("7"))
+            new List<>(f.word("x"), f.number("7"))
         );
 
         testMacroProcessing(
             new Macro(
-                f.name("FOO"),
+                f.word("FOO"),
                 null,
-                new List<>(f.name("x"), f.number("7"), f.whitespace(" "))
+                new List<>(f.word("x"), f.number("7"), f.whitespace(" "))
             ),
-            new List<>(f.name("x"), f.number("7"))
+            new List<>(f.word("x"), f.number("7"))
         );
     }
 

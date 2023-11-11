@@ -33,8 +33,8 @@ public @Test class OperatorConcatenationServiceTest {
         );
 
         testConcatenate(
-            new List<>(new NameToken("a", 2)),
-            new List<>(new NameToken("a", 2))
+            new List<>(new WordToken("a", 2)),
+            new List<>(new WordToken("a", 2))
         );
 
         testConcatenate(
@@ -48,8 +48,8 @@ public @Test class OperatorConcatenationServiceTest {
         );
 
         testConcatenate(
-            new List<>(new SpecialToken("#", 3), new NameToken("a", 4)),
-            new List<>(new SpecialToken("#", 3), new NameToken("a", 4))
+            new List<>(new SpecialToken("#", 3), new WordToken("a", 4)),
+            new List<>(new SpecialToken("#", 3), new WordToken("a", 4))
         );
 
         testConcatenate(
@@ -69,10 +69,10 @@ public @Test class OperatorConcatenationServiceTest {
 
         testConcatenate(
             new List<>(
-                new NumberToken("7", 0), new SpecialToken("#", 3), new SpecialToken("#", 4), new NameToken("a", 10)
+                new NumberToken("7", 0), new SpecialToken("#", 3), new SpecialToken("#", 4), new WordToken("a", 10)
             ),
             new List<>(
-                new NumberToken("7", 0), new SpecialToken("##", 3), new NameToken("a", 10)
+                new NumberToken("7", 0), new SpecialToken("##", 3), new WordToken("a", 10)
             )
         );
     }

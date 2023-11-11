@@ -37,14 +37,14 @@ public @Test class MacroParserTest {
                 f.whitespace(" "),
                 f.special("#"),
                 f.whitespace(" "),
-                f.name("define"),
+                f.word("define"),
                 f.whitespace(" "),
-                f.name("LOREM_IPSUM")
+                f.word("LOREM_IPSUM")
             ),
             new List<>(0, 1, 3),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
-                new Macro(f.name("LOREM_IPSUM"), null, new List<>()),
+                new Macro(f.word("LOREM_IPSUM"), null, new List<>()),
                 macro
             )
         );
@@ -54,16 +54,16 @@ public @Test class MacroParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("define"),
+                f.word("define"),
                 f.whitespace(" "),
-                f.name("LOREM_IPSUM"),
+                f.word("LOREM_IPSUM"),
                 f.bracket("("),
                 f.bracket(")")
             ),
             new List<>(0, 1, 3, 5),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
-                new Macro(f.name("LOREM_IPSUM"), new List<>(), new List<>()),
+                new Macro(f.word("LOREM_IPSUM"), new List<>(), new List<>()),
                 macro
             )
         );
@@ -73,16 +73,16 @@ public @Test class MacroParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("define"),
+                f.word("define"),
                 f.whitespace(" "),
-                f.name("TEST"),
-                f.name("foo"),
-                f.name("bar")
+                f.word("TEST"),
+                f.word("foo"),
+                f.word("bar")
             ),
             new List<>(0, 1, 3),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
-                new Macro(f.name("TEST"), null, new List<>(f.name("foo"), f.name("bar"))),
+                new Macro(f.word("TEST"), null, new List<>(f.word("foo"), f.word("bar"))),
                 macro
             )
         );
@@ -92,29 +92,29 @@ public @Test class MacroParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("define"),
+                f.word("define"),
                 f.whitespace(" "),
-                f.name("PLUS"),
+                f.word("PLUS"),
                 f.bracket("("),
                 f.whitespace(" "),
-                f.name("x"),
+                f.word("x"),
                 f.whitespace(" "),
                 f.separator(","),
                 f.whitespace(" "),
-                f.name("y"),
+                f.word("y"),
                 f.whitespace(" "),
                 f.bracket(")"),
-                f.name("x"),
+                f.word("x"),
                 f.operator("+"),
-                f.name("y")
+                f.word("y")
             ),
             new List<>(0, 1, 3, 5, 6, 11, 12),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(
-                    f.name("PLUS"),
-                    new List<>(f.name("x"), f.name("y")),
-                    new List<>(f.name("x"), f.operator("+"), f.name("y"))
+                    f.word("PLUS"),
+                    new List<>(f.word("x"), f.word("y")),
+                    new List<>(f.word("x"), f.operator("+"), f.word("y"))
                 ),
                 macro
             )
@@ -125,9 +125,9 @@ public @Test class MacroParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("define"),
+                f.word("define"),
                 f.whitespace(" "),
-                f.name("PLUS"),
+                f.word("PLUS"),
                 f.bracket("("),
                 f.operator("..."),
                 f.bracket(")")
@@ -136,8 +136,8 @@ public @Test class MacroParserTest {
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(
-                    f.name("PLUS"),
-                    new List<>(f.name(""), f.operator("...")),
+                    f.word("PLUS"),
+                    new List<>(f.word(""), f.operator("...")),
                     new List<>()
                 ),
                 macro
@@ -147,10 +147,10 @@ public @Test class MacroParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("define"),
-                f.name("PLUS"),
+                f.word("define"),
+                f.word("PLUS"),
                 f.bracket("("),
-                f.name("x"),
+                f.word("x"),
                 f.operator("..."),
                 f.bracket(")")
             ),
@@ -158,8 +158,8 @@ public @Test class MacroParserTest {
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(
-                    f.name("PLUS"),
-                    new List<>(f.name("x"), f.operator("...")),
+                    f.word("PLUS"),
+                    new List<>(f.word("x"), f.operator("...")),
                     new List<>()
                 ),
                 macro
@@ -169,10 +169,10 @@ public @Test class MacroParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("define"),
-                f.name("PLUS"),
+                f.word("define"),
+                f.word("PLUS"),
                 f.bracket("("),
-                f.name("x"),
+                f.word("x"),
                 f.separator(","),
                 f.operator("..."),
                 f.bracket(")")
@@ -181,8 +181,8 @@ public @Test class MacroParserTest {
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(
-                    f.name("PLUS"),
-                    new List<>(f.name("x"), f.name(""), f.operator("...")),
+                    f.word("PLUS"),
+                    new List<>(f.word("x"), f.word(""), f.operator("...")),
                     new List<>()
                 ),
                 macro
@@ -192,12 +192,12 @@ public @Test class MacroParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("define"),
-                f.name("PLUS"),
+                f.word("define"),
+                f.word("PLUS"),
                 f.bracket("("),
-                f.name("x"),
+                f.word("x"),
                 f.separator(","),
-                f.name("y"),
+                f.word("y"),
                 f.operator("..."),
                 f.bracket(")")
             ),
@@ -205,8 +205,8 @@ public @Test class MacroParserTest {
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
                 new Macro(
-                    f.name("PLUS"),
-                    new List<>(f.name("x"), f.name("y"), f.operator("...")),
+                    f.word("PLUS"),
+                    new List<>(f.word("x"), f.word("y"), f.operator("...")),
                     new List<>()
                 ),
                 macro
@@ -218,9 +218,9 @@ public @Test class MacroParserTest {
         mutator.mutate(
             new List<>(
                 f.special("#"),
-                f.name("define"),
+                f.word("define"),
                 f.whitespace(" "),
-                f.name("LOREM_IPSUM"),
+                f.word("LOREM_IPSUM"),
                 f.whitespace(" "),
                 f.bracket("("),
                 f.whitespace(" "),
@@ -230,7 +230,7 @@ public @Test class MacroParserTest {
             new List<>(0, 1, 3),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
-                new Macro(f.name("LOREM_IPSUM"), null, new List<>(
+                new Macro(f.word("LOREM_IPSUM"), null, new List<>(
                     f.whitespace(" "),
                     f.bracket("("),
                     f.whitespace(" "),
@@ -246,8 +246,8 @@ public @Test class MacroParserTest {
         Assert.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.special("#"),
-                f.name("define"),
-                f.name("PLUS"),
+                f.word("define"),
+                f.word("PLUS"),
                 f.bracket("(")
             ));
         }).throwsException(PreprocessorException.class);
@@ -255,8 +255,8 @@ public @Test class MacroParserTest {
         Assert.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.special("#"),
-                f.name("define"),
-                f.name("PLUS"),
+                f.word("define"),
+                f.word("PLUS"),
                 f.bracket("("),
                 f.separator(","),
                 f.bracket(")")
@@ -266,11 +266,11 @@ public @Test class MacroParserTest {
         Assert.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.special("#"),
-                f.name("define"),
-                f.name("PLUS"),
+                f.word("define"),
+                f.word("PLUS"),
                 f.bracket("("),
-                f.name("x"),
-                f.name("y"),
+                f.word("x"),
+                f.word("y"),
                 f.bracket(")")
             ));
         }).throwsException(PreprocessorException.class);
@@ -278,11 +278,11 @@ public @Test class MacroParserTest {
         Assert.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.special("#"),
-                f.name("define"),
-                f.name("PLUS"),
+                f.word("define"),
+                f.word("PLUS"),
                 f.bracket("("),
                 f.operator("..."),
-                f.name("x"),
+                f.word("x"),
                 f.bracket(")")
             ));
         }).throwsException(PreprocessorException.class);
@@ -290,8 +290,8 @@ public @Test class MacroParserTest {
         Assert.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.special("#"),
-                f.name("define"),
-                f.name("PLUS"),
+                f.word("define"),
+                f.word("PLUS"),
                 f.bracket("("),
                 f.operator("..."),
                 f.operator("..."),

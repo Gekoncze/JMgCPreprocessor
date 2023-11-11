@@ -55,21 +55,21 @@ public @Test class PreprocessorTest {
         Assert.assertEquals(1, macros.getDefinitions().count());
         macroValidator.assertEquals(
             new Macro(
-                new NameToken("PLUS", 28),
-                new List<>(new NameToken("x", 33), new NameToken("y", 36)),
-                new List<>(new NameToken("x", 45), new OperatorToken("+", 47), new NameToken("y", 49))
+                new WordToken("PLUS", 28),
+                new List<>(new WordToken("x", 33), new WordToken("y", 36)),
+                new List<>(new WordToken("x", 45), new OperatorToken("+", 47), new WordToken("y", 49))
             ),
             macros.getDefinitions().getFirst()
         );
 
         tokenValidator.assertEquals(
             new List<>(
-                new NameToken("int", 52),
-                new NameToken("main", 56),
+                new WordToken("int", 52),
+                new WordToken("main", 56),
                 new BracketToken("(", 60),
                 new BracketToken(")", 61),
                 new BracketToken("{", 63),
-                new NameToken("printf", 69),
+                new WordToken("printf", 69),
                 new BracketToken("(", 75),
                 new DoubleQuoteToken("%s at line %i: %i\\n", 85),
                 new SeparatorToken(",", 106),
@@ -114,16 +114,16 @@ public @Test class PreprocessorTest {
 
         macroValidator.assertEquals(
             new Macro(
-                new NameToken("MINUS", 41),
-                new List<>(new NameToken("x", 47), new NameToken("y", 50)),
+                new WordToken("MINUS", 41),
+                new List<>(new WordToken("x", 47), new WordToken("y", 50)),
                 new List<>(
-                    new NameToken("OPERATION", 53),
+                    new WordToken("OPERATION", 53),
                     new BracketToken("(", 62),
-                    new NameToken("x", 63),
+                    new WordToken("x", 63),
                     new SeparatorToken(",", 64),
                     new OperatorToken("-", 66),
                     new SeparatorToken(",", 67),
-                    new NameToken("y", 69),
+                    new WordToken("y", 69),
                     new BracketToken(")", 70)
                 )
             ),
@@ -169,8 +169,8 @@ public @Test class PreprocessorTest {
         );
 
         Macros macros = new Macros();
-        macros.getDefinitions().addLast(new Macro(new NameToken("straw", -1), null, new List<>()));
-        macros.getDefinitions().addLast(new Macro(new NameToken("berry", -1), null, new List<>()));
+        macros.getDefinitions().addLast(new Macro(new WordToken("straw", -1), null, new List<>()));
+        macros.getDefinitions().addLast(new Macro(new WordToken("berry", -1), null, new List<>()));
 
         List<Token> tokens = preprocessor.preprocess(file, macros);
 

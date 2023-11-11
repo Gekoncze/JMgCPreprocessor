@@ -6,7 +6,7 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
@@ -55,19 +55,19 @@ public @Service class TokenConcatenationService {
     }
 
     private @Mandatory Token concatenate(@Mandatory Token left, @Mandatory Token right) {
-        if (left instanceof NameToken && right instanceof NameToken) {
-            return new NameToken(left.getText() + right.getText(), left.getPosition());
+        if (left instanceof WordToken && right instanceof WordToken) {
+            return new WordToken(left.getText() + right.getText(), left.getPosition());
         }
 
-        if (left instanceof NameToken && right instanceof NumberToken) {
-            return new NameToken(left.getText() + right.getText(), left.getPosition());
+        if (left instanceof WordToken && right instanceof NumberToken) {
+            return new WordToken(left.getText() + right.getText(), left.getPosition());
         }
 
         if (left instanceof NumberToken && right instanceof NumberToken) {
             return new NumberToken(left.getText() + right.getText(), left.getPosition());
         }
 
-        if (left instanceof NumberToken && right instanceof NameToken) {
+        if (left instanceof NumberToken && right instanceof WordToken) {
             return new NumberToken(left.getText() + right.getText(), left.getPosition());
         }
 

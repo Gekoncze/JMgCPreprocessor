@@ -27,21 +27,21 @@ public @Test class DirectiveParsersTest {
 
     private void testParseDirectiveLine() {
         DefineDirective directive = (DefineDirective) parsers.parse(
-            new List<>(f.special("#"), f.name("define"), f.name("TEST"))
+            new List<>(f.special("#"), f.word("define"), f.word("TEST"))
         );
 
         Assert.assertNotNull(directive);
-        validator.assertEquals(f.name("define"), directive.getKeyword());
+        validator.assertEquals(f.word("define"), directive.getKeyword());
         Assert.assertNotNull(directive.getMacro());
     }
 
     private void testParseNonDirectiveLine() {
-        Assert.assertNull(parsers.parse(new List<>(f.name("define"), f.name("TEST"))));
+        Assert.assertNull(parsers.parse(new List<>(f.word("define"), f.word("TEST"))));
     }
 
     private void testParseUnsupportedDirectiveLine() {
         Assert.assertThatCode(() -> {
-            parsers.parse(new List<>(f.special("#"), f.name("unknown"), f.name("TEST")));
+            parsers.parse(new List<>(f.special("#"), f.word("unknown"), f.word("TEST")));
         }).throwsException(CodeException.class);
     }
 }

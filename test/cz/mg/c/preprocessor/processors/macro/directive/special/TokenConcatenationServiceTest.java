@@ -5,7 +5,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenValidator;
@@ -36,46 +36,46 @@ public @Test class TokenConcatenationServiceTest {
         );
 
         testConcatenate(
-            new List<>(f.name("a"), f.special("##")),
-            new List<>(f.name("a"), f.special("##"))
+            new List<>(f.word("a"), f.special("##")),
+            new List<>(f.word("a"), f.special("##"))
         );
 
         testConcatenate(
-            new List<>(f.special("##"), f.name("a")),
-            new List<>(f.special("##"), f.name("a"))
+            new List<>(f.special("##"), f.word("a")),
+            new List<>(f.special("##"), f.word("a"))
         );
 
         testConcatenate(
-            new List<>(new NameToken("foo", 3), new SpecialToken("##", 6), new NameToken("bar", 8)),
-            new List<>(new NameToken("foobar", 3))
+            new List<>(new WordToken("foo", 3), new SpecialToken("##", 6), new WordToken("bar", 8)),
+            new List<>(new WordToken("foobar", 3))
         );
 
         testConcatenate(
-            new List<>(f.name("f"), f.name("foo"), f.special("##"), f.name("bar"), f.name("b")),
-            new List<>(f.name("f"), f.name("foobar"), f.name("b"))
+            new List<>(f.word("f"), f.word("foo"), f.special("##"), f.word("bar"), f.word("b")),
+            new List<>(f.word("f"), f.word("foobar"), f.word("b"))
         );
 
         testConcatenate(
             new List<>(
                 f.whitespace(" "),
-                f.name("f"),
+                f.word("f"),
                 f.whitespace(" "),
-                f.name("foo"),
+                f.word("foo"),
                 f.whitespace(" "),
                 f.special("##"),
                 f.whitespace(" "),
-                f.name("bar"),
+                f.word("bar"),
                 f.whitespace(" "),
-                f.name("b"),
+                f.word("b"),
                 f.whitespace(" ")
             ),
             new List<>(
                 f.whitespace(" "),
-                f.name("f"),
+                f.word("f"),
                 f.whitespace(" "),
-                f.name("foobar"),
+                f.word("foobar"),
                 f.whitespace(" "),
-                f.name("b"),
+                f.word("b"),
                 f.whitespace(" ")
             )
         );

@@ -28,31 +28,31 @@ public @Test class MacroExpressionsTest {
 
     private void testEvaluateNotDefined() {
         MacroManager macros = new MacroManager(new Macros());
-        List<Token> tokens = new List<>(f.name("defined"), f.bracket("("), f.name("FOOBAR"), f.bracket(")"));
+        List<Token> tokens = new List<>(f.word("defined"), f.bracket("("), f.word("FOOBAR"), f.bracket(")"));
         Assert.assertEquals(false, expressions.evaluate(tokens, macros));
         Assert.assertEquals(false, macros.defined("defined"));
     }
 
     private void testEvaluateDefined() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOOBAR"), null, new List<>()));
-        List<Token> tokens = new List<>(f.name("defined"), f.bracket("("), f.name("FOOBAR"), f.bracket(")"));
+        macros.define(new Macro(f.word("FOOBAR"), null, new List<>()));
+        List<Token> tokens = new List<>(f.word("defined"), f.bracket("("), f.word("FOOBAR"), f.bracket(")"));
         Assert.assertEquals(true, expressions.evaluate(tokens, macros));
         Assert.assertEquals(false, macros.defined("defined"));
     }
 
     private void testEvaluateCombination1() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOOBAR"), null, new List<>()));
+        macros.define(new Macro(f.word("FOOBAR"), null, new List<>()));
         List<Token> tokens = new List<>(
-            f.name("defined"),
+            f.word("defined"),
             f.bracket("("),
-            f.name("FOOBAR"),
+            f.word("FOOBAR"),
             f.bracket(")"),
             f.operator("&&"),
-            f.name("defined"),
+            f.word("defined"),
             f.bracket("("),
-            f.name("BARFOO"),
+            f.word("BARFOO"),
             f.bracket(")")
         );
         Assert.assertEquals(false, expressions.evaluate(tokens, macros));
@@ -61,16 +61,16 @@ public @Test class MacroExpressionsTest {
 
     private void testEvaluateCombination2() {
         MacroManager macros = new MacroManager(new Macros());
-        macros.define(new Macro(f.name("FOOBAR"), null, new List<>()));
+        macros.define(new Macro(f.word("FOOBAR"), null, new List<>()));
         List<Token> tokens = new List<>(
-            f.name("defined"),
+            f.word("defined"),
             f.bracket("("),
-            f.name("FOOBAR"),
+            f.word("FOOBAR"),
             f.bracket(")"),
             f.operator("||"),
-            f.name("defined"),
+            f.word("defined"),
             f.bracket("("),
-            f.name("BARFOO"),
+            f.word("BARFOO"),
             f.bracket(")")
         );
         Assert.assertEquals(true, expressions.evaluate(tokens, macros));

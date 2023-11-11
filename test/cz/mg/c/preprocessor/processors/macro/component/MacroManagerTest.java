@@ -8,7 +8,7 @@ import cz.mg.c.preprocessor.processors.macro.entities.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
 import java.util.NoSuchElementException;
 
@@ -36,7 +36,7 @@ public @Test class MacroManagerTest {
         Assert.assertEquals(true, macros.getDefinitions().isEmpty());
 
         Macro first = new Macro(new Token("MACRO", 0), new List<>(), new List<>());
-        Macro second = new Macro(new Token("MACRO", 0), new List<>(), new List<>(new NameToken("foo", 0)));
+        Macro second = new Macro(new Token("MACRO", 0), new List<>(), new List<>(new WordToken("foo", 0)));
 
         manager.define(first);
 

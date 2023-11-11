@@ -28,10 +28,10 @@ public @Test class WarningDirectiveParserTest {
         parserValidator.validate(WarningDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.name("warning"), f.name("doko"), f.name("doko"), f.name("doko")),
+            new List<>(f.special("#"), f.word("warning"), f.word("doko"), f.word("doko"), f.word("doko")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.name("warning"), directive.getKeyword())
+            directive -> tokenValidator.assertEquals(f.word("warning"), directive.getKeyword())
         );
 
         mutator.mutate(
@@ -39,18 +39,18 @@ public @Test class WarningDirectiveParserTest {
                 f.whitespace(" "),
                 f.special("#"),
                 f.whitespace(" "),
-                f.name("warning"),
+                f.word("warning"),
                 f.whitespace(" "),
-                f.name("doko"),
+                f.word("doko"),
                 f.whitespace(" "),
-                f.name("doko"),
+                f.word("doko"),
                 f.whitespace(" "),
-                f.name("doko"),
+                f.word("doko"),
                 f.whitespace(" ")
             ),
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.name("warning"), directive.getKeyword())
+            directive -> tokenValidator.assertEquals(f.word("warning"), directive.getKeyword())
         );
     }
 }

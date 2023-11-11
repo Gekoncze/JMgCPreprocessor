@@ -27,7 +27,7 @@ public @Test class NewlineProcessorTest {
 
     private void testProcessingNewlines() {
         List<Token> tokens = new List<>(
-            f.name("a"),
+            f.word("a"),
             f.whitespace("\n"),
             f.number("11"),
             f.number("69"),
@@ -36,7 +36,7 @@ public @Test class NewlineProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(3, lines.count());
-        validator.assertEquals(new List<>(f.name("a")), lines.get(0));
+        validator.assertEquals(new List<>(f.word("a")), lines.get(0));
         validator.assertEquals(new List<>(f.number("11"), f.number("69")), lines.get(1));
         validator.assertEquals(new List<>(f.separator(";")), lines.get(2));
     }
@@ -45,37 +45,37 @@ public @Test class NewlineProcessorTest {
         List<Token> tokens = new List<>(
             f.whitespace("\n"),
             f.number("3"),
-            f.name("foo"),
+            f.word("foo"),
             f.whitespace(" ")
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
         validator.assertEquals(new List<>(), lines.get(0));
-        validator.assertEquals(new List<>(f.number("3"), f.name("foo"), f.whitespace(" ")), lines.get(1));
+        validator.assertEquals(new List<>(f.number("3"), f.word("foo"), f.whitespace(" ")), lines.get(1));
     }
 
     private void testProcessingMiddle() {
         List<Token> tokens = new List<>(
-            f.name("foo"),
+            f.word("foo"),
             f.whitespace("\n"),
-            f.name("bar")
+            f.word("bar")
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        validator.assertEquals(new List<>(f.name("foo")), lines.get(0));
-        validator.assertEquals(new List<>(f.name("bar")), lines.get(1));
+        validator.assertEquals(new List<>(f.word("foo")), lines.get(0));
+        validator.assertEquals(new List<>(f.word("bar")), lines.get(1));
     }
 
     private void testProcessingLast() {
         List<Token> tokens = new List<>(
             f.whitespace("\t"),
-            f.name("Pony"),
+            f.word("Pony"),
             f.operator("!"),
             f.whitespace("\n")
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        validator.assertEquals(new List<>(f.whitespace("\t"), f.name("Pony"), f.operator("!")), lines.get(0));
+        validator.assertEquals(new List<>(f.whitespace("\t"), f.word("Pony"), f.operator("!")), lines.get(0));
         validator.assertEquals(new List<>(), lines.get(1));
     }
 }

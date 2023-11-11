@@ -28,24 +28,24 @@ public @Test class MacroProcessorTest {
 
     private void testProcessing() {
         Macros macros = new Macros();
-        macros.getDefinitions().addLast(new Macro(f.name("FOO"), null, new List<>()));
-        macros.getDefinitions().addLast(new Macro(f.name("DELETE_ME_NOW"), null, new List<>()));
+        macros.getDefinitions().addLast(new Macro(f.word("FOO"), null, new List<>()));
+        macros.getDefinitions().addLast(new Macro(f.word("DELETE_ME_NOW"), null, new List<>()));
 
         List<List<Token>> lines = new List<>(
             new List<>(f.number("1")),
-            new List<>(f.special("#"), f.name("ifdef"), f.name("FOO")),
+            new List<>(f.special("#"), f.word("ifdef"), f.word("FOO")),
             new List<>(f.number("2")),
-            new List<>(f.special("#"), f.name("ifdef"), f.name("BAR")),
+            new List<>(f.special("#"), f.word("ifdef"), f.word("BAR")),
             new List<>(f.number("3")),
-            new List<>(f.special("#"), f.name("else")),
+            new List<>(f.special("#"), f.word("else")),
             new List<>(f.number("4")),
-            new List<>(f.special("#"), f.name("endif")),
+            new List<>(f.special("#"), f.word("endif")),
             new List<>(f.number("5")),
-            new List<>(f.special("#"), f.name("else")),
+            new List<>(f.special("#"), f.word("else")),
             new List<>(f.number("6")),
-            new List<>(f.special("#"), f.name("endif")),
+            new List<>(f.special("#"), f.word("endif")),
             new List<>(f.number("7")),
-            new List<>(f.special("#"), f.name("undef"), f.name("DELETE_ME_NOW"))
+            new List<>(f.special("#"), f.word("undef"), f.word("DELETE_ME_NOW"))
         );
 
         List<Token> actualTokens = macroProcessor.process(lines, macros);
@@ -66,7 +66,7 @@ public @Test class MacroProcessorTest {
 
     private void testProcessingError() {
         Assert.assertThatCode(() -> {
-            macroProcessor.process(new List<List<Token>>(new List<>(f.special("#"), f.name("error"))), new Macros());
+            macroProcessor.process(new List<List<Token>>(new List<>(f.special("#"), f.word("error"))), new Macros());
         }).throwsException(ErrorException.class);
     }
 }

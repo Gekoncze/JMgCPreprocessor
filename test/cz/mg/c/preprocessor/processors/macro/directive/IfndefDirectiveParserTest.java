@@ -31,12 +31,12 @@ public @Test class IfndefDirectiveParserTest {
         parserValidator.validate(IfndefDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.name("ifndef"), f.name("TEST")),
+            new List<>(f.special("#"), f.word("ifndef"), f.word("TEST")),
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.name("ifndef"), directive.getKeyword());
-                tokenValidator.assertEquals(f.name("TEST"), directive.getName());
+                tokenValidator.assertEquals(f.word("ifndef"), directive.getKeyword());
+                tokenValidator.assertEquals(f.word("TEST"), directive.getName());
             }
         );
 
@@ -45,16 +45,16 @@ public @Test class IfndefDirectiveParserTest {
                 f.whitespace(" "),
                 f.special("#"),
                 f.whitespace(" "),
-                f.name("ifndef"),
+                f.word("ifndef"),
                 f.whitespace(" "),
-                f.name("TEST"),
+                f.word("TEST"),
                 f.whitespace(" ")
             ),
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.name("ifndef"), directive.getKeyword());
-                tokenValidator.assertEquals(f.name("TEST"), directive.getName());
+                tokenValidator.assertEquals(f.word("ifndef"), directive.getKeyword());
+                tokenValidator.assertEquals(f.word("TEST"), directive.getName());
             }
         );
     }
@@ -63,8 +63,8 @@ public @Test class IfndefDirectiveParserTest {
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
                 f.special("#"),
-                f.name("ifndef"),
-                f.name("TEST"),
+                f.word("ifndef"),
+                f.word("TEST"),
                 f.whitespace(" ")
             )))
             .doesNotThrowAnyException();
@@ -72,28 +72,28 @@ public @Test class IfndefDirectiveParserTest {
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
                 f.special("#"),
-                f.name("ifndef"),
-                f.name("TEST"),
-                f.name("unexpected")
+                f.word("ifndef"),
+                f.word("TEST"),
+                f.word("unexpected")
             )))
             .throwsException(CodeException.class);
 
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
                 f.special("#"),
-                f.name("ifndef"),
-                f.name("TEST"),
+                f.word("ifndef"),
+                f.word("TEST"),
                 f.whitespace(""),
-                f.name("unexpected")
+                f.word("unexpected")
             )))
             .throwsException(CodeException.class);
 
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
                 f.special("#"),
-                f.name("ifndef"),
-                f.name("TEST"),
-                f.name("unexpected"),
+                f.word("ifndef"),
+                f.word("TEST"),
+                f.word("unexpected"),
                 f.whitespace(" ")
             )))
             .throwsException(CodeException.class);

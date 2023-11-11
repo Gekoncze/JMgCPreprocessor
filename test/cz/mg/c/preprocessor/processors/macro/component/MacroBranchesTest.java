@@ -48,10 +48,10 @@ public @Test class MacroBranchesTest {
     private void test() {
         MacroBranches branches = new MacroBranches();
 
-        Directive fooBegin = new IfdefDirective(f.name("ifdef"), f.name("FOO"));
-        Directive fooElse = new ElseDirective(f.name("else"));
-        Directive barElse = new ElseDirective(f.name("else"));
-        Directive barEnd = new EndifDirective(f.name("endif"));
+        Directive fooBegin = new IfdefDirective(f.word("ifdef"), f.word("FOO"));
+        Directive fooElse = new ElseDirective(f.word("else"));
+        Directive barElse = new ElseDirective(f.word("else"));
+        Directive barEnd = new EndifDirective(f.word("endif"));
 
         Assert.assertEquals(trueBranch, branches.getBranch());
 

@@ -33,8 +33,8 @@ public @Test class CommentProcessorTest {
         );
 
         testProcessing(
-            new List<>(f.name("a")),
-            new List<>(f.name("a"))
+            new List<>(f.word("a")),
+            new List<>(f.word("a"))
         );
 
         testProcessing(

@@ -10,7 +10,7 @@ import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.test.TokenValidator;
 
 import java.nio.file.Path;
@@ -39,7 +39,7 @@ public @Test class FileMacroExpansionServiceTest {
         MacroManager macros = new MacroManager(new Macros());
         FileMacro fileMacro = new FileMacro(file);
         macros.define(fileMacro);
-        MacroCall call = new MacroCall(fileMacro, new NameToken("__FILE__", 48), new List<>());
+        MacroCall call = new MacroCall(fileMacro, new WordToken("__FILE__", 48), new List<>());
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>(new DoubleQuoteToken(file.getPath().toAbsolutePath().toString(), 48));
         validator.assertEquals(expectedTokens, actualTokens);

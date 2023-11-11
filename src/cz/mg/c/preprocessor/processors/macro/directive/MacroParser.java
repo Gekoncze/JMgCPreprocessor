@@ -33,7 +33,7 @@ public @Service class MacroParser {
         reader.skip(WhitespaceToken.class);
         reader.read("#", SpecialToken.class);
         reader.skip(WhitespaceToken.class);
-        reader.read(DefineDirective.KEYWORD, NameToken.class);
+        reader.read(DefineDirective.KEYWORD, WordToken.class);
         reader.skip(WhitespaceToken.class);
         return new Macro(
             readName(reader),
@@ -43,7 +43,7 @@ public @Service class MacroParser {
     }
 
     private @Mandatory Token readName(@Mandatory TokenReader reader) {
-        return reader.read(NameToken.class);
+        return reader.read(WordToken.class);
     }
 
     private @Optional List<Token> readParameters(@Mandatory TokenReader reader) {
@@ -66,10 +66,10 @@ public @Service class MacroParser {
                     if (expectedName) {
                         if (reader.has("...", OperatorToken.class)) {
                             Token varargs = reader.read();
-                            parameters.addLast(new NameToken("", varargs.getPosition()));
+                            parameters.addLast(new WordToken("", varargs.getPosition()));
                             parameters.addLast(varargs);
                         } else {
-                            parameters.addLast(reader.read(NameToken.class));
+                            parameters.addLast(reader.read(WordToken.class));
                             if (reader.has("...", OperatorToken.class)) {
                                 parameters.addLast(reader.read());
                             }

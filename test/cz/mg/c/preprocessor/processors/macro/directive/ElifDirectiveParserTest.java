@@ -28,11 +28,11 @@ public @Test class ElifDirectiveParserTest {
         parserValidator.validate(ElifDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.name("elif"), f.number("1"), f.operator("<"), f.number("2")),
+            new List<>(f.special("#"), f.word("elif"), f.number("1"), f.operator("<"), f.number("2")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.name("elif"), directive.getKeyword());
+                tokenValidator.assertEquals(f.word("elif"), directive.getKeyword());
                 tokenValidator.assertEquals(
                     new List<>(f.number("1"), f.operator("<"), f.number("2")),
                     directive.getExpression()
@@ -45,7 +45,7 @@ public @Test class ElifDirectiveParserTest {
                 f.whitespace(" "),
                 f.special("#"),
                 f.whitespace(" "),
-                f.name("elif"),
+                f.word("elif"),
                 f.whitespace(" "),
                 f.number("1"),
                 f.whitespace(" "),
@@ -57,7 +57,7 @@ public @Test class ElifDirectiveParserTest {
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.name("elif"), directive.getKeyword());
+                tokenValidator.assertEquals(f.word("elif"), directive.getKeyword());
                 tokenValidator.assertEquals(
                     new List<>(
                         f.whitespace(" "),

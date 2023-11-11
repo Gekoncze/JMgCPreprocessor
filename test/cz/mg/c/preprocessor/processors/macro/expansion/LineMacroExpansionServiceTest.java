@@ -10,7 +10,7 @@ import cz.mg.c.preprocessor.processors.macro.entities.system.LineMacro;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.test.TokenValidator;
 
@@ -42,7 +42,7 @@ public @Test class LineMacroExpansionServiceTest {
         FileMacro fileMacro = new FileMacro(file);
         macros.define(lineMacro);
         macros.define(fileMacro);
-        MacroCall call = new MacroCall(lineMacro, new NameToken("__LINE__", 48), new List<>());
+        MacroCall call = new MacroCall(lineMacro, new WordToken("__LINE__", 48), new List<>());
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>(new NumberToken("2", 48));
         validator.assertEquals(expectedTokens, actualTokens);

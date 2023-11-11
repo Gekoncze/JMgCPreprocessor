@@ -35,11 +35,11 @@ public @Test class MacroExpansionServicesTest {
 
     private void testExpandPlainMacro() {
         MacroManager macros = new MacroManager(new Macros());
-        Macro macro = new Macro(f.name("MACRO"), new List<>(), new List<>(f.name("Aki")));
+        Macro macro = new Macro(f.word("MACRO"), new List<>(), new List<>(f.word("Aki")));
         macros.define(macro);
-        MacroCall call = new MacroCall(macro, f.name("MACRO"), new List<>());
+        MacroCall call = new MacroCall(macro, f.word("MACRO"), new List<>());
         List<Token> actualTokens = services.expand(call, macros);
-        List<Token> expectedTokens = new List<>(f.name("Aki"));
+        List<Token> expectedTokens = new List<>(f.word("Aki"));
         validator.assertEquals(expectedTokens, actualTokens);
     }
 
@@ -48,7 +48,7 @@ public @Test class MacroExpansionServicesTest {
         File file = new File(Path.of("chan"), "");
         FileMacro fileMacro = new FileMacro(file);
         macros.define(fileMacro);
-        MacroCall call = new MacroCall(fileMacro, f.name("__FILE__"), null);
+        MacroCall call = new MacroCall(fileMacro, f.word("__FILE__"), null);
         List<Token> actualTokens = services.expand(call, macros);
         List<Token> expectedTokens = new List<>(f.doubleQuote(file.getPath().toAbsolutePath().toString()));
         validator.assertEquals(expectedTokens, actualTokens);
@@ -57,9 +57,9 @@ public @Test class MacroExpansionServicesTest {
     private void testValidation() {
         Assert.assertThatCode(() -> {
             MacroManager macros = new MacroManager(new Macros());
-            Macro macro = new Macro(f.name("FAIL"), null, null);
+            Macro macro = new Macro(f.word("FAIL"), null, null);
             macros.define(macro);
-            MacroCall call = new MacroCall(macro, f.name("FAIL"), new List<>());
+            MacroCall call = new MacroCall(macro, f.word("FAIL"), new List<>());
             services.expand(call, macros);
         }).throwsException(CodeException.class);
     }

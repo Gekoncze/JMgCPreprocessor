@@ -28,10 +28,10 @@ public @Test class ErrorDirectiveParserTest {
         parserValidator.validate(ErrorDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.name("error"), f.name("oi"), f.name("oi"), f.name("oi")),
+            new List<>(f.special("#"), f.word("error"), f.word("oi"), f.word("oi"), f.word("oi")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.name("error"), directive.getKeyword())
+            directive -> tokenValidator.assertEquals(f.word("error"), directive.getKeyword())
         );
 
         mutator.mutate(
@@ -39,18 +39,18 @@ public @Test class ErrorDirectiveParserTest {
                 f.whitespace(" "),
                 f.special("#"),
                 f.whitespace(" "),
-                f.name("error"),
+                f.word("error"),
                 f.whitespace(" "),
-                f.name("oi"),
+                f.word("oi"),
                 f.whitespace(" "),
-                f.name("oi"),
+                f.word("oi"),
                 f.whitespace(" "),
-                f.name("oi"),
+                f.word("oi"),
                 f.whitespace(" ")
             ),
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.name("error"), directive.getKeyword())
+            directive -> tokenValidator.assertEquals(f.word("error"), directive.getKeyword())
         );
     }
 }

@@ -5,7 +5,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
 import cz.mg.c.preprocessor.test.MacroValidator;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.tokens.NameToken;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.test.TokenMutator;
 
@@ -27,17 +27,17 @@ public @Test class SpecialMacroParserTest {
         mutator.mutate(
             new List<>(
                 new SpecialToken("#", 0),
-                new NameToken("define", 1),
-                new NameToken("TEST", 10),
-                new NameToken("foo", 15),
+                new WordToken("define", 1),
+                new WordToken("TEST", 10),
+                new WordToken("foo", 15),
                 new SpecialToken("#", 19),
                 new SpecialToken("#", 20),
-                new NameToken("bar", 25)
+                new WordToken("bar", 25)
             ),
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             macro -> validator.assertEquals(
-                new Macro(new NameToken("TEST", 10), null, new List<>(new NameToken("foobar", 15))),
+                new Macro(new WordToken("TEST", 10), null, new List<>(new WordToken("foobar", 15))),
                 macro
             )
         );
