@@ -3,7 +3,7 @@ package cz.mg.c.preprocessor.processors.macro.entities.directives;
 import cz.mg.annotations.classes.Entity;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Value;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
 import java.nio.file.Path;
 
@@ -16,7 +16,7 @@ public @Entity class IncludeDirective extends Directive {
     public IncludeDirective() {
     }
 
-    public IncludeDirective(Token keyword) {
+    public IncludeDirective(WordToken keyword) {
         super(keyword);
     }
 

@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Entity;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Shared;
 import cz.mg.c.preprocessor.processors.macro.entities.Macro;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
 public @Entity class DefineDirective extends Directive {
     public static final String KEYWORD = "define";
@@ -14,7 +14,7 @@ public @Entity class DefineDirective extends Directive {
     public DefineDirective() {
     }
 
-    public DefineDirective(Token keyword, Macro macro) {
+    public DefineDirective(WordToken keyword, Macro macro) {
         super(keyword);
         this.macro = macro;
     }

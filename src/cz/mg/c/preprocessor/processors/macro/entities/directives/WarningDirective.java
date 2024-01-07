@@ -1,7 +1,7 @@
 package cz.mg.c.preprocessor.processors.macro.entities.directives;
 
 import cz.mg.annotations.classes.Entity;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
 public @Entity class WarningDirective extends Directive {
     public static final String KEYWORD = "warning";
@@ -9,7 +9,7 @@ public @Entity class WarningDirective extends Directive {
     public WarningDirective() {
     }
 
-    public WarningDirective(Token keyword) {
+    public WarningDirective(WordToken keyword) {
         super(keyword);
     }
 }

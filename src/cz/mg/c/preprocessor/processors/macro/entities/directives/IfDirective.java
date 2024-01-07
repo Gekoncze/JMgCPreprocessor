@@ -5,6 +5,7 @@ import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Shared;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
 public @Entity class IfDirective extends Directive {
     public static final String KEYWORD = "if";
@@ -14,7 +15,7 @@ public @Entity class IfDirective extends Directive {
     public IfDirective() {
     }
 
-    public IfDirective(Token keyword, List<Token> expression) {
+    public IfDirective(WordToken keyword, List<Token> expression) {
         super(keyword);
         this.expression = expression;
     }

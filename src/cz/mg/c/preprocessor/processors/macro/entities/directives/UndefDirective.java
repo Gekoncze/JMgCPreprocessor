@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Entity;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Shared;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
 public @Entity class UndefDirective extends Directive {
     public static final String KEYWORD = "undef";
@@ -13,7 +14,7 @@ public @Entity class UndefDirective extends Directive {
     public UndefDirective() {
     }
 
-    public UndefDirective(Token keyword, Token name) {
+    public UndefDirective(WordToken keyword, Token name) {
         super(keyword);
         this.name = name;
     }
