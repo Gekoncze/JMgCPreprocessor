@@ -42,7 +42,7 @@ public @Service class MacroParser {
         );
     }
 
-    private @Mandatory Token readName(@Mandatory TokenReader reader) {
+    private @Mandatory WordToken readName(@Mandatory TokenReader reader) {
         return reader.read(WordToken.class);
     }
 

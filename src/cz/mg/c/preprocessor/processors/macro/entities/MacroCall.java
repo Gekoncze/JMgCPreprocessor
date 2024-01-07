@@ -7,16 +7,17 @@ import cz.mg.annotations.storage.Link;
 import cz.mg.annotations.storage.Part;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
 public @Entity class MacroCall {
     private Macro macro;
-    private Token token;
+    private WordToken token;
     private List<List<Token>> arguments;
 
     public MacroCall() {
     }
 
-    public MacroCall(Macro macro, Token token, List<List<Token>> arguments) {
+    public MacroCall(Macro macro, WordToken token, List<List<Token>> arguments) {
         this.macro = macro;
         this.token = token;
         this.arguments = arguments;
@@ -32,11 +33,11 @@ public @Entity class MacroCall {
     }
 
     @Required @Part
-    public Token getToken() {
+    public WordToken getToken() {
         return token;
     }
 
-    public void setToken(Token token) {
+    public void setToken(WordToken token) {
         this.token = token;
     }
 

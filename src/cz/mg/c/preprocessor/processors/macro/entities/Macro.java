@@ -6,16 +6,17 @@ import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Part;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.collections.list.List;
+import cz.mg.tokenizer.entities.tokens.WordToken;
 
 public @Entity class Macro {
-    private Token name;
+    private WordToken name;
     private List<Token> parameters;
     private List<Token> tokens = new List<>();
 
     public Macro() {
     }
 
-    public Macro(Token name, List<Token> parameters, List<Token> tokens) {
+    public Macro(WordToken name, List<Token> parameters, List<Token> tokens) {
         this.name = name;
         this.parameters = parameters;
         this.tokens = tokens;
@@ -26,7 +27,7 @@ public @Entity class Macro {
         return name;
     }
 
-    public void setName(Token name) {
+    public void setName(WordToken name) {
         this.name = name;
     }
 

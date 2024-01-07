@@ -35,8 +35,8 @@ public @Test class MacroManagerTest {
         Assert.assertSame(null, manager.getOptional("foo"));
         Assert.assertEquals(true, macros.getDefinitions().isEmpty());
 
-        Macro first = new Macro(new Token("MACRO", 0), new List<>(), new List<>());
-        Macro second = new Macro(new Token("MACRO", 0), new List<>(), new List<>(new WordToken("foo", 0)));
+        Macro first = new Macro(new WordToken("MACRO", 0), new List<>(), new List<>());
+        Macro second = new Macro(new WordToken("MACRO", 0), new List<>(), new List<>(new WordToken("foo", 0)));
 
         manager.define(first);
 
@@ -79,7 +79,7 @@ public @Test class MacroManagerTest {
     private void testTemporary() {
         Macros macros = new Macros();
         MacroManager manager = new MacroManager(macros);
-        Macro macro = new Macro(new Token("MACRO", 0), new List<>(), new List<>());
+        Macro macro = new Macro(new WordToken("MACRO", 0), new List<>(), new List<>());
 
         Integer result = manager.temporary(() -> {
             Assert.assertSame(macro, macros.getDefinitions().getFirst());

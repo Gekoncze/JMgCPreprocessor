@@ -59,7 +59,7 @@ public @Component class MacroExpander {
                 } else if (isMacroInPath(macro, path)) {
                     tokens.addLast(token);
                 } else {
-                    call = new MacroCall(macro, token, null);
+                    call = new MacroCall(macro, (WordToken) token, null);
                     nesting = 0;
                     if (macro.getParameters() == null) {
                         expandCall(path);
