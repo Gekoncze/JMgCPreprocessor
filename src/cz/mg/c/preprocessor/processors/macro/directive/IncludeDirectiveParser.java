@@ -7,9 +7,9 @@ import cz.mg.c.preprocessor.processors.macro.entities.directives.IncludeDirectiv
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
+import cz.mg.tokenizer.entities.tokens.*;
+
+import java.nio.file.Path;
 
 public @Service class IncludeDirectiveParser implements DirectiveParser {
     private static volatile @Service IncludeDirectiveParser instance;
@@ -41,6 +41,46 @@ public @Service class IncludeDirectiveParser implements DirectiveParser {
         reader.read("#", SpecialToken.class);
         reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(IncludeDirective.KEYWORD, WordToken.class));
+        reader.skip(WhitespaceToken.class);
+        if (reader.has(DoubleQuoteToken.class)) {
+            directive.setLibrary(false);
+            directive.setPath(Path.of(readLocalPath(reader)));
+        } else {
+            directive.setLibrary(true);
+            directive.setPath(Path.of(readLibraryPath(reader)));
+        }
+        reader.skip(WhitespaceToken.class);
+        reader.readEnd();
         return directive;
+    }
+
+    private @Mandatory String readLocalPath(@Mandatory TokenReader reader) {
+        return reader.read(DoubleQuoteToken.class).getText();
+    }
+
+    private @Mandatory String readLibraryPath(@Mandatory TokenReader reader) {
+        StringBuilder builder = new StringBuilder();
+        reader.read("<", OperatorToken.class);
+        while (reader.has()) {
+            if (reader.has(">", OperatorToken.class)) {
+                reader.read();
+                break;
+            } else if (reader.has(this::pathToken)) {
+                builder.append(reader.read().getText());
+            } else {
+                Token token = reader.read();
+                throw new PreprocessorException(
+                    token.getPosition(),
+                    "Unexpected token of type " + token.getClass().getSimpleName() + "."
+                );
+            }
+        }
+        return builder.toString().trim();
+    }
+
+    private boolean pathToken(@Mandatory Token token) {
+        return token instanceof WordToken
+            || token instanceof OperatorToken
+            || token instanceof WhitespaceToken;
     }
 }
