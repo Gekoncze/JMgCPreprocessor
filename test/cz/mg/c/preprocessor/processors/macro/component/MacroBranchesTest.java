@@ -7,10 +7,10 @@ import cz.mg.c.preprocessor.processors.macro.branch.MacroCompletedBranchProcesso
 import cz.mg.c.preprocessor.processors.macro.branch.MacroFalseBranchProcessor;
 import cz.mg.c.preprocessor.processors.macro.branch.MacroTrueBranchProcessor;
 import cz.mg.c.preprocessor.processors.macro.components.MacroBranches;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.Directive;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.ElseDirective;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.EndifDirective;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.IfdefDirective;
+import cz.mg.c.entities.directives.Directive;
+import cz.mg.c.entities.directives.ElseDirective;
+import cz.mg.c.entities.directives.EndifDirective;
+import cz.mg.c.entities.directives.IfdefDirective;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.CodeException;
 import cz.mg.tokenizer.test.TokenFactory;

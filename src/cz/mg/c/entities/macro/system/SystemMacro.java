@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.processors.macro.entities.system;
+package cz.mg.c.entities.macro.system;
 
 import cz.mg.annotations.classes.Entity;
 

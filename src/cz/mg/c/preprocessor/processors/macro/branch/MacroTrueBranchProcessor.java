@@ -2,12 +2,12 @@ package cz.mg.c.preprocessor.processors.macro.branch;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.c.entities.directives.*;
 import cz.mg.c.preprocessor.processors.macro.components.MacroBranches;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
 import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
-import cz.mg.c.preprocessor.processors.macro.entities.Macro;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.*;
+import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.preprocessor.processors.macro.exceptions.ErrorException;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.processors.macro.expression.MacroExpressions;

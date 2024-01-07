@@ -2,8 +2,8 @@ package cz.mg.c.preprocessor.processors.macro;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.macro.entities.Macro;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
+import cz.mg.c.entities.macro.Macro;
+import cz.mg.c.entities.macro.Macros;
 import cz.mg.c.preprocessor.processors.macro.exceptions.ErrorException;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;

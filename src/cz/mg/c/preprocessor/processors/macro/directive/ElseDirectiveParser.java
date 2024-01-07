@@ -3,7 +3,7 @@ package cz.mg.c.preprocessor.processors.macro.directive;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.exceptions.PreprocessorException;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.ElseDirective;
+import cz.mg.c.entities.directives.ElseDirective;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;

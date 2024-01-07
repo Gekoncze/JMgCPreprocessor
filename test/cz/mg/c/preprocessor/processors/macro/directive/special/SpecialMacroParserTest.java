@@ -2,7 +2,7 @@ package cz.mg.c.preprocessor.processors.macro.directive.special;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.preprocessor.test.MacroValidator;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.tokens.WordToken;

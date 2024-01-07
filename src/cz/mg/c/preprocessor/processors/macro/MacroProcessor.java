@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.preprocessor.processors.macro.components.MacroBranches;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
 import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
-import cz.mg.c.preprocessor.processors.macro.entities.Macros;
+import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 

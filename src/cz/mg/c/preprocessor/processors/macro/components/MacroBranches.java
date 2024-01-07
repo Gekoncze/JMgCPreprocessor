@@ -3,7 +3,7 @@ package cz.mg.c.preprocessor.processors.macro.components;
 import cz.mg.annotations.classes.Component;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.Directive;
+import cz.mg.c.entities.directives.Directive;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.processors.macro.branch.MacroBranchProcessor;
 import cz.mg.c.preprocessor.processors.macro.branch.MacroCompletedBranchProcessor;

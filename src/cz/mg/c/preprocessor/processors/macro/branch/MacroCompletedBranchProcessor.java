@@ -6,8 +6,8 @@ import cz.mg.c.preprocessor.processors.macro.components.MacroBranches;
 import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
 import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.Directive;
-import cz.mg.c.preprocessor.processors.macro.entities.directives.EndifDirective;
+import cz.mg.c.entities.directives.Directive;
+import cz.mg.c.entities.directives.EndifDirective;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
 

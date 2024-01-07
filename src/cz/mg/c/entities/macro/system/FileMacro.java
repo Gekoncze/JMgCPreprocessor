@@ -1,10 +1,10 @@
-package cz.mg.c.preprocessor.processors.macro.entities.system;
+package cz.mg.c.entities.macro.system;
 
 import cz.mg.annotations.classes.Entity;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Required;
 import cz.mg.annotations.storage.Link;
-import cz.mg.c.preprocessor.processors.macro.entities.Macro;
+import cz.mg.c.entities.macro.Macro;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.tokenizer.entities.tokens.WordToken;

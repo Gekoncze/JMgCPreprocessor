@@ -2,8 +2,8 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.macro.entities.Macro;
-import cz.mg.c.preprocessor.processors.macro.entities.MacroCall;
+import cz.mg.c.entities.macro.Macro;
+import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
