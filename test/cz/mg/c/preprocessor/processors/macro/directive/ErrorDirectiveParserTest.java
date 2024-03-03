@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
+import cz.mg.test.Assert;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenMutator;
 import cz.mg.tokenizer.test.TokenValidator;
@@ -28,10 +29,33 @@ public @Test class ErrorDirectiveParserTest {
         parserValidator.validate(ErrorDirectiveParser.getInstance());
 
         mutator.mutate(
+            new List<>(f.special("#"), f.word("error")),
+            new List<>(0, 1),
+            tokens -> parser.parse(tokens),
+            directive -> {
+                tokenValidator.assertEquals(f.word("error"), directive.getKeyword());
+                Assert.assertNull(directive.getMessage());
+            }
+        );
+
+        mutator.mutate(
+            new List<>(f.special("#"), f.word("error"), f.whitespace(" ")),
+            new List<>(0, 1),
+            tokens -> parser.parse(tokens),
+            directive -> {
+                tokenValidator.assertEquals(f.word("error"), directive.getKeyword());
+                Assert.assertNull(directive.getMessage());
+            }
+        );
+
+        mutator.mutate(
             new List<>(f.special("#"), f.word("error"), f.word("oi"), f.word("oi"), f.word("oi")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.word("error"), directive.getKeyword())
+            directive -> {
+                tokenValidator.assertEquals(f.word("error"), directive.getKeyword());
+                Assert.assertEquals("oioioi", directive.getMessage());
+            }
         );
 
         mutator.mutate(
@@ -50,7 +74,10 @@ public @Test class ErrorDirectiveParserTest {
             ),
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.word("error"), directive.getKeyword())
+            directive -> {
+                tokenValidator.assertEquals(f.word("error"), directive.getKeyword());
+                Assert.assertEquals("oi oi oi", directive.getMessage());
+            }
         );
     }
 }

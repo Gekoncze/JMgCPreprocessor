@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
+import cz.mg.test.Assert;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenMutator;
 import cz.mg.tokenizer.test.TokenValidator;
@@ -28,10 +29,46 @@ public @Test class WarningDirectiveParserTest {
         parserValidator.validate(WarningDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.word("warning"), f.word("doko"), f.word("doko"), f.word("doko")),
+            new List<>(
+                f.special("#"),
+                f.word("warning")
+            ),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.word("warning"), directive.getKeyword())
+            directive -> {
+                tokenValidator.assertEquals(f.word("warning"), directive.getKeyword());
+                Assert.assertNull(directive.getMessage());
+            }
+        );
+
+        mutator.mutate(
+            new List<>(
+                f.special("#"),
+                f.word("warning"),
+                f.whitespace(" ")
+            ),
+            new List<>(0, 1),
+            tokens -> parser.parse(tokens),
+            directive -> {
+                tokenValidator.assertEquals(f.word("warning"), directive.getKeyword());
+                Assert.assertNull(directive.getMessage());
+            }
+        );
+
+        mutator.mutate(
+            new List<>(
+                f.special("#"),
+                f.word("warning"),
+                f.word("doko"),
+                f.word("doko"),
+                f.word("doko")
+            ),
+            new List<>(0, 1),
+            tokens -> parser.parse(tokens),
+            directive -> {
+                tokenValidator.assertEquals(f.word("warning"), directive.getKeyword());
+                Assert.assertEquals("dokodokodoko", directive.getMessage());
+            }
         );
 
         mutator.mutate(
@@ -50,7 +87,10 @@ public @Test class WarningDirectiveParserTest {
             ),
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.word("warning"), directive.getKeyword())
+            directive -> {
+                tokenValidator.assertEquals(f.word("warning"), directive.getKeyword());
+                Assert.assertEquals("doko doko doko", directive.getMessage());
+            }
         );
     }
 }
