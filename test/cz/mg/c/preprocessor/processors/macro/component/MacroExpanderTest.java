@@ -9,7 +9,7 @@ import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenValidator;
 
@@ -214,6 +214,6 @@ public @Test class MacroExpanderTest {
             macros.define(new Macro(f.word("FOO"), new List<>(), new List<>()));
             List<Token> line = new List<>(f.word("FOO"), f.bracket("("));
             MacroExpander.expand(line, macros);
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
     }
 }

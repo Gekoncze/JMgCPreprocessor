@@ -26,8 +26,8 @@ public @Component class MacroBranches {
         return levels.getLast().getValue();
     }
 
-    public void nest(@Mandatory Directive directive) {
-        levels.addLast(new Pair<>(directive, trueBranch));
+    public void nest(@Mandatory Directive directive, boolean activated) {
+        levels.addLast(new Pair<>(directive, activated ? trueBranch : falseBranch));
     }
 
     public void unnest(@Mandatory Directive directive) {

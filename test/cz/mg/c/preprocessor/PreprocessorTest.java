@@ -2,16 +2,20 @@ package cz.mg.c.preprocessor;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
+import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.Macros;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
+import cz.mg.c.preprocessor.test.MacroFactory;
 import cz.mg.c.preprocessor.test.MacroValidator;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.*;
+import cz.mg.tokenizer.exceptions.TraceableException;
+import cz.mg.tokenizer.services.UserExceptionFactory;
 import cz.mg.tokenizer.test.TokenValidator;
 
 import java.nio.file.Path;
@@ -25,6 +29,7 @@ public @Test class PreprocessorTest {
         test.testNestedMacros();
         test.testNestedConditions();
         test.testWhitespaces();
+        test.testExpressions();
 
         System.out.println("OK");
     }
@@ -32,6 +37,8 @@ public @Test class PreprocessorTest {
     private final @Service Preprocessor preprocessor = Preprocessor.getInstance();
     private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
     private final @Service MacroValidator macroValidator = MacroValidator.getInstance();
+    private final @Service UserExceptionFactory userExceptionFactory = UserExceptionFactory.getInstance();
+    private final @Service MacroFactory m = MacroFactory.getInstance();
 
     private void testProcessing() {
         File file = new File(
@@ -235,5 +242,34 @@ public @Test class PreprocessorTest {
         Assert.assertEquals(1, call.getArguments().count());
         Assert.assertEquals(1, call.getArguments().getFirst().count());
         Assert.assertEquals("7", call.getArguments().getFirst().getFirst().getText());
+    }
+
+    private void testExpressions() {
+        File file = new File(
+            Path.of("/test/file/main.c"),
+            "#ifndef FIRST_PRECONDITION\n" +
+            "    #if (SECOND_PRECONDITION==1)\n" +
+            "        #if (defined(__cplusplus) && (__cplusplus >= 201103L)) \\\n" +
+            "            || (defined(_MSVC_LANG) && (_MSVC_LANG >= 201103L))\n" +
+            "        #endif\n" +
+            "    #endif\n" +
+            "#endif"
+        );
+
+        Assert.assertThatCode(() -> wrap(file, () -> {
+            preprocessor.preprocess(file, m.create());
+        })).doesNotThrowAnyException();
+
+        Assert.assertThatCode(() -> wrap(file, () -> {
+            preprocessor.preprocess(file, m.create(m.create("FIRST_PRECONDITION")));
+        })).doesNotThrowAnyException();
+    }
+
+    private void wrap(@Mandatory File file, @Mandatory Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (TraceableException e) {
+            throw userExceptionFactory.create(file.getPath(), file.getContent(), e);
+        }
     }
 }

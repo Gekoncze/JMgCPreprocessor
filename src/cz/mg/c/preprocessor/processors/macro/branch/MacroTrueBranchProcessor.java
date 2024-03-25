@@ -64,21 +64,21 @@ public @Service class MacroTrueBranchProcessor implements MacroBranchProcessor {
         } else if (directive instanceof IfDirective) {
             List<Token> expression = ((IfDirective) directive).getExpression();
             if (expressions.evaluate(expression, macros)) {
-                branches.nest(directive);
+                branches.nest(directive, true);
             } else {
                 branches.skip();
             }
         } else if (directive instanceof IfdefDirective) {
             String name = ((IfdefDirective) directive).getName().getText();
             if (macros.defined(name)) {
-                branches.nest(directive);
+                branches.nest(directive, true);
             } else {
                 branches.skip();
             }
         } else if (directive instanceof IfndefDirective) {
             String name = ((IfndefDirective) directive).getName().getText();
             if (!macros.defined(name)) {
-                branches.nest(directive);
+                branches.nest(directive, true);
             } else {
                 branches.skip();
             }

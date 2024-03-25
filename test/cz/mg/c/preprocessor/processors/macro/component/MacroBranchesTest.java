@@ -12,7 +12,7 @@ import cz.mg.c.entities.directives.ElseDirective;
 import cz.mg.c.entities.directives.EndifDirective;
 import cz.mg.c.entities.directives.IfdefDirective;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
 
 public @Test class MacroBranchesTest {
@@ -61,19 +61,19 @@ public @Test class MacroBranchesTest {
 
         Assert.assertThatCode(() -> {
             branches.validateNotRoot(fooBegin);
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> {
             branches.unnest(fooBegin);
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
 
         // #ifdef FOO
-        branches.nest(fooBegin);
+        branches.nest(fooBegin, true);
         Assert.assertEquals(trueBranch, branches.getBranch());
 
         Assert.assertThatCode(() -> {
             branches.validateIsRoot();
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> {
             branches.validateNotRoot(fooBegin);
@@ -84,7 +84,7 @@ public @Test class MacroBranchesTest {
         Assert.assertEquals(falseBranch, branches.getBranch());
 
         // #else BAR
-        branches.nest(barElse);
+        branches.nest(barElse, true);
         Assert.assertEquals(trueBranch, branches.getBranch());
 
         // #endif BAR

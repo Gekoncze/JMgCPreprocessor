@@ -11,7 +11,7 @@ import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenValidator;
 
@@ -61,6 +61,6 @@ public @Test class MacroExpansionServicesTest {
             macros.define(macro);
             MacroCall call = new MacroCall(macro, f.word("FAIL"), new List<>());
             services.expand(call, macros);
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
     }
 }

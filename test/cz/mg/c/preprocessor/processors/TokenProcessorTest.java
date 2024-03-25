@@ -9,7 +9,7 @@ import cz.mg.tokenizer.entities.tokens.NumberToken;
 import cz.mg.tokenizer.entities.tokens.OperatorToken;
 import cz.mg.tokenizer.entities.tokens.SingleQuoteToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
-import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenValidator;
 
 public @Test class TokenProcessorTest {
@@ -43,9 +43,9 @@ public @Test class TokenProcessorTest {
     }
 
     private void testProcessException() {
-        CodeException exception = Assert.assertThatCode(() -> {
+        TraceableException exception = Assert.assertThatCode(() -> {
             tokenProcessor.process("1 + 1\\\n = '2");
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
         Assert.assertEquals(10, exception.getPosition());
     }
 }

@@ -7,7 +7,7 @@ import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
 
 public @Test class MacroCallValidatorTest {
@@ -37,7 +37,7 @@ public @Test class MacroCallValidatorTest {
             Macro macro = new Macro(f.word("FOO"), null, new List<>());
             MacroCall call = new MacroCall(macro, f.word("FOO"), new List<>());
             validator.validate(call);
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
     }
 
     private void testMacroCallWithoutArguments() {
@@ -45,7 +45,7 @@ public @Test class MacroCallValidatorTest {
             Macro macro = new Macro(f.word("FOO"), new List<>(), new List<>());
             MacroCall call = new MacroCall(macro, f.word("FOO"), null);
             validator.validate(call);
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> {
             Macro macro = new Macro(f.word("FOO"), null, new List<>());
@@ -73,7 +73,7 @@ public @Test class MacroCallValidatorTest {
                 new List<List<Token>>(new List<>(f.special("*"), f.word("ptr")))
             );
             validator.validate(call);
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
     }
 
     private void testMacroCallEmptyArguments() {
@@ -85,6 +85,6 @@ public @Test class MacroCallValidatorTest {
                 new List<>(new List<>(), new List<>())
             );
             validator.validate(call);
-        }).throwsException(CodeException.class);
+        }).throwsException(TraceableException.class);
     }
 }
