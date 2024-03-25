@@ -1,7 +1,5 @@
 ### NOW ###
     ... fixing preprocessor test
-        ... so, for *undefined* macro inside expression, it should evaluate to 0, not as "no token"
-            ... see test 2 on desktop
 
 ### SOON ###
     ...
