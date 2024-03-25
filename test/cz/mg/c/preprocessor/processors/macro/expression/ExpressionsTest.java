@@ -4,7 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.exceptions.CodeException;
+import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
 
 public @Test class ExpressionsTest {
@@ -41,6 +41,10 @@ public @Test class ExpressionsTest {
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("7")
+        )));
+
+        Assert.assertEquals(false, evaluator.evaluate(new List<>(
+            f.word("one")
         )));
     }
 
@@ -221,37 +225,38 @@ public @Test class ExpressionsTest {
 
     private void testIllegalExpression() {
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
-            f.operator("()")
-        ))).throwsException(CodeException.class);
+            f.operator("("),
+            f.operator(")")
+        ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.operator("+")
-        ))).throwsException(CodeException.class);
+        ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.bracket("("),
             f.operator("+"),
             f.bracket(")")
-        ))).throwsException(CodeException.class);
+        ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.operator("1")
-        ))).doesNotThrowAnyException();
+        ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.bracket("("),
             f.operator("1"),
             f.bracket(")")
-        ))).doesNotThrowAnyException();
+        ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.bracket("("),
             f.operator("1")
-        ))).throwsException(CodeException.class);
+        ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.operator("1"),
             f.bracket(")")
-        ))).throwsException(CodeException.class);
+        ))).throwsException(TraceableException.class);
     }
 }

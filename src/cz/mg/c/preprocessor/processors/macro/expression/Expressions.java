@@ -8,10 +8,7 @@ import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.BracketToken;
-import cz.mg.tokenizer.entities.tokens.NumberToken;
-import cz.mg.tokenizer.entities.tokens.OperatorToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
+import cz.mg.tokenizer.entities.tokens.*;
 
 public @Service class Expressions {
     private static volatile @Service Expressions instance;
@@ -49,7 +46,7 @@ public @Service class Expressions {
     }
 
     private boolean evaluateResult(@Mandatory Token token) {
-        return parse(token) != 0;
+        return evaluateToken(token) != 0;
     }
 
     private @Mandatory Token evaluateExpression(@Mandatory TokenReader reader, boolean requireClosed) {
@@ -114,20 +111,20 @@ public @Service class Expressions {
     }
 
     private void evaluateBinary(@Mandatory ListItem<Token> item, @Mandatory Operator operator) {
-        int left = parse(item.removePrevious());
-        int right = parse(item.removeNext());
+        int left = evaluateToken(item.removePrevious());
+        int right = evaluateToken(item.removeNext());
         int result = operator.getOperation().evaluate(left, right);
         item.set(create(String.valueOf(result)));
     }
 
     private void evaluateLunary(@Mandatory ListItem<Token> item, @Mandatory Operator operator) {
-        int right = parse(item.removeNext());
+        int right = evaluateToken(item.removeNext());
         int result = operator.getOperation().evaluate(0, right);
         item.set(create(String.valueOf(result)));
     }
 
     private void evaluateRunary(@Mandatory ListItem<Token> item, @Mandatory Operator operator) {
-        int left = parse(item.removePrevious());
+        int left = evaluateToken(item.removePrevious());
         int result = operator.getOperation().evaluate(left, 0);
         item.set(create(String.valueOf(result)));
     }
@@ -136,8 +133,16 @@ public @Service class Expressions {
         return item != null && item.get() instanceof OperatorToken;
     }
 
+    private boolean isOperand(@Optional ListItem<Token> item) {
+        return isNumber(item) || isWord(item);
+    }
+
     private boolean isNumber(@Optional ListItem<Token> item) {
         return item != null && item.get() instanceof NumberToken;
+    }
+
+    private boolean isWord(@Optional ListItem<Token> item) {
+        return item != null && item.get() instanceof WordToken;
     }
 
     private boolean isOpeningBracket(@Mandatory Token token) {
@@ -150,39 +155,48 @@ public @Service class Expressions {
 
     private boolean isOperator(@Mandatory ListItem<Token> item, @Mandatory Operator operator) {
         if (item.get().getText().equals(operator.getText())) {
-            switch (operator.getType()) {
-                case BINARY: return isBinaryOperator(item);
-                case LUNARY: return isLunaryOperator(item);
-                case RUNARY: return isRunaryOperator(item);
-            }
+            return switch (operator.getType()) {
+                case BINARY -> isBinaryOperator(item);
+                case LUNARY -> isLunaryOperator(item);
+                case RUNARY -> isRunaryOperator(item);
+            };
         }
         return false;
     }
 
     private boolean isBinaryOperator(@Mandatory ListItem<Token> item) {
-        return isNumber(item.getPreviousItem()) && isNumber(item.getNextItem());
+        return isOperand(item.getPreviousItem()) && isOperand(item.getNextItem());
     }
 
     private boolean isLunaryOperator(@Mandatory ListItem<Token> item) {
-        return !isNumber(item.getPreviousItem()) && isNumber(item.getNextItem());
+        return !isOperand(item.getPreviousItem()) && isOperand(item.getNextItem());
     }
 
     private boolean isRunaryOperator(@Mandatory ListItem<Token> item) {
-        return isNumber(item.getPreviousItem()) && !isNumber(item.getNextItem());
+        return isOperand(item.getPreviousItem()) && !isOperand(item.getNextItem());
     }
 
     private @Mandatory Token create(@Mandatory String value) {
         return new NumberToken(value, -1);
     }
 
-    private int parse(@Mandatory Token token) {
-        try {
-            return Integer.parseInt(token.getText());
-        } catch (NumberFormatException e) {
+    private int evaluateToken(@Mandatory Token token) {
+        if (token instanceof NumberToken) {
+            try {
+                return Integer.parseInt(token.getText());
+            } catch (NumberFormatException e) {
+                throw new MacroException(
+                    token.getPosition(),
+                    "Could not parse number '" + token.getText() + "'.",
+                    e
+                );
+            }
+        } else if (token instanceof WordToken) {
+            return 0;
+        } else {
             throw new MacroException(
                 token.getPosition(),
-                "Expected number, but got '" + token.getText() + "'.",
-                e
+                "Unexpected token of type " + token.getClass().getSimpleName() + "."
             );
         }
     }
