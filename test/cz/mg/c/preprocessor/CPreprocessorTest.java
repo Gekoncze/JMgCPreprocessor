@@ -20,11 +20,11 @@ import cz.mg.tokenizer.test.TokenValidator;
 
 import java.nio.file.Path;
 
-public @Test class PreprocessorTest {
+public @Test class CPreprocessorTest {
     public static void main(String[] args) {
-        System.out.print("Running " + PreprocessorTest.class.getSimpleName() + " ... ");
+        System.out.print("Running " + CPreprocessorTest.class.getSimpleName() + " ... ");
 
-        PreprocessorTest test = new PreprocessorTest();
+        CPreprocessorTest test = new CPreprocessorTest();
         test.testProcessing();
         test.testNestedMacros();
         test.testNestedConditions();
@@ -34,7 +34,7 @@ public @Test class PreprocessorTest {
         System.out.println("OK");
     }
 
-    private final @Service Preprocessor preprocessor = Preprocessor.getInstance();
+    private final @Service CPreprocessor CPreprocessor = CPreprocessor.getInstance();
     private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
     private final @Service MacroValidator macroValidator = MacroValidator.getInstance();
     private final @Service UserExceptionFactory userExceptionFactory = UserExceptionFactory.getInstance();
@@ -57,7 +57,7 @@ public @Test class PreprocessorTest {
         );
 
         Macros macros = new Macros();
-        List<Token> tokens = preprocessor.preprocess(file, macros);
+        List<Token> tokens = CPreprocessor.preprocess(file, macros);
 
         Assert.assertEquals(1, macros.getDefinitions().count());
         macroValidator.assertEquals(
@@ -113,7 +113,7 @@ public @Test class PreprocessorTest {
         );
 
         Macros macros = new Macros();
-        List<Token> tokens = preprocessor.preprocess(file, macros);
+        List<Token> tokens = CPreprocessor.preprocess(file, macros);
 
         Assert.assertEquals(2, macros.getDefinitions().count());
         Assert.assertEquals("OPERATION", macros.getDefinitions().getFirst().getName().getText());
@@ -179,7 +179,7 @@ public @Test class PreprocessorTest {
         macros.getDefinitions().addLast(new Macro(new WordToken("straw", -1), null, new List<>()));
         macros.getDefinitions().addLast(new Macro(new WordToken("berry", -1), null, new List<>()));
 
-        List<Token> tokens = preprocessor.preprocess(file, macros);
+        List<Token> tokens = CPreprocessor.preprocess(file, macros);
 
         MacroManager manager = new MacroManager(macros);
         Assert.assertEquals(true, manager.defined("straw"));
@@ -212,7 +212,7 @@ public @Test class PreprocessorTest {
 
         Macros macros = new Macros();
 
-        List<Token> tokens =  preprocessor.preprocess(file, macros);
+        List<Token> tokens =  CPreprocessor.preprocess(file, macros);
 
         MacroManager manager = new MacroManager(macros);
         Assert.assertEquals(true, manager.defined("PLUS"));
@@ -257,11 +257,11 @@ public @Test class PreprocessorTest {
         );
 
         Assert.assertThatCode(() -> wrap(file, () -> {
-            preprocessor.preprocess(file, m.create());
+            CPreprocessor.preprocess(file, m.create());
         })).doesNotThrowAnyException();
 
         Assert.assertThatCode(() -> wrap(file, () -> {
-            preprocessor.preprocess(file, m.create(m.create("FIRST_PRECONDITION")));
+            CPreprocessor.preprocess(file, m.create(m.create("FIRST_PRECONDITION")));
         })).doesNotThrowAnyException();
     }
 

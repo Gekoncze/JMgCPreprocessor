@@ -71,6 +71,6 @@ public @Test class AllTests {
         WhitespaceProcessorTest.main(args);
 
         // cz.mg.c.preprocessor
-        PreprocessorTest.main(args);
+        CPreprocessorTest.main(args);
     }
 }
