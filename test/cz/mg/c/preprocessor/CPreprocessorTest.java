@@ -9,7 +9,6 @@ import cz.mg.c.entities.macro.Macros;
 import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.test.MacroFactory;
 import cz.mg.c.preprocessor.test.MacroValidator;
-import cz.mg.c.tokenizer.CTokenizer;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.test.Assert;
@@ -58,7 +57,7 @@ public @Test class CPreprocessorTest {
         );
 
         Macros macros = new Macros();
-        CPreprocessor preprocessor = new CPreprocessor(new CTokenizer(), macros);
+        CPreprocessor preprocessor = new CPreprocessor(macros);
         List<Token> tokens = preprocessor.preprocess(file);
 
         Assert.assertEquals(1, macros.getDefinitions().count());
@@ -115,7 +114,7 @@ public @Test class CPreprocessorTest {
         );
 
         Macros macros = new Macros();
-        CPreprocessor preprocessor = new CPreprocessor(new CTokenizer(), macros);
+        CPreprocessor preprocessor = new CPreprocessor(macros);
         List<Token> tokens = preprocessor.preprocess(file);
 
         Assert.assertEquals(2, macros.getDefinitions().count());
@@ -182,7 +181,7 @@ public @Test class CPreprocessorTest {
         macros.getDefinitions().addLast(new Macro(new WordToken("straw", -1), null, new List<>()));
         macros.getDefinitions().addLast(new Macro(new WordToken("berry", -1), null, new List<>()));
 
-        CPreprocessor preprocessor = new CPreprocessor(new CTokenizer(), macros);
+        CPreprocessor preprocessor = new CPreprocessor(macros);
         List<Token> tokens = preprocessor.preprocess(file);
 
         MacroManager manager = new MacroManager(macros);
@@ -216,7 +215,7 @@ public @Test class CPreprocessorTest {
 
         Macros macros = new Macros();
 
-        CPreprocessor preprocessor = new CPreprocessor(new CTokenizer(), macros);
+        CPreprocessor preprocessor = new CPreprocessor(macros);
         List<Token> tokens =  preprocessor.preprocess(file);
 
         MacroManager manager = new MacroManager(macros);
@@ -262,11 +261,11 @@ public @Test class CPreprocessorTest {
         );
 
         Assert.assertThatCode(() -> wrap(file, () -> {
-            new CPreprocessor(new CTokenizer(), m.create()).preprocess(file);
+            new CPreprocessor(m.create()).preprocess(file);
         })).doesNotThrowAnyException();
 
         Assert.assertThatCode(() -> wrap(file, () -> {
-            new CPreprocessor(new CTokenizer(), m.create(m.create("FIRST_PRECONDITION"))).preprocess(file);
+            new CPreprocessor(m.create(m.create("FIRST_PRECONDITION"))).preprocess(file);
         })).doesNotThrowAnyException();
     }
 
