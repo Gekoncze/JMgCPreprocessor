@@ -8,8 +8,8 @@ import cz.mg.c.entities.directives.DefineDirective;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class DefineDirectiveParser implements DirectiveParser {
@@ -42,7 +42,7 @@ public @Service class DefineDirectiveParser implements DirectiveParser {
         DefineDirective directive = new DefineDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.skip(WhitespaceToken.class);
-        reader.read("#", SpecialToken.class);
+        reader.read("#", SymbolToken.class);
         reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(DefineDirective.KEYWORD, WordToken.class));
         reader.skip(WhitespaceToken.class);

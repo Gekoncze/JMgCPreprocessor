@@ -1,4 +1,4 @@
-package cz.mg.c.preprocessor.processors.macro.directive;
+package cz.mg.c.preprocessor.processors.macro.directive.special;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
@@ -31,7 +31,7 @@ public @Service class MacroParser {
     public @Mandatory Macro parse(@Mandatory List<Token> line) {
         TokenReader reader = new TokenReader(line, MacroException::new);
         reader.skip(WhitespaceToken.class);
-        reader.read("#", SpecialToken.class);
+        reader.read("#", SymbolToken.class);
         reader.skip(WhitespaceToken.class);
         reader.read(DefineDirective.KEYWORD, WordToken.class);
         reader.skip(WhitespaceToken.class);
@@ -47,13 +47,13 @@ public @Service class MacroParser {
     }
 
     private @Optional List<Token> readParameters(@Mandatory TokenReader reader) {
-        if (reader.has("(", BracketToken.class)) {
+        if (reader.has("(", SymbolToken.class)) {
             List<Token> parameters = new List<>();
             int startPosition = reader.read().getPosition();
             boolean expectedName = true;
             while (true) {
                 reader.skip(WhitespaceToken.class);
-                if (reader.has(")", BracketToken.class)) {
+                if (reader.has(")", SymbolToken.class)) {
                     int endPosition = reader.read().getPosition();
                     if (expectedName && !parameters.isEmpty()) {
                         throw new MacroException(
@@ -64,18 +64,18 @@ public @Service class MacroParser {
                     break;
                 } else if (reader.has()) {
                     if (expectedName) {
-                        if (reader.has("...", OperatorToken.class)) {
+                        if (reader.has("...", SymbolToken.class)) {
                             Token varargs = reader.read();
                             parameters.addLast(new WordToken("", varargs.getPosition()));
                             parameters.addLast(varargs);
                         } else {
                             parameters.addLast(reader.read(WordToken.class));
-                            if (reader.has("...", OperatorToken.class)) {
+                            if (reader.has("...", SymbolToken.class)) {
                                 parameters.addLast(reader.read());
                             }
                         }
                     } else {
-                        reader.read(",", SeparatorToken.class);
+                        reader.read(",", SymbolToken.class);
                     }
                     expectedName = !expectedName;
                 } else {

@@ -30,7 +30,7 @@ public @Test class DefineDirectiveParserTest {
         parserValidator.validate(DefineDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.word("define"), f.word("TEST")),
+            new List<>(f.symbol("#"), f.word("define"), f.word("TEST")),
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
@@ -42,7 +42,7 @@ public @Test class DefineDirectiveParserTest {
         mutator.mutate(
             new List<>(
                 f.whitespace(" "),
-                f.special("#"),
+                f.symbol("#"),
                 f.whitespace(" "),
                 f.word("define"),
                 f.whitespace(" "),

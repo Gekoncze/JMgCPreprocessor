@@ -27,7 +27,7 @@ public @Test class DirectiveParsersTest {
 
     private void testParseDirectiveLine() {
         DefineDirective directive = (DefineDirective) parsers.parse(
-            new List<>(f.special("#"), f.word("define"), f.word("TEST"))
+            new List<>(f.symbol("#"), f.word("define"), f.word("TEST"))
         );
 
         Assert.assertNotNull(directive);
@@ -41,7 +41,7 @@ public @Test class DirectiveParsersTest {
 
     private void testParseUnsupportedDirectiveLine() {
         Assert.assertThatCode(() -> {
-            parsers.parse(new List<>(f.special("#"), f.word("unknown"), f.word("TEST")));
+            parsers.parse(new List<>(f.symbol("#"), f.word("unknown"), f.word("TEST")));
         }).throwsException(TraceableException.class);
     }
 }

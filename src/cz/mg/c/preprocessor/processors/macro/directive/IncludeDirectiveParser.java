@@ -8,6 +8,7 @@ import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.*;
+import cz.mg.tokenizer.entities.tokens.quote.DoubleQuoteToken;
 
 import java.nio.file.Path;
 
@@ -38,7 +39,7 @@ public @Service class IncludeDirectiveParser implements DirectiveParser {
         IncludeDirective directive = new IncludeDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.skip(WhitespaceToken.class);
-        reader.read("#", SpecialToken.class);
+        reader.read("#", SymbolToken.class);
         reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(IncludeDirective.KEYWORD, WordToken.class));
         reader.skip(WhitespaceToken.class);
@@ -60,9 +61,9 @@ public @Service class IncludeDirectiveParser implements DirectiveParser {
 
     private @Mandatory String readLibraryPath(@Mandatory TokenReader reader) {
         StringBuilder builder = new StringBuilder();
-        reader.read("<", OperatorToken.class);
+        reader.read("<", SymbolToken.class);
         while (reader.has()) {
-            if (reader.has(">", OperatorToken.class)) {
+            if (reader.has(">", SymbolToken.class)) {
                 reader.read();
                 break;
             } else if (reader.has(this::pathToken)) {
@@ -80,7 +81,8 @@ public @Service class IncludeDirectiveParser implements DirectiveParser {
 
     private boolean pathToken(@Mandatory Token token) {
         return token instanceof WordToken
-            || token instanceof OperatorToken
+            || token instanceof NumberToken
+            || token instanceof SymbolToken
             || token instanceof WhitespaceToken;
     }
 }

@@ -27,7 +27,7 @@ public @Test class ExpressionParserTest {
     private void testParse() {
         mutator.mutate(
             new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("if"),
                 f.number("69")
             ),
@@ -41,16 +41,16 @@ public @Test class ExpressionParserTest {
 
         mutator.mutate(
             new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("if"),
                 f.number("6"),
-                f.operator("+"),
+                f.symbol("+"),
                 f.number("9")
             ),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             expression -> validator.assertEquals(
-                new List<>(f.number("6"), f.operator("+"), f.number("9")),
+                new List<>(f.number("6"), f.symbol("+"), f.number("9")),
                 expression
             )
         );
@@ -58,13 +58,13 @@ public @Test class ExpressionParserTest {
         mutator.mutate(
             new List<>(
                 f.whitespace(" "),
-                f.special("#"),
+                f.symbol("#"),
                 f.whitespace(" "),
                 f.word("if"),
                 f.whitespace(" "),
                 f.number("6"),
                 f.whitespace(" "),
-                f.operator("+"),
+                f.symbol("+"),
                 f.whitespace(" "),
                 f.number("9"),
                 f.whitespace(" ")
@@ -76,7 +76,7 @@ public @Test class ExpressionParserTest {
                     f.whitespace(" "),
                     f.number("6"),
                     f.whitespace(" "),
-                    f.operator("+"),
+                    f.symbol("+"),
                     f.whitespace(" "),
                     f.number("9"),
                     f.whitespace(" ")
@@ -87,27 +87,27 @@ public @Test class ExpressionParserTest {
 
         mutator.mutate(
             new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("if"),
                 f.number("69"),
-                f.operator("*"),
-                f.bracket("("),
+                f.symbol("*"),
+                f.symbol("("),
                 f.number("1"),
-                f.operator("&&"),
+                f.symbol("&&"),
                 f.number("0"),
-                f.bracket(")")
+                f.symbol(")")
             ),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             expression -> validator.assertEquals(
                 new List<>(
                     f.number("69"),
-                    f.operator("*"),
-                    f.bracket("("),
+                    f.symbol("*"),
+                    f.symbol("("),
                     f.number("1"),
-                    f.operator("&&"),
+                    f.symbol("&&"),
                     f.number("0"),
-                    f.bracket(")")
+                    f.symbol(")")
                 ),
                 expression
             )
@@ -118,11 +118,11 @@ public @Test class ExpressionParserTest {
             .throwsException(PreprocessorException.class);
 
         Assert
-            .assertThatCode(() -> parser.parse(new List<>(f.special("#"))))
+            .assertThatCode(() -> parser.parse(new List<>(f.symbol("#"))))
             .throwsException(PreprocessorException.class);
 
         Assert
-            .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.word("if"))))
+            .assertThatCode(() -> parser.parse(new List<>(f.symbol("#"), f.word("if"))))
             .throwsException(PreprocessorException.class);
     }
 }

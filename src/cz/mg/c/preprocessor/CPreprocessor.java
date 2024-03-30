@@ -25,7 +25,7 @@ public @Component class CPreprocessor {
     public @Mandatory List<Token> preprocess(@Mandatory File file) {
         MacroManager macroManager = new MacroManager(macros);
         return macroManager.temporary(() -> {
-            return mainPreprocessor.process(file, macros);
+            return mainPreprocessor.process(file, macros, tokenizer);
         }, new FileMacro(file), new LineMacro());
     }
 }

@@ -6,6 +6,7 @@ import cz.mg.c.entities.macro.Macros;
 import cz.mg.c.preprocessor.processors.macro.MacroProcessor;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
+import cz.mg.tokenizer.Tokenizer;
 import cz.mg.tokenizer.entities.Token;
 
 public @Service class MainPreprocessor {
@@ -36,8 +37,12 @@ public @Service class MainPreprocessor {
     private MainPreprocessor() {
     }
 
-    public @Mandatory List<Token> process(@Mandatory File file, @Mandatory Macros macros) {
-        List<Token> tokens = tokenProcessor.process(file.getContent());
+    public @Mandatory List<Token> process(
+        @Mandatory File file,
+        @Mandatory Macros macros,
+        @Mandatory Tokenizer tokenizer
+    ) {
+        List<Token> tokens = tokenProcessor.process(file.getContent(), tokenizer);
         commentProcessor.process(tokens);
         List<List<Token>> lines = newlineProcessor.process(tokens);
         tokens = macroProcessor.process(lines, macros);

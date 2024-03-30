@@ -30,7 +30,7 @@ public @Test class WarningDirectiveParserTest {
 
         mutator.mutate(
             new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("warning")
             ),
             new List<>(0, 1),
@@ -43,7 +43,7 @@ public @Test class WarningDirectiveParserTest {
 
         mutator.mutate(
             new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("warning"),
                 f.whitespace(" ")
             ),
@@ -57,7 +57,7 @@ public @Test class WarningDirectiveParserTest {
 
         mutator.mutate(
             new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("warning"),
                 f.word("doko"),
                 f.word("doko"),
@@ -74,7 +74,7 @@ public @Test class WarningDirectiveParserTest {
         mutator.mutate(
             new List<>(
                 f.whitespace(" "),
-                f.special("#"),
+                f.symbol("#"),
                 f.whitespace(" "),
                 f.word("warning"),
                 f.whitespace(" "),

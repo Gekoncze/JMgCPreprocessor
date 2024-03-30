@@ -2,15 +2,13 @@
     ...
 
 ### SOON ###
-    ...
+    refactor TokenConcatenationService, SpecialMacroParser and MacroParser
+        check when the concatenation take place, if during macro definition or during macro call
 
 ### LATER ###
     so it looks like there are more cases uncovered (case 27)
         brackets for defined operator are optional for some reason
         #if defined xyz
-
-    consider whether Preprocessor should be stateful
-        Tokenizer could be passed as parameter
 
     add tests
         for MacroTrueBranchProcessor

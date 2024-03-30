@@ -31,10 +31,10 @@ public @Service class TokenProcessor {
     private TokenProcessor() {
     }
 
-    public @Mandatory List<Token> process(@Mandatory String content) {
+    public @Mandatory List<Token> process(@Mandatory String content, @Mandatory Tokenizer tokenizer) {
         String backslashedContent = backslashProcessor.process(content);
         try {
-            List<Token> tokens = new Tokenizer().tokenize(backslashedContent);
+            List<Token> tokens = tokenizer.tokenize(backslashedContent);
             backslashPositionProcessor.process(content, backslashedContent, tokens);
             return tokens;
         } catch (TokenizeException e) {

@@ -32,13 +32,13 @@ public @Test class NewlineProcessorTest {
             f.number("11"),
             f.number("69"),
             f.whitespace("\n"),
-            f.separator(";")
+            f.symbol(";")
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(3, lines.count());
         validator.assertEquals(new List<>(f.word("a")), lines.get(0));
         validator.assertEquals(new List<>(f.number("11"), f.number("69")), lines.get(1));
-        validator.assertEquals(new List<>(f.separator(";")), lines.get(2));
+        validator.assertEquals(new List<>(f.symbol(";")), lines.get(2));
     }
 
     private void testProcessingFirst() {
@@ -70,12 +70,12 @@ public @Test class NewlineProcessorTest {
         List<Token> tokens = new List<>(
             f.whitespace("\t"),
             f.word("Pony"),
-            f.operator("!"),
+            f.symbol("!"),
             f.whitespace("\n")
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        validator.assertEquals(new List<>(f.whitespace("\t"), f.word("Pony"), f.operator("!")), lines.get(0));
+        validator.assertEquals(new List<>(f.whitespace("\t"), f.word("Pony"), f.symbol("!")), lines.get(0));
         validator.assertEquals(new List<>(), lines.get(1));
     }
 }

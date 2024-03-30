@@ -40,42 +40,42 @@ public @Test class CommentProcessorTest {
         testProcessing(
             new List<>(
                 f.comment("foo bar"),
-                f.plain("a"),
+                f.token("a"),
                 f.whitespace(" "),
-                f.plain("bb")
+                f.token("bb")
             ),
             new List<>(
-                f.plain("a"),
+                f.token("a"),
                 f.whitespace(" "),
-                f.plain("bb")
+                f.token("bb")
             )
         );
 
         testProcessing(
             new List<>(
-                f.plain("foo"),
+                f.token("foo"),
                 f.comment("="),
                 f.whitespace("\t"),
-                f.plain("bar"),
+                f.token("bar"),
                 f.comment(" "),
                 f.number("69")
             ),
             new List<>(
-                f.plain("foo"),
+                f.token("foo"),
                 f.whitespace("\t"),
-                f.plain("bar"),
+                f.token("bar"),
                 f.number("69")
             )
         );
 
         testProcessing(
             new List<>(
-                f.plain("~"),
+                f.token("~"),
                 f.whitespace(" "),
                 f.comment("yay\nmay")
             ),
             new List<>(
-                f.plain("~"),
+                f.token("~"),
                 f.whitespace(" ")
             )
         );

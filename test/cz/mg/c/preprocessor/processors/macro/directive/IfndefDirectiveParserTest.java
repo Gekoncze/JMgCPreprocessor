@@ -31,7 +31,7 @@ public @Test class IfndefDirectiveParserTest {
         parserValidator.validate(IfndefDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.word("ifndef"), f.word("TEST")),
+            new List<>(f.symbol("#"), f.word("ifndef"), f.word("TEST")),
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
@@ -43,7 +43,7 @@ public @Test class IfndefDirectiveParserTest {
         mutator.mutate(
             new List<>(
                 f.whitespace(" "),
-                f.special("#"),
+                f.symbol("#"),
                 f.whitespace(" "),
                 f.word("ifndef"),
                 f.whitespace(" "),
@@ -62,7 +62,7 @@ public @Test class IfndefDirectiveParserTest {
     private void testUnexpectedTrailingTokens() {
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("ifndef"),
                 f.word("TEST"),
                 f.whitespace(" ")
@@ -71,7 +71,7 @@ public @Test class IfndefDirectiveParserTest {
 
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("ifndef"),
                 f.word("TEST"),
                 f.word("unexpected")
@@ -80,7 +80,7 @@ public @Test class IfndefDirectiveParserTest {
 
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("ifndef"),
                 f.word("TEST"),
                 f.whitespace(""),
@@ -90,7 +90,7 @@ public @Test class IfndefDirectiveParserTest {
 
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("ifndef"),
                 f.word("TEST"),
                 f.word("unexpected"),

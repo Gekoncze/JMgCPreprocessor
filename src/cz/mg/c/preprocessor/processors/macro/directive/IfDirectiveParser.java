@@ -7,8 +7,8 @@ import cz.mg.c.entities.directives.IfDirective;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class IfDirectiveParser implements DirectiveParser {
@@ -41,7 +41,7 @@ public @Service class IfDirectiveParser implements DirectiveParser {
         IfDirective directive = new IfDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.skip(WhitespaceToken.class);
-        reader.read("#", SpecialToken.class);
+        reader.read("#", SymbolToken.class);
         reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(IfDirective.KEYWORD, WordToken.class));
         directive.setExpression(expressionParser.parse(line));

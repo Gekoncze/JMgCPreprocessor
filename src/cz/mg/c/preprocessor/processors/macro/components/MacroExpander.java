@@ -9,9 +9,8 @@ import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.processors.macro.expansion.MacroExpansionServices;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.BracketToken;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.SeparatorToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 import java.util.Objects;
@@ -150,15 +149,15 @@ public @Component class MacroExpander {
     }
 
     private boolean isOpeningBracket(@Mandatory Token token) {
-        return token instanceof BracketToken && token.getText().equals("(");
+        return token instanceof SymbolToken && token.getText().equals("(");
     }
 
     private boolean isClosingBracket(@Mandatory Token token) {
-        return token instanceof BracketToken && token.getText().equals(")");
+        return token instanceof SymbolToken && token.getText().equals(")");
     }
 
     private boolean isComma(@Mandatory Token token) {
-        return token instanceof SeparatorToken && token.getText().equals(",");
+        return token instanceof SymbolToken && token.getText().equals(",");
     }
 
     private boolean isMacroInPath(@Mandatory Macro macro, @Mandatory List<Macro> path) {

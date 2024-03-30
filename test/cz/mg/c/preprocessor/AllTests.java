@@ -11,7 +11,7 @@ import cz.mg.c.preprocessor.processors.macro.MacroProcessorTest;
 import cz.mg.c.preprocessor.processors.macro.component.MacroBranchesTest;
 import cz.mg.c.preprocessor.processors.macro.component.MacroExpanderTest;
 import cz.mg.c.preprocessor.processors.macro.directive.*;
-import cz.mg.c.preprocessor.processors.macro.directive.special.OperatorConcatenationServiceTest;
+import cz.mg.c.preprocessor.processors.macro.directive.special.MacroParserTest;
 import cz.mg.c.preprocessor.processors.macro.directive.special.SpecialMacroParserTest;
 import cz.mg.c.preprocessor.processors.macro.directive.special.TokenConcatenationServiceTest;
 import cz.mg.c.preprocessor.processors.macro.expansion.*;
@@ -29,7 +29,7 @@ public @Test class AllTests {
         MacroExpanderTest.main(args);
 
         // cz.mg.c.preprocessor.processors.macro.directive.special
-        OperatorConcatenationServiceTest.main(args);
+        MacroParserTest.main(args);
         SpecialMacroParserTest.main(args);
         TokenConcatenationServiceTest.main(args);
 
@@ -45,7 +45,6 @@ public @Test class AllTests {
         IfDirectiveParserTest.main(args);
         IfndefDirectiveParserTest.main(args);
         IncludeDirectiveParserTest.main(args);
-        MacroParserTest.main(args);
         UndefDirectiveParserTest.main(args);
         WarningDirectiveParserTest.main(args);
 

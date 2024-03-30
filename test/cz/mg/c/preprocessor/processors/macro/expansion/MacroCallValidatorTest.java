@@ -60,7 +60,7 @@ public @Test class MacroCallValidatorTest {
             MacroCall call = new MacroCall(
                 macro,
                 f.word("FOO"),
-                new List<>(new List<>(f.special("*"), f.word("ptr")), new List<>(f.word("a")))
+                new List<>(new List<>(f.symbol("*"), f.word("ptr")), new List<>(f.word("a")))
             );
             validator.validate(call);
         }).doesNotThrowAnyException();
@@ -70,7 +70,7 @@ public @Test class MacroCallValidatorTest {
             MacroCall call = new MacroCall(
                 macro,
                 f.word("FOO"),
-                new List<List<Token>>(new List<>(f.special("*"), f.word("ptr")))
+                new List<List<Token>>(new List<>(f.symbol("*"), f.word("ptr")))
             );
             validator.validate(call);
         }).throwsException(TraceableException.class);

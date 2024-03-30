@@ -130,7 +130,7 @@ public @Service class Expressions {
     }
 
     private boolean isOperator(@Optional ListItem<Token> item) {
-        return item != null && item.get() instanceof OperatorToken;
+        return item != null && item.get() instanceof SymbolToken && !isBracket(item.get());
     }
 
     private boolean isOperand(@Optional ListItem<Token> item) {
@@ -146,11 +146,15 @@ public @Service class Expressions {
     }
 
     private boolean isOpeningBracket(@Mandatory Token token) {
-        return token instanceof BracketToken && token.getText().equals("(");
+        return token instanceof SymbolToken && token.getText().equals("(");
     }
 
     private boolean isClosingBracket(@Mandatory Token token) {
-        return token instanceof BracketToken && token.getText().equals(")");
+        return token instanceof SymbolToken && token.getText().equals(")");
+    }
+
+    private boolean isBracket(@Mandatory Token token) {
+        return token.getText().equals("(") || token.getText().equals(")");
     }
 
     private boolean isOperator(@Mandatory ListItem<Token> item, @Mandatory Operator operator) {

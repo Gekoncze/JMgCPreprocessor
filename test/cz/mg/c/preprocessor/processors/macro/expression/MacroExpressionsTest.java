@@ -28,7 +28,7 @@ public @Test class MacroExpressionsTest {
 
     private void testEvaluateNotDefined() {
         MacroManager macros = new MacroManager(new Macros());
-        List<Token> tokens = new List<>(f.word("defined"), f.bracket("("), f.word("FOOBAR"), f.bracket(")"));
+        List<Token> tokens = new List<>(f.word("defined"), f.symbol("("), f.word("FOOBAR"), f.symbol(")"));
         Assert.assertEquals(false, expressions.evaluate(tokens, macros));
         Assert.assertEquals(false, macros.defined("defined"));
     }
@@ -36,7 +36,7 @@ public @Test class MacroExpressionsTest {
     private void testEvaluateDefined() {
         MacroManager macros = new MacroManager(new Macros());
         macros.define(new Macro(f.word("FOOBAR"), null, new List<>()));
-        List<Token> tokens = new List<>(f.word("defined"), f.bracket("("), f.word("FOOBAR"), f.bracket(")"));
+        List<Token> tokens = new List<>(f.word("defined"), f.symbol("("), f.word("FOOBAR"), f.symbol(")"));
         Assert.assertEquals(true, expressions.evaluate(tokens, macros));
         Assert.assertEquals(false, macros.defined("defined"));
     }
@@ -46,14 +46,14 @@ public @Test class MacroExpressionsTest {
         macros.define(new Macro(f.word("FOOBAR"), null, new List<>()));
         List<Token> tokens = new List<>(
             f.word("defined"),
-            f.bracket("("),
+            f.symbol("("),
             f.word("FOOBAR"),
-            f.bracket(")"),
-            f.operator("&&"),
+            f.symbol(")"),
+            f.symbol("&&"),
             f.word("defined"),
-            f.bracket("("),
+            f.symbol("("),
             f.word("BARFOO"),
-            f.bracket(")")
+            f.symbol(")")
         );
         Assert.assertEquals(false, expressions.evaluate(tokens, macros));
         Assert.assertEquals(false, macros.defined("defined"));
@@ -64,14 +64,14 @@ public @Test class MacroExpressionsTest {
         macros.define(new Macro(f.word("FOOBAR"), null, new List<>()));
         List<Token> tokens = new List<>(
             f.word("defined"),
-            f.bracket("("),
+            f.symbol("("),
             f.word("FOOBAR"),
-            f.bracket(")"),
-            f.operator("||"),
+            f.symbol(")"),
+            f.symbol("||"),
             f.word("defined"),
-            f.bracket("("),
+            f.symbol("("),
             f.word("BARFOO"),
-            f.bracket(")")
+            f.symbol(")")
         );
         Assert.assertEquals(true, expressions.evaluate(tokens, macros));
         Assert.assertEquals(false, macros.defined("defined"));

@@ -2,13 +2,15 @@ package cz.mg.c.preprocessor.processors;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
+import cz.mg.annotations.requirement.Mandatory;
+import cz.mg.c.tokenizer.CTokenizer;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.entities.Token;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
-import cz.mg.tokenizer.entities.tokens.OperatorToken;
-import cz.mg.tokenizer.entities.tokens.SingleQuoteToken;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
+import cz.mg.tokenizer.entities.tokens.quote.SingleQuoteToken;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenValidator;
 
@@ -25,17 +27,18 @@ public @Test class TokenProcessorTest {
 
     private final @Service TokenProcessor tokenProcessor = TokenProcessor.getInstance();
     private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Mandatory CTokenizer tokenizer = new CTokenizer();
 
     private void testProcess() {
-        List<Token> actualTokens = tokenProcessor.process("1 + 1\\\n = '2'");
+        List<Token> actualTokens = tokenProcessor.process("1 + 1\\\n = '2'", tokenizer);
         List<Token> expectedTokens = new List<>(
             new NumberToken("1", 0),
             new WhitespaceToken(" ", 1),
-            new OperatorToken("+", 2),
+            new SymbolToken("+", 2),
             new WhitespaceToken(" ", 3),
             new NumberToken("1", 4),
             new WhitespaceToken(" ", 7),
-            new OperatorToken("=", 8),
+            new SymbolToken("=", 8),
             new WhitespaceToken(" ", 9),
             new SingleQuoteToken("2", 10)
         );
@@ -44,7 +47,7 @@ public @Test class TokenProcessorTest {
 
     private void testProcessException() {
         TraceableException exception = Assert.assertThatCode(() -> {
-            tokenProcessor.process("1 + 1\\\n = '2");
+            tokenProcessor.process("1 + 1\\\n = '2", tokenizer);
         }).throwsException(TraceableException.class);
         Assert.assertEquals(10, exception.getPosition());
     }

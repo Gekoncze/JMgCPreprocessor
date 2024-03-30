@@ -6,9 +6,9 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 import cz.mg.tokenizer.entities.tokens.WordToken;
 import cz.mg.tokenizer.entities.tokens.NumberToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class TokenConcatenationService {
@@ -81,7 +81,7 @@ public @Service class TokenConcatenationService {
     }
 
     private boolean isDoubleNumberSign(@Mandatory Token token) {
-        return token instanceof SpecialToken && token.getText().equals("##");
+        return token instanceof SymbolToken && token.getText().equals("##");
     }
 
     private boolean isWhitespace(@Optional ListItem<Token> item) {

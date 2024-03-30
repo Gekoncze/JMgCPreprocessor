@@ -31,14 +31,14 @@ public @Test class ElseDirectiveParserTest {
         parserValidator.validate(ElseDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.word("else")),
+            new List<>(f.symbol("#"), f.word("else")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> tokenValidator.assertEquals(f.word("else"), directive.getKeyword())
         );
 
         mutator.mutate(
-            new List<>(f.whitespace(" "), f.special("#"), f.whitespace(" "), f.word("else"), f.whitespace(" ")),
+            new List<>(f.whitespace(" "), f.symbol("#"), f.whitespace(" "), f.word("else"), f.whitespace(" ")),
             new List<>(0, 1, 2, 3, 4),
             tokens -> parser.parse(tokens),
             directive -> tokenValidator.assertEquals(f.word("else"), directive.getKeyword())
@@ -47,16 +47,16 @@ public @Test class ElseDirectiveParserTest {
 
     private void testUnexpectedTrailingTokens() {
         Assert
-            .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.word("else"), f.whitespace(" "))))
+            .assertThatCode(() -> parser.parse(new List<>(f.symbol("#"), f.word("else"), f.whitespace(" "))))
             .doesNotThrowAnyException();
 
         Assert
-            .assertThatCode(() -> parser.parse(new List<>(f.special("#"), f.word("else"), f.word("unexpected"))))
+            .assertThatCode(() -> parser.parse(new List<>(f.symbol("#"), f.word("else"), f.word("unexpected"))))
             .throwsException(TraceableException.class);
 
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("else"),
                 f.whitespace(" "),
                 f.word("unexpected")
@@ -65,7 +65,7 @@ public @Test class ElseDirectiveParserTest {
 
         Assert
             .assertThatCode(() -> parser.parse(new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("else"),
                 f.word("unexpected"),
                 f.whitespace(" ")

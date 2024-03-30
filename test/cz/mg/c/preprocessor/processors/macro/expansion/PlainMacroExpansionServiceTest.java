@@ -48,9 +48,9 @@ public @Test class PlainMacroExpansionServiceTest {
             null,
             new List<>(
                 f.word("y"),
-                f.operator("-"),
+                f.symbol("-"),
                 f.word("z"),
-                f.operator("+"),
+                f.symbol("+"),
                 f.word("x"),
                 f.word("x"),
                 f.word("x")
@@ -65,9 +65,9 @@ public @Test class PlainMacroExpansionServiceTest {
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>(
             f.word("y"),
-            f.operator("-"),
+            f.symbol("-"),
             f.word("z"),
-            f.operator("+"),
+            f.symbol("+"),
             f.word("x"),
             f.word("x"),
             f.word("x")
@@ -91,7 +91,7 @@ public @Test class PlainMacroExpansionServiceTest {
             f.word("BAR"),
             new List<>(
                 new List<>(f.word("oi")),
-                new List<>(f.number("7"), f.operator("!"))
+                new List<>(f.number("7"), f.symbol("!"))
             )
         );
 
@@ -107,9 +107,9 @@ public @Test class PlainMacroExpansionServiceTest {
             new List<>(f.word("x"), f.word("y")),
             new List<>(
                 f.word("y"),
-                f.operator("-"),
+                f.symbol("-"),
                 f.word("z"),
-                f.operator("+"),
+                f.symbol("+"),
                 f.word("x"),
                 f.word("x"),
                 f.word("x")
@@ -124,17 +124,17 @@ public @Test class PlainMacroExpansionServiceTest {
             f.word("BARFOO"),
             new List<>(
                 new List<>(f.word("oi")),
-                new List<>(f.number("7"), f.operator("!"))
+                new List<>(f.number("7"), f.symbol("!"))
             )
         );
 
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>(
             f.number("7"),
-            f.operator("!"),
-            f.operator("-"),
+            f.symbol("!"),
+            f.symbol("-"),
             f.word("z"),
-            f.operator("+"),
+            f.symbol("+"),
             f.word("oi"),
             f.word("oi"),
             f.word("oi")

@@ -6,8 +6,8 @@ import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParser;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
 
 public @Service class DirectiveParserValidator {
     private static volatile @Service DirectiveParserValidator instance;
@@ -36,7 +36,7 @@ public @Service class DirectiveParserValidator {
             .throwsException(PreprocessorException.class);
 
         Assert
-            .assertThatCode(() -> parser.parse(new List<>(new SpecialToken("#", 0))))
+            .assertThatCode(() -> parser.parse(new List<>(new SymbolToken("#", 0))))
             .throwsException(PreprocessorException.class);
 
         Assert.assertEquals(false, parser.getName().isEmpty());

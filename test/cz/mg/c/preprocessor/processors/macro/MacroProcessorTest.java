@@ -33,19 +33,19 @@ public @Test class MacroProcessorTest {
 
         List<List<Token>> lines = new List<>(
             new List<>(f.number("1")),
-            new List<>(f.special("#"), f.word("ifdef"), f.word("FOO")),
+            new List<>(f.symbol("#"), f.word("ifdef"), f.word("FOO")),
             new List<>(f.number("2")),
-            new List<>(f.special("#"), f.word("ifdef"), f.word("BAR")),
+            new List<>(f.symbol("#"), f.word("ifdef"), f.word("BAR")),
             new List<>(f.number("3")),
-            new List<>(f.special("#"), f.word("else")),
+            new List<>(f.symbol("#"), f.word("else")),
             new List<>(f.number("4")),
-            new List<>(f.special("#"), f.word("endif")),
+            new List<>(f.symbol("#"), f.word("endif")),
             new List<>(f.number("5")),
-            new List<>(f.special("#"), f.word("else")),
+            new List<>(f.symbol("#"), f.word("else")),
             new List<>(f.number("6")),
-            new List<>(f.special("#"), f.word("endif")),
+            new List<>(f.symbol("#"), f.word("endif")),
             new List<>(f.number("7")),
-            new List<>(f.special("#"), f.word("undef"), f.word("DELETE_ME_NOW"))
+            new List<>(f.symbol("#"), f.word("undef"), f.word("DELETE_ME_NOW"))
         );
 
         List<Token> actualTokens = macroProcessor.process(lines, macros);
@@ -66,7 +66,7 @@ public @Test class MacroProcessorTest {
 
     private void testProcessingError() {
         Assert.assertThatCode(() -> {
-            macroProcessor.process(new List<List<Token>>(new List<>(f.special("#"), f.word("error"))), new Macros());
+            macroProcessor.process(new List<List<Token>>(new List<>(f.symbol("#"), f.word("error"))), new Macros());
         }).throwsException(ErrorException.class);
     }
 }

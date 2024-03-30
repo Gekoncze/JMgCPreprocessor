@@ -50,12 +50,12 @@ public @Test class ExpressionsTest {
 
     private void testUnaryNotEvaluate() {
         Assert.assertEquals(false, evaluator.evaluate(new List<>(
-            f.operator("!"),
+            f.symbol("!"),
             f.number("7")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
-            f.operator("!"),
+            f.symbol("!"),
             f.number("0")
         )));
     }
@@ -63,31 +63,31 @@ public @Test class ExpressionsTest {
     private void testBinaryAndEvaluate() {
         Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("0"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("0")
         )));
 
         Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("1"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("0")
         )));
 
         Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("0"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("1")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("1")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("3"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("7")
         )));
     }
@@ -95,31 +95,31 @@ public @Test class ExpressionsTest {
     private void testBinaryOrEvaluate() {
         Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("0"),
-            f.operator("||"),
+            f.symbol("||"),
             f.number("0")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
-            f.operator("||"),
+            f.symbol("||"),
             f.number("0")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("0"),
-            f.operator("||"),
+            f.symbol("||"),
             f.number("1")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
-            f.operator("||"),
+            f.symbol("||"),
             f.number("1")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("3"),
-            f.operator("||"),
+            f.symbol("||"),
             f.number("7")
         )));
     }
@@ -127,67 +127,67 @@ public @Test class ExpressionsTest {
     private void testComplexEvaluate() {
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
-            f.operator("&&"),
-            f.bracket("("),
+            f.symbol("&&"),
+            f.symbol("("),
             f.number("0"),
-            f.operator("||"),
+            f.symbol("||"),
             f.number("1"),
-            f.bracket(")")
+            f.symbol(")")
         )));
 
         Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("1"),
-            f.operator("&&"),
-            f.bracket("("),
+            f.symbol("&&"),
+            f.symbol("("),
             f.number("0"),
-            f.operator("||"),
+            f.symbol("||"),
             f.number("0"),
-            f.bracket(")")
+            f.symbol(")")
         )));
 
         Assert.assertEquals(false, evaluator.evaluate(new List<>(
             f.number("1"),
-            f.operator("&&"),
-            f.bracket("("),
-            f.bracket("("),
+            f.symbol("&&"),
+            f.symbol("("),
+            f.symbol("("),
             f.number("1"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("1"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("0"),
-            f.bracket(")"),
-            f.operator("||"),
+            f.symbol(")"),
+            f.symbol("||"),
             f.number("0"),
-            f.bracket(")")
+            f.symbol(")")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("1"),
-            f.operator("&&"),
-            f.bracket("("),
-            f.bracket("("),
+            f.symbol("&&"),
+            f.symbol("("),
+            f.symbol("("),
             f.number("1"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("1"),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.number("1"),
-            f.bracket(")"),
-            f.operator("||"),
+            f.symbol(")"),
+            f.symbol("||"),
             f.number("0"),
-            f.bracket(")")
+            f.symbol(")")
         )));
 
         Assert.assertEquals(true, evaluator.evaluate(new List<>(
             f.number("4"),
-            f.operator("=="),
+            f.symbol("=="),
             f.number("7"),
-            f.operator("-"),
-            f.bracket("("),
-            f.operator("-"),
+            f.symbol("-"),
+            f.symbol("("),
+            f.symbol("-"),
             f.number("2"),
-            f.operator("+"),
+            f.symbol("+"),
             f.number("5"),
-            f.bracket(")")
+            f.symbol(")")
         )));
     }
 
@@ -196,67 +196,67 @@ public @Test class ExpressionsTest {
             f.whitespace(" "),
             f.number("1"),
             f.whitespace(" "),
-            f.operator("&&"),
+            f.symbol("&&"),
             f.whitespace(" "),
-            f.bracket("("),
+            f.symbol("("),
             f.whitespace(" "),
-            f.bracket("("),
-            f.whitespace(" "),
-            f.number("1"),
-            f.whitespace(" "),
-            f.operator("&&"),
+            f.symbol("("),
             f.whitespace(" "),
             f.number("1"),
             f.whitespace(" "),
-            f.operator("&&"),
+            f.symbol("&&"),
+            f.whitespace(" "),
+            f.number("1"),
+            f.whitespace(" "),
+            f.symbol("&&"),
             f.whitespace(" "),
             f.number("0"),
             f.whitespace(" "),
-            f.bracket(")"),
+            f.symbol(")"),
             f.whitespace(" "),
-            f.operator("||"),
+            f.symbol("||"),
             f.whitespace(" "),
             f.number("0"),
             f.whitespace(" "),
-            f.bracket(")"),
+            f.symbol(")"),
             f.whitespace(" ")
         )));
     }
 
     private void testIllegalExpression() {
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
-            f.operator("("),
-            f.operator(")")
+            f.symbol("("),
+            f.symbol(")")
         ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
-            f.operator("+")
+            f.symbol("+")
         ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
-            f.bracket("("),
-            f.operator("+"),
-            f.bracket(")")
+            f.symbol("("),
+            f.symbol("+"),
+            f.symbol(")")
         ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
-            f.operator("1")
+            f.symbol("1")
         ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
-            f.bracket("("),
-            f.operator("1"),
-            f.bracket(")")
+            f.symbol("("),
+            f.symbol("1"),
+            f.symbol(")")
         ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
-            f.bracket("("),
-            f.operator("1")
+            f.symbol("("),
+            f.symbol("1")
         ))).throwsException(TraceableException.class);
 
         Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
-            f.operator("1"),
-            f.bracket(")")
+            f.symbol("1"),
+            f.symbol(")")
         ))).throwsException(TraceableException.class);
     }
 }

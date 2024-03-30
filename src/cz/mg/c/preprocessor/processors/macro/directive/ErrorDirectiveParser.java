@@ -8,8 +8,8 @@ import cz.mg.c.entities.directives.ErrorDirective;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
 
 public @Service class ErrorDirectiveParser implements DirectiveParser {
@@ -39,7 +39,7 @@ public @Service class ErrorDirectiveParser implements DirectiveParser {
         ErrorDirective directive = new ErrorDirective();
         TokenReader reader = new TokenReader(line, PreprocessorException::new);
         reader.skip(WhitespaceToken.class);
-        reader.read("#", SpecialToken.class);
+        reader.read("#", SymbolToken.class);
         reader.skip(WhitespaceToken.class);
         directive.setKeyword(reader.read(ErrorDirective.KEYWORD, WordToken.class));
         directive.setMessage(readMessage(reader));

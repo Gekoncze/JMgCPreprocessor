@@ -9,8 +9,8 @@ import cz.mg.c.entities.macro.system.FileMacro;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.DoubleQuoteToken;
 import cz.mg.tokenizer.entities.tokens.WordToken;
+import cz.mg.tokenizer.entities.tokens.quote.DoubleQuoteToken;
 import cz.mg.tokenizer.test.TokenValidator;
 
 import java.nio.file.Path;

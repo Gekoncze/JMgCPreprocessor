@@ -47,12 +47,12 @@ public @Test class WhitespaceProcessorTest {
                 f.whitespace(" "),
                 f.number("11"),
                 f.whitespace("\t"),
-                f.separator(";")
+                f.symbol(";")
             ),
             new List<>(
                 f.word("a"),
                 f.number("11"),
-                f.separator(";")
+                f.symbol(";")
             )
         );
 

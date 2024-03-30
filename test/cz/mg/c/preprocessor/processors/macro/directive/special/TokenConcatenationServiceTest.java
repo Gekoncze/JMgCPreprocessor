@@ -5,8 +5,8 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.entities.Token;
+import cz.mg.tokenizer.entities.tokens.SymbolToken;
 import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.SpecialToken;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenValidator;
 
@@ -31,27 +31,27 @@ public @Test class TokenConcatenationServiceTest {
         );
 
         testConcatenate(
-            new List<>(f.special("##")),
-            new List<>(f.special("##"))
+            new List<>(f.symbol("##")),
+            new List<>(f.symbol("##"))
         );
 
         testConcatenate(
-            new List<>(f.word("a"), f.special("##")),
-            new List<>(f.word("a"), f.special("##"))
+            new List<>(f.word("a"), f.symbol("##")),
+            new List<>(f.word("a"), f.symbol("##"))
         );
 
         testConcatenate(
-            new List<>(f.special("##"), f.word("a")),
-            new List<>(f.special("##"), f.word("a"))
+            new List<>(f.symbol("##"), f.word("a")),
+            new List<>(f.symbol("##"), f.word("a"))
         );
 
         testConcatenate(
-            new List<>(new WordToken("foo", 3), new SpecialToken("##", 6), new WordToken("bar", 8)),
+            new List<>(new WordToken("foo", 3), new SymbolToken("##", 6), new WordToken("bar", 8)),
             new List<>(new WordToken("foobar", 3))
         );
 
         testConcatenate(
-            new List<>(f.word("f"), f.word("foo"), f.special("##"), f.word("bar"), f.word("b")),
+            new List<>(f.word("f"), f.word("foo"), f.symbol("##"), f.word("bar"), f.word("b")),
             new List<>(f.word("f"), f.word("foobar"), f.word("b"))
         );
 
@@ -62,7 +62,7 @@ public @Test class TokenConcatenationServiceTest {
                 f.whitespace(" "),
                 f.word("foo"),
                 f.whitespace(" "),
-                f.special("##"),
+                f.symbol("##"),
                 f.whitespace(" "),
                 f.word("bar"),
                 f.whitespace(" "),

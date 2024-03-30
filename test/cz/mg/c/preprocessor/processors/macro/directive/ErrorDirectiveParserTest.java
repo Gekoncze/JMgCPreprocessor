@@ -29,7 +29,7 @@ public @Test class ErrorDirectiveParserTest {
         parserValidator.validate(ErrorDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.word("error")),
+            new List<>(f.symbol("#"), f.word("error")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
@@ -39,7 +39,7 @@ public @Test class ErrorDirectiveParserTest {
         );
 
         mutator.mutate(
-            new List<>(f.special("#"), f.word("error"), f.whitespace(" ")),
+            new List<>(f.symbol("#"), f.word("error"), f.whitespace(" ")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
@@ -49,7 +49,7 @@ public @Test class ErrorDirectiveParserTest {
         );
 
         mutator.mutate(
-            new List<>(f.special("#"), f.word("error"), f.word("oi"), f.word("oi"), f.word("oi")),
+            new List<>(f.symbol("#"), f.word("error"), f.word("oi"), f.word("oi"), f.word("oi")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
@@ -61,7 +61,7 @@ public @Test class ErrorDirectiveParserTest {
         mutator.mutate(
             new List<>(
                 f.whitespace(" "),
-                f.special("#"),
+                f.symbol("#"),
                 f.whitespace(" "),
                 f.word("error"),
                 f.whitespace(" "),

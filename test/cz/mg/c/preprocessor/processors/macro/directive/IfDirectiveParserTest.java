@@ -28,13 +28,13 @@ public @Test class IfDirectiveParserTest {
         parserValidator.validate(IfDirectiveParser.getInstance());
 
         mutator.mutate(
-            new List<>(f.special("#"), f.word("if"), f.number("1"), f.operator(">"), f.number("2")),
+            new List<>(f.symbol("#"), f.word("if"), f.number("1"), f.symbol(">"), f.number("2")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
                 tokenValidator.assertEquals(f.word("if"), directive.getKeyword());
                 tokenValidator.assertEquals(
-                    new List<>(f.number("1"), f.operator(">"), f.number("2")),
+                    new List<>(f.number("1"), f.symbol(">"), f.number("2")),
                     directive.getExpression()
                 );
             }
@@ -43,13 +43,13 @@ public @Test class IfDirectiveParserTest {
         mutator.mutate(
             new List<>(
                 f.whitespace(" "),
-                f.special("#"),
+                f.symbol("#"),
                 f.whitespace(" "),
                 f.word("if"),
                 f.whitespace(" "),
                 f.number("1"),
                 f.whitespace(" "),
-                f.operator(">"),
+                f.symbol(">"),
                 f.whitespace(" "),
                 f.number("2"),
                 f.whitespace(" ")
@@ -63,7 +63,7 @@ public @Test class IfDirectiveParserTest {
                         f.whitespace(" "),
                         f.number("1"),
                         f.whitespace(" "),
-                        f.operator(">"),
+                        f.symbol(">"),
                         f.whitespace(" "),
                         f.number("2"),
                         f.whitespace(" ")

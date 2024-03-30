@@ -30,7 +30,7 @@ public @Test class IncludeDirectiveParserTest {
 
         mutator.mutate(
             new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("include"),
                 f.doubleQuote("stdio.h")
             ),
@@ -46,7 +46,7 @@ public @Test class IncludeDirectiveParserTest {
         mutator.mutate(
             new List<>(
                 f.whitespace(" "),
-                f.special("#"),
+                f.symbol("#"),
                 f.whitespace(" "),
                 f.word("include"),
                 f.whitespace(" "),
@@ -64,13 +64,13 @@ public @Test class IncludeDirectiveParserTest {
 
         mutator.mutate(
             new List<>(
-                f.special("#"),
+                f.symbol("#"),
                 f.word("include"),
-                f.operator("<"),
+                f.symbol("<"),
                 f.word("stdio"),
-                f.operator("."),
+                f.symbol("."),
                 f.word("h"),
-                f.operator(">")
+                f.symbol(">")
             ),
             new List<>(0, 1, 2, 3, 4, 5, 6),
             tokens -> parser.parse(tokens),
@@ -84,17 +84,17 @@ public @Test class IncludeDirectiveParserTest {
         mutator.mutate(
             new List<>(
                 f.whitespace(" "),
-                f.special("#"),
+                f.symbol("#"),
                 f.whitespace(" "),
                 f.word("include"),
                 f.whitespace(" "),
-                f.operator("<"),
+                f.symbol("<"),
                 f.whitespace(" "),
                 f.word("stdio"),
-                f.operator("."),
+                f.symbol("."),
                 f.word("h"),
                 f.whitespace(" "),
-                f.operator(">"),
+                f.symbol(">"),
                 f.whitespace(" ")
             ),
             new List<>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
