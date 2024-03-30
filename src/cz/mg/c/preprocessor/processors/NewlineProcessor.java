@@ -3,8 +3,8 @@ package cz.mg.c.preprocessor.processors;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.WhitespaceToken;
 
 public @Service class NewlineProcessor {
     private static volatile @Service NewlineProcessor instance;

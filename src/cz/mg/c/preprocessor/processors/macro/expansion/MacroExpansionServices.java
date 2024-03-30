@@ -10,7 +10,7 @@ import cz.mg.c.entities.macro.system.LineMacro;
 import cz.mg.collections.components.Capacity;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 public @Service class MacroExpansionServices {
     private static volatile @Service MacroExpansionServices instance;

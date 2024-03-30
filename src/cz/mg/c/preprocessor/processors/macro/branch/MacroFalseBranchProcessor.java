@@ -9,7 +9,7 @@ import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
 import cz.mg.c.preprocessor.processors.macro.expression.MacroExpressions;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 public @Service class MacroFalseBranchProcessor implements MacroBranchProcessor {
     private static volatile @Service MacroFalseBranchProcessor instance;

@@ -6,7 +6,7 @@ import cz.mg.c.preprocessor.processors.backslash.BackslashPositionProcessor;
 import cz.mg.c.preprocessor.processors.backslash.BackslashProcessor;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.Tokenizer;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TokenizeException;
 
 public @Service class TokenProcessor {

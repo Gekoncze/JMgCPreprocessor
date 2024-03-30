@@ -5,8 +5,8 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.preprocessor.test.MacroValidator;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.tokens.SymbolToken;
-import cz.mg.tokenizer.entities.tokens.WordToken;
+import cz.mg.token.tokens.SymbolToken;
+import cz.mg.token.tokens.WordToken;
 import cz.mg.tokenizer.test.TokenMutator;
 
 public @Test class SpecialMacroParserTest {

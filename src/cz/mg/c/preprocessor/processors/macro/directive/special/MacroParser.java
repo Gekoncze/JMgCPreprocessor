@@ -8,8 +8,8 @@ import cz.mg.c.entities.directives.DefineDirective;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.*;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.*;
 
 public @Service class MacroParser {
     private static volatile @Service MacroParser instance;

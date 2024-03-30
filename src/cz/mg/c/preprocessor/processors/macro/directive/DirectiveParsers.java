@@ -7,10 +7,10 @@ import cz.mg.c.entities.directives.Directive;
 import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.SymbolToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
-import cz.mg.tokenizer.entities.tokens.WordToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.SymbolToken;
+import cz.mg.token.tokens.WhitespaceToken;
+import cz.mg.token.tokens.WordToken;
 
 public @Service class DirectiveParsers {
     private static volatile @Service DirectiveParsers instance;

@@ -5,11 +5,11 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.annotations.requirement.Optional;
 import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.SymbolToken;
-import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.NumberToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.SymbolToken;
+import cz.mg.token.tokens.WordToken;
+import cz.mg.token.tokens.NumberToken;
+import cz.mg.token.tokens.WhitespaceToken;
 
 public @Service class TokenConcatenationService {
     private static volatile @Service TokenConcatenationService instance;

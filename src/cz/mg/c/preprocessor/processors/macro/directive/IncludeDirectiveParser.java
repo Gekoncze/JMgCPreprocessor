@@ -6,9 +6,9 @@ import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.entities.directives.IncludeDirective;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.*;
-import cz.mg.tokenizer.entities.tokens.quote.DoubleQuoteToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.*;
+import cz.mg.token.tokens.quote.DoubleQuoteToken;
 
 import java.nio.file.Path;
 

@@ -7,7 +7,7 @@ import cz.mg.c.preprocessor.processors.macro.MacroProcessor;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.tokenizer.Tokenizer;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 public @Service class MainPreprocessor {
     private static volatile @Service MainPreprocessor instance;

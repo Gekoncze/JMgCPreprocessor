@@ -6,8 +6,8 @@ import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.system.FileMacro;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.quote.DoubleQuoteToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.quote.DoubleQuoteToken;
 
 public @Service class FileMacroExpansionService implements MacroExpansionService {
     private static volatile @Service FileMacroExpansionService instance;

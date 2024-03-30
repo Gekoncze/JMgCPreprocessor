@@ -7,7 +7,7 @@ import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.entities.tokens.WordToken;
+import cz.mg.token.tokens.WordToken;
 
 import java.util.NoSuchElementException;
 

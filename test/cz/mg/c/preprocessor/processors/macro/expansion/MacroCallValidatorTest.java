@@ -6,7 +6,7 @@ import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
 

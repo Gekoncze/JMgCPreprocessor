@@ -7,7 +7,7 @@ import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.collections.components.Capacity;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 import java.util.Iterator;
 

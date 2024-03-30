@@ -6,7 +6,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenValidator;
 

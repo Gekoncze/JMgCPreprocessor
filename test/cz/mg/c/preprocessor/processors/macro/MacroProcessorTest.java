@@ -7,7 +7,7 @@ import cz.mg.c.entities.macro.Macros;
 import cz.mg.c.preprocessor.processors.macro.exceptions.ErrorException;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenValidator;
 

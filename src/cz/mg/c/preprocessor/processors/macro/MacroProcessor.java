@@ -7,7 +7,7 @@ import cz.mg.c.preprocessor.processors.macro.components.MacroExpander;
 import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 public @Service class MacroProcessor {
     private static volatile @Service MacroProcessor instance;

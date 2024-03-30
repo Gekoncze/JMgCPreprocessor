@@ -6,11 +6,11 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.tokenizer.CTokenizer;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.NumberToken;
-import cz.mg.tokenizer.entities.tokens.SymbolToken;
-import cz.mg.tokenizer.entities.tokens.WhitespaceToken;
-import cz.mg.tokenizer.entities.tokens.quote.SingleQuoteToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.NumberToken;
+import cz.mg.token.tokens.SymbolToken;
+import cz.mg.token.tokens.WhitespaceToken;
+import cz.mg.token.tokens.quote.SingleQuoteToken;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenValidator;
 

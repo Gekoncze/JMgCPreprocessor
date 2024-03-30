@@ -9,7 +9,7 @@ import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParsers;
 import cz.mg.c.entities.directives.Directive;
 import cz.mg.c.entities.directives.EndifDirective;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 public @Service class MacroCompletedBranchProcessor implements MacroBranchProcessor {
     private static volatile @Service MacroCompletedBranchProcessor instance;

@@ -6,8 +6,8 @@ import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParser;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.entities.tokens.SymbolToken;
-import cz.mg.tokenizer.entities.tokens.WordToken;
+import cz.mg.token.tokens.SymbolToken;
+import cz.mg.token.tokens.WordToken;
 
 public @Service class DirectiveParserValidator {
     private static volatile @Service DirectiveParserValidator instance;

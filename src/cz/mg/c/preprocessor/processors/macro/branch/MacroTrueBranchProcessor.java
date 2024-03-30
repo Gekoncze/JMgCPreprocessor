@@ -12,7 +12,7 @@ import cz.mg.c.preprocessor.processors.macro.exceptions.ErrorException;
 import cz.mg.c.preprocessor.processors.macro.exceptions.MacroException;
 import cz.mg.c.preprocessor.processors.macro.expression.MacroExpressions;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 public @Service class MacroTrueBranchProcessor implements MacroBranchProcessor {
     private static volatile @Service MacroTrueBranchProcessor instance;

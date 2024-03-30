@@ -8,9 +8,9 @@ import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.Macros;
 import cz.mg.c.entities.macro.system.DefinedMacro;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.entities.Token;
-import cz.mg.tokenizer.entities.tokens.WordToken;
-import cz.mg.tokenizer.entities.tokens.NumberToken;
+import cz.mg.token.Token;
+import cz.mg.token.tokens.WordToken;
+import cz.mg.token.tokens.NumberToken;
 import cz.mg.tokenizer.test.TokenValidator;
 
 public @Test class DefinedMacroExpansionServiceTest {

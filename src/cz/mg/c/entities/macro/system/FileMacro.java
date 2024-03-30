@@ -7,7 +7,7 @@ import cz.mg.annotations.storage.Link;
 import cz.mg.c.entities.macro.Macro;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
-import cz.mg.tokenizer.entities.tokens.WordToken;
+import cz.mg.token.tokens.WordToken;
 
 public @Entity class FileMacro extends Macro implements SystemMacro {
     public static final @Mandatory String NAME = "__FILE__";

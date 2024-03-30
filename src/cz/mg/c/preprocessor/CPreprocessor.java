@@ -10,7 +10,7 @@ import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.tokenizer.Tokenizer;
-import cz.mg.tokenizer.entities.Token;
+import cz.mg.token.Token;
 
 public @Component class CPreprocessor {
     private final @Mandatory MainPreprocessor mainPreprocessor = MainPreprocessor.getInstance();
