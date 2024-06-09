@@ -6,13 +6,12 @@ import cz.mg.annotations.requirement.Optional;
 import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.Macros;
-import cz.mg.collections.components.Capacity;
 import cz.mg.collections.list.ListItem;
 import cz.mg.collections.map.Map;
 
 public @Component class MacroManager {
     private final @Mandatory Macros macros;
-    private final @Mandatory Map<String, ListItem<Macro>> map = new Map<>(new Capacity(100));
+    private final @Mandatory Map<String, ListItem<Macro>> map = new Map<>();
 
     public MacroManager(Macros macros) {
         this.macros = macros;
@@ -46,7 +45,7 @@ public @Component class MacroManager {
     }
 
     public void undefine(@Mandatory String name) {
-        map.remove(name).remove();
+        map.unset(name).remove();
     }
 
     public void called(@Mandatory MacroCall call) {

@@ -2,12 +2,11 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.requirement.Mandatory;
-import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.system.DefinedMacro;
 import cz.mg.c.entities.macro.system.FileMacro;
 import cz.mg.c.entities.macro.system.LineMacro;
-import cz.mg.collections.components.Capacity;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.collections.list.List;
 import cz.mg.collections.map.Map;
 import cz.mg.token.Token;
@@ -21,11 +20,11 @@ public @Service class MacroExpansionServices {
                 if (instance == null) {
                     instance = new MacroExpansionServices();
                     instance.macroCallValidator = MacroCallValidator.getInstance();
-                    instance.systemMacroNames = new Map<>(new Capacity(10));
+                    instance.systemMacroNames = new Map<>();
                     instance.systemMacroNames.set(DefinedMacro.NAME, DefinedMacro.NAME);
                     instance.systemMacroNames.set(FileMacro.NAME, FileMacro.NAME);
                     instance.systemMacroNames.set(LineMacro.NAME, LineMacro.NAME);
-                    instance.macroExpansionServices = new Map<>(new Capacity(10));
+                    instance.macroExpansionServices = new Map<>();
                     instance.macroExpansionServices.set(DefinedMacro.NAME, DefinedMacroExpansionService.getInstance());
                     instance.macroExpansionServices.set(FileMacro.NAME, FileMacroExpansionService.getInstance());
                     instance.macroExpansionServices.set(LineMacro.NAME, LineMacroExpansionService.getInstance());
