@@ -8,7 +8,7 @@ import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.Macros;
 import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.preprocessor.test.MacroFactory;
-import cz.mg.c.preprocessor.test.MacroValidator;
+import cz.mg.c.preprocessor.test.MacroAssertions;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.test.Assert;
@@ -17,7 +17,7 @@ import cz.mg.token.tokens.*;
 import cz.mg.token.tokens.quote.DoubleQuoteToken;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.services.UserExceptionFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 import java.nio.file.Path;
 
@@ -35,8 +35,8 @@ public @Test class CPreprocessorTest {
         System.out.println("OK");
     }
 
-    private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
-    private final @Service MacroValidator macroValidator = MacroValidator.getInstance();
+    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
+    private final @Service MacroAssertions macroAssertions = MacroAssertions.getInstance();
     private final @Service UserExceptionFactory userExceptionFactory = UserExceptionFactory.getInstance();
     private final @Service MacroFactory m = MacroFactory.getInstance();
 
@@ -61,7 +61,7 @@ public @Test class CPreprocessorTest {
         List<Token> tokens = preprocessor.preprocess(file);
 
         Assert.assertEquals(1, macros.getDefinitions().count());
-        macroValidator.assertEquals(
+        macroAssertions.assertEquals(
             new Macro(
                 new WordToken("PLUS", 28),
                 new List<>(new WordToken("x", 33), new WordToken("y", 36)),
@@ -70,7 +70,7 @@ public @Test class CPreprocessorTest {
             macros.getDefinitions().getFirst()
         );
 
-        tokenValidator.assertEquals(
+        tokenAssertions.assertEquals(
             new List<>(
                 new WordToken("int", 52),
                 new WordToken("main", 56),
@@ -121,7 +121,7 @@ public @Test class CPreprocessorTest {
         Assert.assertEquals("OPERATION", macros.getDefinitions().getFirst().getName().getText());
         Assert.assertEquals("MINUS", macros.getDefinitions().getLast().getName().getText());
 
-        macroValidator.assertEquals(
+        macroAssertions.assertEquals(
             new Macro(
                 new WordToken("MINUS", 41),
                 new List<>(new WordToken("x", 47), new WordToken("y", 50)),
@@ -139,7 +139,7 @@ public @Test class CPreprocessorTest {
             macros.getDefinitions().getLast()
         );
 
-        tokenValidator.assertEquals(
+        tokenAssertions.assertEquals(
             new List<>(
                 new NumberToken("7", 114),
                 new SymbolToken("-", 66),
@@ -193,7 +193,7 @@ public @Test class CPreprocessorTest {
         Assert.assertEquals(false, manager.defined("STRAW"));
         Assert.assertEquals(false, manager.defined("NONE"));
 
-        tokenValidator.assertEquals(
+        tokenAssertions.assertEquals(
             new List<>(
                 new NumberToken("0", 0),
                 new NumberToken("1", 15),
@@ -221,7 +221,7 @@ public @Test class CPreprocessorTest {
         MacroManager manager = new MacroManager(macros);
         Assert.assertEquals(true, manager.defined("PLUS"));
 
-        tokenValidator.assertEquals(
+        tokenAssertions.assertEquals(
             new List<>(
                 new NumberToken("7", 35),
                 new SymbolToken("+", 22),

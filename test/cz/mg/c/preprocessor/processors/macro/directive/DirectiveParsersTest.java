@@ -7,7 +7,7 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class DirectiveParsersTest {
     public static void main(String[] args) {
@@ -23,7 +23,7 @@ public @Test class DirectiveParsersTest {
 
     private final @Service DirectiveParsers parsers = DirectiveParsers.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testParseDirectiveLine() {
         DefineDirective directive = (DefineDirective) parsers.parse(
@@ -31,7 +31,7 @@ public @Test class DirectiveParsersTest {
         );
 
         Assert.assertNotNull(directive);
-        validator.assertEquals(f.word("define"), directive.getKeyword());
+        assertions.assertEquals(f.word("define"), directive.getKeyword());
         Assert.assertNotNull(directive.getMacro());
     }
 

@@ -11,7 +11,7 @@ import cz.mg.collections.list.List;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.WordToken;
 import cz.mg.token.tokens.NumberToken;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class DefinedMacroExpansionServiceTest {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public @Test class DefinedMacroExpansionServiceTest {
     }
 
     private final @Service DefinedMacroExpansionService service = DefinedMacroExpansionService.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testExpand() {
         MacroManager macros = new MacroManager(new Macros());
@@ -37,14 +37,14 @@ public @Test class DefinedMacroExpansionServiceTest {
             new List<List<Token>>(new List<>(new WordToken("FOOBAR", 20)))
         );
 
-        validator.assertEquals(
+        assertions.assertEquals(
             new List<>(new NumberToken("0", 10)),
             service.expand(macros, call)
         );
 
         macros.define(new Macro(new WordToken("FOOBAR", 5), null, new List<>()));
 
-        validator.assertEquals(
+        assertions.assertEquals(
             new List<>(new NumberToken("1", 10)),
             service.expand(macros, call)
         );

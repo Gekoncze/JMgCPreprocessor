@@ -11,7 +11,7 @@ import cz.mg.file.File;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.WordToken;
 import cz.mg.token.tokens.quote.DoubleQuoteToken;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 import java.nio.file.Path;
 
@@ -26,7 +26,7 @@ public @Test class FileMacroExpansionServiceTest {
     }
 
     private final @Service FileMacroExpansionService service = FileMacroExpansionService.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testExpand() {
         File file = new File(
@@ -42,6 +42,6 @@ public @Test class FileMacroExpansionServiceTest {
         MacroCall call = new MacroCall(fileMacro, new WordToken("__FILE__", 48), new List<>());
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>(new DoubleQuoteToken(file.getPath().toAbsolutePath().toString(), 48));
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 }

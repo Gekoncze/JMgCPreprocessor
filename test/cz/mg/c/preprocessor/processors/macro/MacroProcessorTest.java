@@ -9,7 +9,7 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class MacroProcessorTest {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public @Test class MacroProcessorTest {
 
     private final @Service MacroProcessor macroProcessor = MacroProcessor.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testProcessing() {
         Macros macros = new Macros();
@@ -58,7 +58,7 @@ public @Test class MacroProcessorTest {
             f.number("7")
         );
 
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
 
         Assert.assertEquals(1, macros.getDefinitions().count());
         Assert.assertEquals("FOO", macros.getDefinitions().getFirst().getName().getText());

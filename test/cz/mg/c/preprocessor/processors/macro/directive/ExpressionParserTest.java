@@ -7,7 +7,7 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenMutator;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class ExpressionParserTest {
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public @Test class ExpressionParserTest {
     }
 
     private final @Service ExpressionParser parser = ExpressionParser.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
@@ -33,7 +33,7 @@ public @Test class ExpressionParserTest {
             ),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
-            expression -> validator.assertEquals(
+            expression -> assertions.assertEquals(
                 new List<>(f.number("69")),
                 expression
             )
@@ -49,7 +49,7 @@ public @Test class ExpressionParserTest {
             ),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
-            expression -> validator.assertEquals(
+            expression -> assertions.assertEquals(
                 new List<>(f.number("6"), f.symbol("+"), f.number("9")),
                 expression
             )
@@ -71,7 +71,7 @@ public @Test class ExpressionParserTest {
             ),
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
-            expression -> validator.assertEquals(
+            expression -> assertions.assertEquals(
                 new List<>(
                     f.whitespace(" "),
                     f.number("6"),
@@ -99,7 +99,7 @@ public @Test class ExpressionParserTest {
             ),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
-            expression -> validator.assertEquals(
+            expression -> assertions.assertEquals(
                 new List<>(
                     f.number("69"),
                     f.symbol("*"),

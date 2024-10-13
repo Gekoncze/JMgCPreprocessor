@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class CommentProcessorTest {
     public static void main(String[] args) {
@@ -17,7 +17,7 @@ public @Test class CommentProcessorTest {
         System.out.println("OK");
     }
 
-    private final TokenValidator validator = TokenValidator.getInstance();
+    private final TokenAssertions assertions = TokenAssertions.getInstance();
     private final TokenFactory f = TokenFactory.getInstance();
     private final CommentProcessor processor = CommentProcessor.getInstance();
 
@@ -83,6 +83,6 @@ public @Test class CommentProcessorTest {
 
     private void testProcessing(@Mandatory List<Token> tokens, @Mandatory List<Token> result) {
         processor.process(tokens);
-        validator.assertEquals(result, tokens);
+        assertions.assertEquals(result, tokens);
     }
 }

@@ -8,7 +8,7 @@ import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenMutator;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class IfndefDirectiveParserTest {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public @Test class IfndefDirectiveParserTest {
     private final @Service IfndefDirectiveParser parser = IfndefDirectiveParser.getInstance();
     private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
-    private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
+    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
@@ -35,8 +35,8 @@ public @Test class IfndefDirectiveParserTest {
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.word("ifndef"), directive.getKeyword());
-                tokenValidator.assertEquals(f.word("TEST"), directive.getName());
+                tokenAssertions.assertEquals(f.word("ifndef"), directive.getKeyword());
+                tokenAssertions.assertEquals(f.word("TEST"), directive.getName());
             }
         );
 
@@ -53,8 +53,8 @@ public @Test class IfndefDirectiveParserTest {
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.word("ifndef"), directive.getKeyword());
-                tokenValidator.assertEquals(f.word("TEST"), directive.getName());
+                tokenAssertions.assertEquals(f.word("ifndef"), directive.getKeyword());
+                tokenAssertions.assertEquals(f.word("TEST"), directive.getName());
             }
         );
     }

@@ -6,7 +6,7 @@ import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenMutator;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class ElifDirectiveParserTest {
     public static void main(String[] args) {
@@ -21,7 +21,7 @@ public @Test class ElifDirectiveParserTest {
     private final @Service ElifDirectiveParser parser = ElifDirectiveParser.getInstance();
     private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
-    private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
+    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
@@ -32,8 +32,8 @@ public @Test class ElifDirectiveParserTest {
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.word("elif"), directive.getKeyword());
-                tokenValidator.assertEquals(
+                tokenAssertions.assertEquals(f.word("elif"), directive.getKeyword());
+                tokenAssertions.assertEquals(
                     new List<>(f.number("1"), f.symbol("<"), f.number("2")),
                     directive.getExpression()
                 );
@@ -57,8 +57,8 @@ public @Test class ElifDirectiveParserTest {
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.word("elif"), directive.getKeyword());
-                tokenValidator.assertEquals(
+                tokenAssertions.assertEquals(f.word("elif"), directive.getKeyword());
+                tokenAssertions.assertEquals(
                     new List<>(
                         f.whitespace(" "),
                         f.number("1"),

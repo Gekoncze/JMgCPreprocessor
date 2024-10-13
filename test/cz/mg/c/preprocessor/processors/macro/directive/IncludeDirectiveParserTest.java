@@ -7,7 +7,7 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenMutator;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class IncludeDirectiveParserTest {
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public @Test class IncludeDirectiveParserTest {
     private final @Service IncludeDirectiveParser parser = IncludeDirectiveParser.getInstance();
     private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
-    private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
+    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
@@ -37,7 +37,7 @@ public @Test class IncludeDirectiveParserTest {
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.word("include"), directive.getKeyword());
+                tokenAssertions.assertEquals(f.word("include"), directive.getKeyword());
                 Assert.assertEquals(false, directive.isLibrary());
                 Assert.assertEquals("stdio.h", directive.getPath().toString());
             }
@@ -56,7 +56,7 @@ public @Test class IncludeDirectiveParserTest {
             new List<>(0, 1, 2, 3, 4, 5, 6),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.word("include"), directive.getKeyword());
+                tokenAssertions.assertEquals(f.word("include"), directive.getKeyword());
                 Assert.assertEquals(false, directive.isLibrary());
                 Assert.assertEquals("stdio.h", directive.getPath().toString());
             }
@@ -75,7 +75,7 @@ public @Test class IncludeDirectiveParserTest {
             new List<>(0, 1, 2, 3, 4, 5, 6),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.word("include"), directive.getKeyword());
+                tokenAssertions.assertEquals(f.word("include"), directive.getKeyword());
                 Assert.assertEquals(true, directive.isLibrary());
                 Assert.assertEquals("stdio.h", directive.getPath().toString());
             }
@@ -100,7 +100,7 @@ public @Test class IncludeDirectiveParserTest {
             new List<>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenValidator.assertEquals(f.word("include"), directive.getKeyword());
+                tokenAssertions.assertEquals(f.word("include"), directive.getKeyword());
                 Assert.assertEquals(true, directive.isLibrary());
                 Assert.assertEquals("stdio.h", directive.getPath().toString());
             }

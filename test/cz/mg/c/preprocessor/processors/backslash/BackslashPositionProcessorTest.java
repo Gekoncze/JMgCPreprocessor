@@ -6,7 +6,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.token.Token;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class BackslashPositionProcessorTest {
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public @Test class BackslashPositionProcessorTest {
 
     private final @Service BackslashPositionProcessor backslashPositionProcessor = BackslashPositionProcessor.getInstance();
     private final @Service BackslashProcessor backslashProcessor = BackslashProcessor.getInstance();
-    private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
+    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
 
     private void testProcessing() {
         String originalContent =
@@ -70,12 +70,12 @@ public @Test class BackslashPositionProcessorTest {
         );
 
         Assert.assertThatCode(() -> {
-            tokenValidator.assertEquals(expectedTokens, tokens);
+            tokenAssertions.assertEquals(expectedTokens, tokens);
         }).throwsException();
 
         backslashPositionProcessor.process(originalContent, backslashedContent, tokens);
 
-        tokenValidator.assertEquals(expectedTokens, tokens);
+        tokenAssertions.assertEquals(expectedTokens, tokens);
     }
 
     private @Mandatory Token createToken(@Mandatory String content, char ch) {

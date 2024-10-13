@@ -8,7 +8,7 @@ import cz.mg.token.Token;
 import cz.mg.token.tokens.SymbolToken;
 import cz.mg.token.tokens.WordToken;
 import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class TokenConcatenationServiceTest {
     public static void main(String[] args) {
@@ -21,7 +21,7 @@ public @Test class TokenConcatenationServiceTest {
     }
 
     private final @Service TokenConcatenationService service = TokenConcatenationService.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testConcatenate() {
@@ -83,6 +83,6 @@ public @Test class TokenConcatenationServiceTest {
 
     private void testConcatenate(@Mandatory List<Token> input, @Mandatory List<Token> output) {
         service.concatenate(input);
-        validator.assertEquals(output, input);
+        assertions.assertEquals(output, input);
     }
 }

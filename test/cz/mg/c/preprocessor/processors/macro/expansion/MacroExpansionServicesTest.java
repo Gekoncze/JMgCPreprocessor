@@ -13,7 +13,7 @@ import cz.mg.test.Assert;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 import java.nio.file.Path;
 
@@ -31,7 +31,7 @@ public @Test class MacroExpansionServicesTest {
 
     private final @Service MacroExpansionServices services = MacroExpansionServices.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testExpandPlainMacro() {
         MacroManager macros = new MacroManager(new Macros());
@@ -40,7 +40,7 @@ public @Test class MacroExpansionServicesTest {
         MacroCall call = new MacroCall(macro, f.word("MACRO"), new List<>());
         List<Token> actualTokens = services.expand(call, macros);
         List<Token> expectedTokens = new List<>(f.word("Aki"));
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testExpandSystemMacro() {
@@ -51,7 +51,7 @@ public @Test class MacroExpansionServicesTest {
         MacroCall call = new MacroCall(fileMacro, f.word("__FILE__"), null);
         List<Token> actualTokens = services.expand(call, macros);
         List<Token> expectedTokens = new List<>(f.doubleQuote(file.getPath().toAbsolutePath().toString()));
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testValidation() {

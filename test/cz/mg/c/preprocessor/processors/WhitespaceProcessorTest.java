@@ -8,7 +8,7 @@ import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class WhitespaceProcessorTest {
     public static void main(String[] args) {
@@ -21,7 +21,7 @@ public @Test class WhitespaceProcessorTest {
         System.out.println("OK");
     }
 
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
     private final @Service WhitespaceProcessor processor = WhitespaceProcessor.getInstance();
 
@@ -70,7 +70,7 @@ public @Test class WhitespaceProcessorTest {
 
     private void testProcessing(@Mandatory List<Token> tokens, @Mandatory List<Token> result) {
         processor.process(tokens);
-        validator.assertEquals(result, tokens);
+        assertions.assertEquals(result, tokens);
     }
 
     private void testMacroProcessing() {
@@ -116,6 +116,6 @@ public @Test class WhitespaceProcessorTest {
         Macros macros = new Macros();
         macros.getDefinitions().addLast(macro);
         processor.process(macros);
-        validator.assertEquals(result, macro.getTokens());
+        assertions.assertEquals(result, macro.getTokens());
     }
 }

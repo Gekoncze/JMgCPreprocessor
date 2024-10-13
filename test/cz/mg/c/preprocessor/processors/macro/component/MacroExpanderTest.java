@@ -11,7 +11,7 @@ import cz.mg.test.Assert;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class MacroExpanderTest {
     public static void main(String[] args) {
@@ -37,19 +37,19 @@ public @Test class MacroExpanderTest {
     }
 
     private final @Service TokenFactory f = TokenFactory.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testNoMacroNoExpansionNoTokens() {
         List<Token> actualTokens = MacroExpander.expand(new List<>(), new MacroManager(new Macros()));
         List<Token> expectedTokens = new List<>();
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoMacroNoExpansion() {
         List<Token> line = new List<>(f.word("bar"));
         List<Token> actualTokens = MacroExpander.expand(line, new MacroManager(new Macros()));
         List<Token> expectedTokens = new List<>(f.word("bar"));
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoExpansion() {
@@ -58,7 +58,7 @@ public @Test class MacroExpanderTest {
         List<Token> line = new List<>(f.word("bar"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>(f.word("bar"));
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoExpansionBrackets() {
@@ -67,7 +67,7 @@ public @Test class MacroExpanderTest {
         List<Token> line = new List<>(f.word("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>(f.word("FOO"));
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testSimpleExpansion() {
@@ -76,7 +76,7 @@ public @Test class MacroExpanderTest {
         List<Token> line = new List<>(f.word("FOO"), f.symbol("("), f.symbol(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>(f.word("foo"));
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testSimpleExpansionWithMoreTokens() {
@@ -94,7 +94,7 @@ public @Test class MacroExpanderTest {
         List<Token> expectedTokens = new List<>(
             f.whitespace("\t"), f.word("foo"), f.symbol("+"), f.word("bar"), f.symbol(";")
         );
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoParametersAndNoImplementation() {
@@ -103,7 +103,7 @@ public @Test class MacroExpanderTest {
         List<Token> line = new List<>(f.word("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>();
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testParametersAndNoImplementation() {
@@ -112,7 +112,7 @@ public @Test class MacroExpanderTest {
         List<Token> line = new List<>(f.word("FOO"), f.symbol("("), f.symbol(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>();
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testParametersAndNoImplementationWithSpaces() {
@@ -121,7 +121,7 @@ public @Test class MacroExpanderTest {
         List<Token> line = new List<>(f.word("FOO"), f.whitespace(" "), f.symbol("("), f.symbol(")"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>();
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testNoParametersAndImplementation() {
@@ -130,7 +130,7 @@ public @Test class MacroExpanderTest {
         List<Token> line = new List<>(f.word("FOO"));
         List<Token> actualTokens = MacroExpander.expand(line, macros);
         List<Token> expectedTokens = new List<>(f.word("_foo_"));
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testParametersAndImplementation() {
@@ -155,7 +155,7 @@ public @Test class MacroExpanderTest {
         List<Token> expectedTokens = new List<>(
             f.whitespace("\t"), f.word("foo"), f.symbol("+"), f.word("bar"), f.symbol(";")
         );
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testBracketNesting() {
@@ -183,7 +183,7 @@ public @Test class MacroExpanderTest {
             f.symbol(")"),
             f.symbol(")")
         );
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testRecursiveExpansion() {
@@ -205,7 +205,7 @@ public @Test class MacroExpanderTest {
         List<Token> expectedTokens = new List<>(
             f.symbol("*"), f.symbol("*"), f.word("FOO"), f.symbol("("), f.symbol(")")
         );
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testMissingRightParenthesis() {

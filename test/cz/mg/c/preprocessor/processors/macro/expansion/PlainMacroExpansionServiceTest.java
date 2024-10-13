@@ -9,7 +9,7 @@ import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class PlainMacroExpansionServiceTest {
     public static void main(String[] args) {
@@ -26,7 +26,7 @@ public @Test class PlainMacroExpansionServiceTest {
 
     private final @Service PlainMacroExpansionService service = PlainMacroExpansionService.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
-    private final @Service TokenValidator validator = TokenValidator.getInstance();
+    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testExpandNoParametersNoImplementation() {
         Macro macro = new Macro(f.word("FOOBAR"), null, new List<>());
@@ -39,7 +39,7 @@ public @Test class PlainMacroExpansionServiceTest {
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>();
 
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testExpandNoParameters() {
@@ -73,7 +73,7 @@ public @Test class PlainMacroExpansionServiceTest {
             f.word("x")
         );
 
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testExpandNoImplementation() {
@@ -98,7 +98,7 @@ public @Test class PlainMacroExpansionServiceTest {
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>();
 
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testExpand() {
@@ -140,6 +140,6 @@ public @Test class PlainMacroExpansionServiceTest {
             f.word("oi")
         );
 
-        validator.assertEquals(expectedTokens, actualTokens);
+        assertions.assertEquals(expectedTokens, actualTokens);
     }
 }

@@ -8,7 +8,7 @@ import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.test.TokenFactory;
 import cz.mg.tokenizer.test.TokenMutator;
-import cz.mg.tokenizer.test.TokenValidator;
+import cz.mg.tokenizer.test.TokenAssertions;
 
 public @Test class EndifDirectiveParserTest {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public @Test class EndifDirectiveParserTest {
     private final @Service EndifDirectiveParser parser = EndifDirectiveParser.getInstance();
     private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
-    private final @Service TokenValidator tokenValidator = TokenValidator.getInstance();
+    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
@@ -34,14 +34,14 @@ public @Test class EndifDirectiveParserTest {
             new List<>(f.symbol("#"), f.word("endif")),
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.word("endif"), directive.getKeyword())
+            directive -> tokenAssertions.assertEquals(f.word("endif"), directive.getKeyword())
         );
 
         mutator.mutate(
             new List<>(f.whitespace(" "), f.symbol("#"), f.whitespace(" "), f.word("endif"), f.whitespace(" ")),
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
-            directive -> tokenValidator.assertEquals(f.word("endif"), directive.getKeyword())
+            directive -> tokenAssertions.assertEquals(f.word("endif"), directive.getKeyword())
         );
     }
 
