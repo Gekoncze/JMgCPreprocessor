@@ -6,6 +6,9 @@ import cz.mg.collections.list.List;
 import cz.mg.collections.list.ListItem;
 import cz.mg.token.Token;
 
+/**
+ * Fixes positions of tokens parsed from content with joined lines.
+ */
 public @Service class BackslashPositionProcessor {
     private static volatile @Service BackslashPositionProcessor instance;
 

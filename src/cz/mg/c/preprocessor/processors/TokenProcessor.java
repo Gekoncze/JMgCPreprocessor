@@ -9,6 +9,10 @@ import cz.mg.tokenizer.Tokenizer;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TokenizeException;
 
+/**
+ * Class that transforms file content into linear list of tokens using given tokenizer.
+ * Backslash characters are also processed and token positions are set as they appear in original content.
+ */
 public @Service class TokenProcessor {
     private static volatile @Service TokenProcessor instance;
 
