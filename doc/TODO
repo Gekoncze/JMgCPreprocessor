@@ -22,3 +22,6 @@
         add support for macro stringification operator (#)
         add support for vararg macro parameters
         add support for include directive
+            currently only single file parsing is supported
+            it should be allowed to expand include directive
+                this might be an option: to expand or not to expand
