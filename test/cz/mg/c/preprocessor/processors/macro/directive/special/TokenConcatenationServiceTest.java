@@ -7,8 +7,8 @@ import cz.mg.collections.list.List;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.SymbolToken;
 import cz.mg.token.tokens.WordToken;
-import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenAssertions;
+import cz.mg.token.test.TokenFactory;
+import cz.mg.token.test.TokenAssertions;
 
 public @Test class TokenConcatenationServiceTest {
     public static void main(String[] args) {

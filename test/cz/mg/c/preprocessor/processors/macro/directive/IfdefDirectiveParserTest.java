@@ -6,9 +6,9 @@ import cz.mg.c.preprocessor.test.*;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.TraceableException;
-import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenMutator;
-import cz.mg.tokenizer.test.TokenAssertions;
+import cz.mg.token.test.TokenFactory;
+import cz.mg.token.test.TokenMutator;
+import cz.mg.token.test.TokenAssertions;
 
 public @Test class IfdefDirectiveParserTest {
     public static void main(String[] args) {

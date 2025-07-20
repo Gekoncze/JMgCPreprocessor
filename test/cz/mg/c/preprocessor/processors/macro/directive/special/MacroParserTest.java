@@ -7,8 +7,8 @@ import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.preprocessor.test.MacroAssertions;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
-import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenMutator;
+import cz.mg.token.test.TokenFactory;
+import cz.mg.token.test.TokenMutator;
 
 public @Test class MacroParserTest {
     public static void main(String[] args) {

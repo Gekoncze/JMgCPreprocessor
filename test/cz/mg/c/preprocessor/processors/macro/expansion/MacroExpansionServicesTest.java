@@ -12,8 +12,8 @@ import cz.mg.file.File;
 import cz.mg.test.Assert;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
-import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenAssertions;
+import cz.mg.token.test.TokenFactory;
+import cz.mg.token.test.TokenAssertions;
 
 import java.nio.file.Path;
 

@@ -8,7 +8,7 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
-import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.token.test.TokenFactory;
 
 public @Test class MacroCallValidatorTest {
     public static void main(String[] args) {

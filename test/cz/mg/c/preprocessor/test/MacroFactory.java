@@ -5,7 +5,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.array.Array;
-import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.token.test.TokenFactory;
 
 public @Service class MacroFactory {
     private static volatile @Service MacroFactory instance;

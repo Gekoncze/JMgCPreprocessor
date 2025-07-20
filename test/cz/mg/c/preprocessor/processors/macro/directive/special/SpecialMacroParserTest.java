@@ -7,7 +7,7 @@ import cz.mg.c.preprocessor.test.MacroAssertions;
 import cz.mg.collections.list.List;
 import cz.mg.token.tokens.SymbolToken;
 import cz.mg.token.tokens.WordToken;
-import cz.mg.tokenizer.test.TokenMutator;
+import cz.mg.token.test.TokenMutator;
 
 public @Test class SpecialMacroParserTest {
     public static void main(String[] args) {

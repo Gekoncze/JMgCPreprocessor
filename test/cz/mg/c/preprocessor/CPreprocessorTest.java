@@ -17,7 +17,7 @@ import cz.mg.token.tokens.*;
 import cz.mg.token.tokens.quote.DoubleQuoteToken;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.tokenizer.services.UserExceptionFactory;
-import cz.mg.tokenizer.test.TokenAssertions;
+import cz.mg.token.test.TokenAssertions;
 
 import java.nio.file.Path;
 
@@ -43,17 +43,18 @@ public @Test class CPreprocessorTest {
     private void testProcessing() {
         File file = new File(
             Path.of("/test/file/main.c"),
-            "#include <stdio.h>\n" +
-            "\n" +
-            "#define PLUS(x, y) \\\n" +
-            "    x + y\n" +
-            "\n" +
-            "int main() {\n" +
-            "    printf(\n" +
-            "        \"%s at line %i: %i\\n\",\n" +
-            "        __FILE__, __LINE__, PLUS(7, 3)\n" +
-            "    );\n" +
-            "}"
+            """
+            #include <stdio.h>
+            
+            #define PLUS(x, y) \\
+                x + y
+            
+            int main() {
+                printf(
+                    "%s at line %i: %i\\n",
+                    __FILE__, __LINE__, PLUS(7, 3)
+                );
+            }"""
         );
 
         Macros macros = new Macros();
@@ -79,7 +80,7 @@ public @Test class CPreprocessorTest {
                 new SymbolToken("{", 63),
                 new WordToken("printf", 69),
                 new SymbolToken("(", 75),
-                new DoubleQuoteToken("%s at line %i: %i\\n", 85),
+                new DoubleQuoteToken("%s at line %i: %i\n", 85),
                 new SymbolToken(",", 106),
                 new DoubleQuoteToken("/test/file/main.c", 116),
                 new SymbolToken(",", 124),
@@ -107,10 +108,12 @@ public @Test class CPreprocessorTest {
     private void testNestedMacros() {
         File file = new File(
             Path.of("/test/file/main.c"),
-            "#define OPERATION(x, o, y) x o y\n" +
-            "#define MINUS(x, y) OPERATION(x, -, y)\n" +
-            "#define OPERATION(x, o, y) y o x\n" +
-            "MINUS(2, 7)"
+            """
+            #define OPERATION(x, o, y) x o y
+            #define MINUS(x, y) OPERATION(x, -, y)
+            #define OPERATION(x, o, y) y o x
+            MINUS(2, 7)
+            """
         );
 
         Macros macros = new Macros();
@@ -152,29 +155,31 @@ public @Test class CPreprocessorTest {
     private void testNestedConditions() {
         File file = new File(
             Path.of("/test/file/main.c"),
-            "0\n" +
-            "#ifdef straw\n" +
-            "1\n" +
-            "#if defined(apple)\n" +
-            "2\n" +
-            "#define STRAWAPPLE\n" +
-            "3\n" +
-            "#elif defined(berry)\n" +
-            "4\n" +
-            "#define STRAWBERRY\n" +
-            "5\n" +
-            "#else\n" +
-            "6\n" +
-            "#define STRAW\n" +
-            "7\n" +
-            "#endif\n" +
-            "8\n" +
-            "#else\n" +
-            "9\n" +
-            "#define NONE\n" +
-            "10\n" +
-            "#endif\n" +
-            "11\n"
+            """
+            0
+            #ifdef straw
+            1
+            #if defined(apple)
+            2
+            #define STRAWAPPLE
+            3
+            #elif defined(berry)
+            4
+            #define STRAWBERRY
+            5
+            #else
+            6
+            #define STRAW
+            7
+            #endif
+            8
+            #else
+            9
+            #define NONE
+            10
+            #endif
+            11
+            """
         );
 
         Macros macros = new Macros();
@@ -251,13 +256,15 @@ public @Test class CPreprocessorTest {
     private void testExpressions() {
         File file = new File(
             Path.of("/test/file/main.c"),
-            "#ifndef FIRST_PRECONDITION\n" +
-            "    #if (SECOND_PRECONDITION==1)\n" +
-            "        #if (defined(__cplusplus) && (__cplusplus >= 201103L)) \\\n" +
-            "            || (defined(_MSVC_LANG) && (_MSVC_LANG >= 201103L))\n" +
-            "        #endif\n" +
-            "    #endif\n" +
-            "#endif"
+            """
+            #ifndef FIRST_PRECONDITION
+                #if (SECOND_PRECONDITION==1)
+                    #if (defined(__cplusplus) && (__cplusplus >= 201103L)) \\
+                        || (defined(_MSVC_LANG) && (_MSVC_LANG >= 201103L))
+                    #endif
+                #endif
+            #endif
+            """
         );
 
         Assert.assertThatCode(() -> wrap(file, () -> {

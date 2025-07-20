@@ -5,7 +5,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.TraceableException;
-import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.token.test.TokenFactory;
 
 public @Test class ExpressionsTest {
     public static void main(String[] args) {

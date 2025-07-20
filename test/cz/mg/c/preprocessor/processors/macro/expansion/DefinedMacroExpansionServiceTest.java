@@ -11,7 +11,7 @@ import cz.mg.collections.list.List;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.WordToken;
 import cz.mg.token.tokens.NumberToken;
-import cz.mg.tokenizer.test.TokenAssertions;
+import cz.mg.token.test.TokenAssertions;
 
 public @Test class DefinedMacroExpansionServiceTest {
     public static void main(String[] args) {

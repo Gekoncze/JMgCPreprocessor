@@ -12,7 +12,7 @@ import cz.mg.token.tokens.SymbolToken;
 import cz.mg.token.tokens.WhitespaceToken;
 import cz.mg.token.tokens.quote.SingleQuoteToken;
 import cz.mg.tokenizer.exceptions.TraceableException;
-import cz.mg.tokenizer.test.TokenAssertions;
+import cz.mg.token.test.TokenAssertions;
 
 public @Test class TokenProcessorTest {
     public static void main(String[] args) {

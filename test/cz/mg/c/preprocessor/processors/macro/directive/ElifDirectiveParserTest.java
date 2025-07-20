@@ -4,9 +4,9 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
-import cz.mg.tokenizer.test.TokenFactory;
-import cz.mg.tokenizer.test.TokenMutator;
-import cz.mg.tokenizer.test.TokenAssertions;
+import cz.mg.token.test.TokenFactory;
+import cz.mg.token.test.TokenMutator;
+import cz.mg.token.test.TokenAssertions;
 
 public @Test class ElifDirectiveParserTest {
     public static void main(String[] args) {

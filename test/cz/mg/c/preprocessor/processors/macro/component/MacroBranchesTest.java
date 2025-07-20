@@ -13,7 +13,7 @@ import cz.mg.c.entities.directives.EndifDirective;
 import cz.mg.c.entities.directives.IfdefDirective;
 import cz.mg.test.Assert;
 import cz.mg.tokenizer.exceptions.TraceableException;
-import cz.mg.tokenizer.test.TokenFactory;
+import cz.mg.token.test.TokenFactory;
 
 public @Test class MacroBranchesTest {
     public static void main(String[] args) {
