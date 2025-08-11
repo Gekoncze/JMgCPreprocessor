@@ -7,7 +7,7 @@ import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.system.FileMacro;
 import cz.mg.collections.list.List;
 import cz.mg.token.Token;
-import cz.mg.token.tokens.quote.DoubleQuoteToken;
+import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 
 public @Service class FileMacroExpansionService implements MacroExpansionService {
     private static volatile @Service FileMacroExpansionService instance;

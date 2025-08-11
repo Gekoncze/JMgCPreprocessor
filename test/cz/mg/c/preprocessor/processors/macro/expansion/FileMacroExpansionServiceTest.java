@@ -10,7 +10,7 @@ import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.WordToken;
-import cz.mg.token.tokens.quote.DoubleQuoteToken;
+import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 import cz.mg.token.test.TokenAssertions;
 
 import java.nio.file.Path;

@@ -8,7 +8,7 @@ import cz.mg.collections.list.List;
 import cz.mg.tokenizer.components.TokenReader;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.*;
-import cz.mg.token.tokens.quote.DoubleQuoteToken;
+import cz.mg.token.tokens.quotes.DoubleQuoteToken;
 
 import java.nio.file.Path;
 

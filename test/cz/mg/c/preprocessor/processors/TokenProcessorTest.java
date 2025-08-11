@@ -10,7 +10,7 @@ import cz.mg.token.Token;
 import cz.mg.token.tokens.NumberToken;
 import cz.mg.token.tokens.SymbolToken;
 import cz.mg.token.tokens.WhitespaceToken;
-import cz.mg.token.tokens.quote.SingleQuoteToken;
+import cz.mg.token.tokens.quotes.SingleQuoteToken;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenAssertions;
 
