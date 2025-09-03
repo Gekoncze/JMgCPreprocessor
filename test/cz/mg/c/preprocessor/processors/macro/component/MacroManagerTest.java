@@ -29,7 +29,7 @@ public @Test class MacroManagerTest {
 
         Assert.assertEquals(false, manager.defined("MACRO"));
         Assert.assertEquals(false, manager.defined("foo"));
-        Assert.assertThatCode(() -> manager.get("MACRO")).throwsException(NoSuchElementException.class);
+        Assert.assertException(() -> manager.get("MACRO"), NoSuchElementException.class);
         Assert.assertSame(null, manager.getOptional("MACRO"));
         Assert.assertSame(null, manager.getOptional("foo"));
         Assert.assertEquals(true, macros.getDefinitions().isEmpty());
@@ -59,7 +59,7 @@ public @Test class MacroManagerTest {
 
         Assert.assertEquals(false, manager.defined("MACRO"));
         Assert.assertEquals(false, manager.defined("foo"));
-        Assert.assertThatCode(() -> manager.get("MACRO")).throwsException(NoSuchElementException.class);
+        Assert.assertException(() -> manager.get("MACRO"), NoSuchElementException.class);
         Assert.assertSame(null, manager.getOptional("MACRO"));
         Assert.assertSame(null, manager.getOptional("foo"));
         Assert.assertEquals(true, macros.getDefinitions().isEmpty());

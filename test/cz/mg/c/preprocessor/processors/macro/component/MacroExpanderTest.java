@@ -8,6 +8,7 @@ import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.entities.macro.Macros;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenFactory;
@@ -209,7 +210,7 @@ public @Test class MacroExpanderTest {
     }
 
     private void testMissingRightParenthesis() {
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             MacroManager macros = new MacroManager(new Macros());
             macros.define(new Macro(f.word("FOO"), new List<>(), new List<>()));
             List<Token> line = new List<>(f.word("FOO"), f.symbol("("));

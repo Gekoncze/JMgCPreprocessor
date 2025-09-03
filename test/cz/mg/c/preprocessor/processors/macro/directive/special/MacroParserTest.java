@@ -7,6 +7,7 @@ import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.preprocessor.test.MacroAssertions;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
 
@@ -243,7 +244,7 @@ public @Test class MacroParserTest {
     }
 
     private void testErrors() {
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("define"),
@@ -252,7 +253,7 @@ public @Test class MacroParserTest {
             ));
         }).throwsException(PreprocessorException.class);
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("define"),
@@ -263,7 +264,7 @@ public @Test class MacroParserTest {
             ));
         }).throwsException(PreprocessorException.class);
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("define"),
@@ -275,7 +276,7 @@ public @Test class MacroParserTest {
             ));
         }).throwsException(PreprocessorException.class);
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("define"),
@@ -287,7 +288,7 @@ public @Test class MacroParserTest {
             ));
         }).throwsException(PreprocessorException.class);
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("define"),

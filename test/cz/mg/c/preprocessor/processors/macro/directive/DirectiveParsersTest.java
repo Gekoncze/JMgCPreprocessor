@@ -5,6 +5,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.entities.directives.DefineDirective;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenAssertions;
@@ -40,7 +41,7 @@ public @Test class DirectiveParsersTest {
     }
 
     private void testParseUnsupportedDirectiveLine() {
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             parsers.parse(new List<>(f.symbol("#"), f.word("unknown"), f.word("TEST")));
         }).throwsException(TraceableException.class);
     }

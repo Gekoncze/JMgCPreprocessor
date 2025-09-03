@@ -6,6 +6,7 @@ import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.preprocessor.processors.macro.directive.DirectiveParser;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.tokens.SymbolToken;
 import cz.mg.token.tokens.WordToken;
 
@@ -27,15 +28,15 @@ public @Service class DirectiveParserValidator {
     }
 
     public void validate(@Mandatory DirectiveParser parser) {
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>()))
             .throwsException(PreprocessorException.class);
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(new WordToken("x", 0))))
             .throwsException(PreprocessorException.class);
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(new SymbolToken("#", 0))))
             .throwsException(PreprocessorException.class);
 

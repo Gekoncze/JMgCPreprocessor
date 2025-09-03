@@ -10,6 +10,7 @@ import cz.mg.c.entities.macro.system.FileMacro;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenFactory;
@@ -55,7 +56,7 @@ public @Test class MacroExpansionServicesTest {
     }
 
     private void testValidation() {
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             MacroManager macros = new MacroManager(new Macros());
             Macro macro = new Macro(f.word("FAIL"), null, null);
             macros.define(macro);

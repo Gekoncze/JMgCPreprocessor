@@ -69,9 +69,7 @@ public @Test class BackslashPositionProcessorTest {
             createToken(originalContent, 'w')
         );
 
-        Assert.assertThatCode(() -> {
-            tokenAssertions.assertEquals(expectedTokens, tokens);
-        }).throwsException();
+        tokenAssertions.assertNotEquals(expectedTokens, tokens);
 
         backslashPositionProcessor.process(originalContent, backslashedContent, tokens);
 

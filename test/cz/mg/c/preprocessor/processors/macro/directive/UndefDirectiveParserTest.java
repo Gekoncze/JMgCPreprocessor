@@ -5,6 +5,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
@@ -60,7 +61,7 @@ public @Test class UndefDirectiveParserTest {
     }
 
     private void testUnexpectedTrailingTokens() {
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("undef"),
@@ -69,7 +70,7 @@ public @Test class UndefDirectiveParserTest {
             )))
             .doesNotThrowAnyException();
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("undef"),
@@ -78,7 +79,7 @@ public @Test class UndefDirectiveParserTest {
             )))
             .throwsException(TraceableException.class);
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("undef"),
@@ -88,7 +89,7 @@ public @Test class UndefDirectiveParserTest {
             )))
             .throwsException(TraceableException.class);
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("undef"),

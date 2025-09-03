@@ -5,6 +5,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
 import cz.mg.token.test.TokenAssertions;
@@ -113,15 +114,15 @@ public @Test class ExpressionParserTest {
             )
         );
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>()))
             .throwsException(PreprocessorException.class);
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(f.symbol("#"))))
             .throwsException(PreprocessorException.class);
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(f.symbol("#"), f.word("if"))))
             .throwsException(PreprocessorException.class);
     }

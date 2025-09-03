@@ -6,6 +6,7 @@ import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.c.tokenizer.CTokenizer;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.NumberToken;
 import cz.mg.token.tokens.SymbolToken;
@@ -46,7 +47,7 @@ public @Test class TokenProcessorTest {
     }
 
     private void testProcessException() {
-        TraceableException exception = Assert.assertThatCode(() -> {
+        TraceableException exception = Assertions.assertThatCode(() -> {
             tokenProcessor.process("1 + 1\\\n = '2", tokenizer);
         }).throwsException(TraceableException.class);
         Assert.assertEquals(10, exception.getPosition());

@@ -12,6 +12,7 @@ import cz.mg.c.entities.directives.ElseDirective;
 import cz.mg.c.entities.directives.EndifDirective;
 import cz.mg.c.entities.directives.IfdefDirective;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenFactory;
 
@@ -55,15 +56,15 @@ public @Test class MacroBranchesTest {
 
         Assert.assertEquals(trueBranch, branches.getBranch());
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             branches.validateIsRoot();
         }).doesNotThrowAnyException();
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             branches.validateNotRoot(fooBegin);
         }).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             branches.unnest(fooBegin);
         }).throwsException(TraceableException.class);
 
@@ -71,11 +72,11 @@ public @Test class MacroBranchesTest {
         branches.nest(fooBegin, true);
         Assert.assertEquals(trueBranch, branches.getBranch());
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             branches.validateIsRoot();
         }).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             branches.validateNotRoot(fooBegin);
         }).doesNotThrowAnyException();
 
@@ -101,7 +102,7 @@ public @Test class MacroBranchesTest {
         branches.end();
         Assert.assertEquals(trueBranch, branches.getBranch());
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             branches.validateIsRoot();
         }).doesNotThrowAnyException();
     }

@@ -6,6 +6,7 @@ import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.Token;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenFactory;
@@ -27,13 +28,13 @@ public @Test class MacroCallValidatorTest {
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testMacroCallWithArguments() {
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             Macro macro = new Macro(f.word("FOO"), new List<>(), new List<>());
             MacroCall call = new MacroCall(macro, f.word("FOO"), new List<>());
             validator.validate(call);
         }).doesNotThrowAnyException();
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             Macro macro = new Macro(f.word("FOO"), null, new List<>());
             MacroCall call = new MacroCall(macro, f.word("FOO"), new List<>());
             validator.validate(call);
@@ -41,13 +42,13 @@ public @Test class MacroCallValidatorTest {
     }
 
     private void testMacroCallWithoutArguments() {
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             Macro macro = new Macro(f.word("FOO"), new List<>(), new List<>());
             MacroCall call = new MacroCall(macro, f.word("FOO"), null);
             validator.validate(call);
         }).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             Macro macro = new Macro(f.word("FOO"), null, new List<>());
             MacroCall call = new MacroCall(macro, f.word("FOO"), null);
             validator.validate(call);
@@ -55,7 +56,7 @@ public @Test class MacroCallValidatorTest {
     }
 
     private void testMacroCallArgumentCount() {
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             Macro macro = new Macro(f.word("FOO"), new List<>(f.word("x"), f.word("y")), new List<>());
             MacroCall call = new MacroCall(
                 macro,
@@ -65,7 +66,7 @@ public @Test class MacroCallValidatorTest {
             validator.validate(call);
         }).doesNotThrowAnyException();
 
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             Macro macro = new Macro(f.word("FOO"), new List<>(f.word("x"), f.word("y")), new List<>());
             MacroCall call = new MacroCall(
                 macro,
@@ -77,7 +78,7 @@ public @Test class MacroCallValidatorTest {
     }
 
     private void testMacroCallEmptyArguments() {
-        Assert.assertThatCode(() -> {
+        Assertions.assertThatCode(() -> {
             Macro macro = new Macro(f.word("FOO"), new List<>(f.word("x"), f.word("y")), new List<>());
             MacroCall call = new MacroCall(
                 macro,

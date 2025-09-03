@@ -5,6 +5,7 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
@@ -46,15 +47,15 @@ public @Test class ElseDirectiveParserTest {
     }
 
     private void testUnexpectedTrailingTokens() {
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(f.symbol("#"), f.word("else"), f.whitespace(" "))))
             .doesNotThrowAnyException();
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(f.symbol("#"), f.word("else"), f.word("unexpected"))))
             .throwsException(TraceableException.class);
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("else"),
@@ -63,7 +64,7 @@ public @Test class ElseDirectiveParserTest {
             )))
             .throwsException(TraceableException.class);
 
-        Assert
+        Assertions
             .assertThatCode(() -> parser.parse(new List<>(
                 f.symbol("#"),
                 f.word("else"),

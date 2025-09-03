@@ -12,6 +12,7 @@ import cz.mg.c.preprocessor.test.MacroAssertions;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.token.Token;
 import cz.mg.token.tokens.*;
 import cz.mg.token.tokens.quotes.DoubleQuoteToken;
@@ -267,11 +268,11 @@ public @Test class CPreprocessorTest {
             """
         );
 
-        Assert.assertThatCode(() -> wrap(file, () -> {
+        Assertions.assertThatCode(() -> wrap(file, () -> {
             new CPreprocessor(m.create()).preprocess(file);
         })).doesNotThrowAnyException();
 
-        Assert.assertThatCode(() -> wrap(file, () -> {
+        Assertions.assertThatCode(() -> wrap(file, () -> {
             new CPreprocessor(m.create(m.create("FIRST_PRECONDITION"))).preprocess(file);
         })).doesNotThrowAnyException();
     }

@@ -4,6 +4,7 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.test.Assertions;
 import cz.mg.tokenizer.exceptions.TraceableException;
 import cz.mg.token.test.TokenFactory;
 
@@ -224,37 +225,37 @@ public @Test class ExpressionsTest {
     }
 
     private void testIllegalExpression() {
-        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+        Assertions.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.symbol("("),
             f.symbol(")")
         ))).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+        Assertions.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.symbol("+")
         ))).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+        Assertions.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.symbol("("),
             f.symbol("+"),
             f.symbol(")")
         ))).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+        Assertions.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.symbol("1")
         ))).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+        Assertions.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.symbol("("),
             f.symbol("1"),
             f.symbol(")")
         ))).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+        Assertions.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.symbol("("),
             f.symbol("1")
         ))).throwsException(TraceableException.class);
 
-        Assert.assertThatCode(() -> evaluator.evaluate(new List<>(
+        Assertions.assertThatCode(() -> evaluator.evaluate(new List<>(
             f.symbol("1"),
             f.symbol(")")
         ))).throwsException(TraceableException.class);
