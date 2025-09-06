@@ -2,14 +2,14 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.entities.macro.Macro;
 import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.Macros;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.collections.list.List;
 import cz.mg.token.Token;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.test.TokenFactory;
-import cz.mg.token.test.TokenAssertions;
 
 public @Test class PlainMacroExpansionServiceTest {
     public static void main(String[] args) {
@@ -26,7 +26,6 @@ public @Test class PlainMacroExpansionServiceTest {
 
     private final @Service PlainMacroExpansionService service = PlainMacroExpansionService.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
-    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testExpandNoParametersNoImplementation() {
         Macro macro = new Macro(f.word("FOOBAR"), null, new List<>());
@@ -39,7 +38,7 @@ public @Test class PlainMacroExpansionServiceTest {
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>();
 
-        assertions.assertEquals(expectedTokens, actualTokens);
+        TokenAssert.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testExpandNoParameters() {
@@ -73,7 +72,7 @@ public @Test class PlainMacroExpansionServiceTest {
             f.word("x")
         );
 
-        assertions.assertEquals(expectedTokens, actualTokens);
+        TokenAssert.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testExpandNoImplementation() {
@@ -98,7 +97,7 @@ public @Test class PlainMacroExpansionServiceTest {
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>();
 
-        assertions.assertEquals(expectedTokens, actualTokens);
+        TokenAssert.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testExpand() {
@@ -140,6 +139,6 @@ public @Test class PlainMacroExpansionServiceTest {
             f.word("oi")
         );
 
-        assertions.assertEquals(expectedTokens, actualTokens);
+        TokenAssert.assertEquals(expectedTokens, actualTokens);
     }
 }

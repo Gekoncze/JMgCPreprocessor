@@ -8,12 +8,12 @@ import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.test.Assertions;
 import cz.mg.token.Token;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.tokens.NumberToken;
 import cz.mg.token.tokens.SymbolToken;
 import cz.mg.token.tokens.WhitespaceToken;
 import cz.mg.token.tokens.quotes.SingleQuoteToken;
 import cz.mg.tokenizer.exceptions.TraceableException;
-import cz.mg.token.test.TokenAssertions;
 
 public @Test class TokenProcessorTest {
     public static void main(String[] args) {
@@ -27,7 +27,6 @@ public @Test class TokenProcessorTest {
     }
 
     private final @Service TokenProcessor tokenProcessor = TokenProcessor.getInstance();
-    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
     private final @Mandatory CTokenizer tokenizer = new CTokenizer();
 
     private void testProcess() {
@@ -43,7 +42,7 @@ public @Test class TokenProcessorTest {
             new WhitespaceToken(" ", 9),
             new SingleQuoteToken("2", 10)
         );
-        assertions.assertEquals(expectedTokens, actualTokens);
+        TokenAssert.assertEquals(expectedTokens, actualTokens);
     }
 
     private void testProcessException() {

@@ -4,8 +4,8 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
 import cz.mg.token.Token;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.test.TokenFactory;
-import cz.mg.token.test.TokenAssertions;
 
 public @Test class CommentProcessorTest {
     public static void main(String[] args) {
@@ -17,9 +17,8 @@ public @Test class CommentProcessorTest {
         System.out.println("OK");
     }
 
-    private final TokenAssertions assertions = TokenAssertions.getInstance();
-    private final TokenFactory f = TokenFactory.getInstance();
     private final CommentProcessor processor = CommentProcessor.getInstance();
+    private final TokenFactory f = TokenFactory.getInstance();
 
     private void testProcessing() {
         testProcessing(
@@ -83,6 +82,6 @@ public @Test class CommentProcessorTest {
 
     private void testProcessing(@Mandatory List<Token> tokens, @Mandatory List<Token> result) {
         processor.process(tokens);
-        assertions.assertEquals(result, tokens);
+        TokenAssert.assertEquals(result, tokens);
     }
 }

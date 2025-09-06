@@ -3,11 +3,11 @@ package cz.mg.c.preprocessor.processors.macro.directive.special;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.entities.macro.Macro;
-import cz.mg.c.preprocessor.test.MacroAssertions;
+import cz.mg.c.preprocessor.test.MacroAssert;
 import cz.mg.collections.list.List;
+import cz.mg.token.test.TokenMutator;
 import cz.mg.token.tokens.SymbolToken;
 import cz.mg.token.tokens.WordToken;
-import cz.mg.token.test.TokenMutator;
 
 public @Test class SpecialMacroParserTest {
     public static void main(String[] args) {
@@ -20,7 +20,6 @@ public @Test class SpecialMacroParserTest {
     }
 
     private final @Service SpecialMacroParser parser = SpecialMacroParser.getInstance();
-    private final @Service MacroAssertions assertions = MacroAssertions.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
 
     private void testConcatenation() {
@@ -35,7 +34,7 @@ public @Test class SpecialMacroParserTest {
             ),
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(new WordToken("TEST", 10), null, new List<>(new WordToken("foobar", 15))),
                 macro
             )

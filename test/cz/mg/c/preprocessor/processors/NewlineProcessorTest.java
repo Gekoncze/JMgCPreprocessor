@@ -5,8 +5,8 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
 import cz.mg.token.Token;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.test.TokenFactory;
-import cz.mg.token.test.TokenAssertions;
 
 public @Test class NewlineProcessorTest {
     public static void main(String[] args) {
@@ -21,9 +21,8 @@ public @Test class NewlineProcessorTest {
         System.out.println("OK");
     }
 
-    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
-    private final @Service TokenFactory f = TokenFactory.getInstance();
     private final @Service NewlineProcessor processor = NewlineProcessor.getInstance();
+    private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testProcessingNewlines() {
         List<Token> tokens = new List<>(
@@ -36,9 +35,9 @@ public @Test class NewlineProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(3, lines.count());
-        assertions.assertEquals(new List<>(f.word("a")), lines.get(0));
-        assertions.assertEquals(new List<>(f.number("11"), f.number("69")), lines.get(1));
-        assertions.assertEquals(new List<>(f.symbol(";")), lines.get(2));
+        TokenAssert.assertEquals(new List<>(f.word("a")), lines.get(0));
+        TokenAssert.assertEquals(new List<>(f.number("11"), f.number("69")), lines.get(1));
+        TokenAssert.assertEquals(new List<>(f.symbol(";")), lines.get(2));
     }
 
     private void testProcessingFirst() {
@@ -50,8 +49,8 @@ public @Test class NewlineProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        assertions.assertEquals(new List<>(), lines.get(0));
-        assertions.assertEquals(new List<>(f.number("3"), f.word("foo"), f.whitespace(" ")), lines.get(1));
+        TokenAssert.assertEquals(new List<>(), lines.get(0));
+        TokenAssert.assertEquals(new List<>(f.number("3"), f.word("foo"), f.whitespace(" ")), lines.get(1));
     }
 
     private void testProcessingMiddle() {
@@ -62,8 +61,8 @@ public @Test class NewlineProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        assertions.assertEquals(new List<>(f.word("foo")), lines.get(0));
-        assertions.assertEquals(new List<>(f.word("bar")), lines.get(1));
+        TokenAssert.assertEquals(new List<>(f.word("foo")), lines.get(0));
+        TokenAssert.assertEquals(new List<>(f.word("bar")), lines.get(1));
     }
 
     private void testProcessingLast() {
@@ -75,7 +74,7 @@ public @Test class NewlineProcessorTest {
         );
         List<List<Token>> lines = processor.process(tokens);
         Assert.assertEquals(2, lines.count());
-        assertions.assertEquals(new List<>(f.whitespace("\t"), f.word("Pony"), f.symbol("!")), lines.get(0));
-        assertions.assertEquals(new List<>(), lines.get(1));
+        TokenAssert.assertEquals(new List<>(f.whitespace("\t"), f.word("Pony"), f.symbol("!")), lines.get(0));
+        TokenAssert.assertEquals(new List<>(), lines.get(1));
     }
 }

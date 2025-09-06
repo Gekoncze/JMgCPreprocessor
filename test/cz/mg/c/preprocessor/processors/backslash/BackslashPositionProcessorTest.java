@@ -4,9 +4,8 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.annotations.requirement.Mandatory;
 import cz.mg.collections.list.List;
-import cz.mg.test.Assert;
 import cz.mg.token.Token;
-import cz.mg.token.test.TokenAssertions;
+import cz.mg.token.test.TokenAssert;
 
 public @Test class BackslashPositionProcessorTest {
     public static void main(String[] args) {
@@ -20,7 +19,6 @@ public @Test class BackslashPositionProcessorTest {
 
     private final @Service BackslashPositionProcessor backslashPositionProcessor = BackslashPositionProcessor.getInstance();
     private final @Service BackslashProcessor backslashProcessor = BackslashProcessor.getInstance();
-    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
 
     private void testProcessing() {
         String originalContent =
@@ -69,11 +67,11 @@ public @Test class BackslashPositionProcessorTest {
             createToken(originalContent, 'w')
         );
 
-        tokenAssertions.assertNotEquals(expectedTokens, tokens);
+        TokenAssert.assertNotEquals(expectedTokens, tokens);
 
         backslashPositionProcessor.process(originalContent, backslashedContent, tokens);
 
-        tokenAssertions.assertEquals(expectedTokens, tokens);
+        TokenAssert.assertEquals(expectedTokens, tokens);
     }
 
     private @Mandatory Token createToken(@Mandatory String content, char ch) {

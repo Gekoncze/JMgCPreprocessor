@@ -5,9 +5,9 @@ import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
 import cz.mg.test.Assert;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
-import cz.mg.token.test.TokenAssertions;
 
 public @Test class ErrorDirectiveParserTest {
     public static void main(String[] args) {
@@ -22,7 +22,6 @@ public @Test class ErrorDirectiveParserTest {
     private final @Service ErrorDirectiveParser parser = ErrorDirectiveParser.getInstance();
     private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
-    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
@@ -33,7 +32,7 @@ public @Test class ErrorDirectiveParserTest {
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("error"), directive.getKeyword());
+                TokenAssert.assertEquals(f.word("error"), directive.getKeyword());
                 Assert.assertNull(directive.getMessage());
             }
         );
@@ -43,7 +42,7 @@ public @Test class ErrorDirectiveParserTest {
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("error"), directive.getKeyword());
+                TokenAssert.assertEquals(f.word("error"), directive.getKeyword());
                 Assert.assertNull(directive.getMessage());
             }
         );
@@ -53,7 +52,7 @@ public @Test class ErrorDirectiveParserTest {
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("error"), directive.getKeyword());
+                TokenAssert.assertEquals(f.word("error"), directive.getKeyword());
                 Assert.assertEquals("oioioi", directive.getMessage());
             }
         );
@@ -75,7 +74,7 @@ public @Test class ErrorDirectiveParserTest {
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("error"), directive.getKeyword());
+                TokenAssert.assertEquals(f.word("error"), directive.getKeyword());
                 Assert.assertEquals("oi oi oi", directive.getMessage());
             }
         );

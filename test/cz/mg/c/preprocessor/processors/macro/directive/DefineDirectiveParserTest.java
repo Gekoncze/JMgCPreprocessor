@@ -3,11 +3,12 @@ package cz.mg.c.preprocessor.processors.macro.directive;
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.entities.macro.Macro;
-import cz.mg.c.preprocessor.test.*;
+import cz.mg.c.preprocessor.test.DirectiveParserValidator;
+import cz.mg.c.preprocessor.test.MacroAssert;
 import cz.mg.collections.list.List;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
-import cz.mg.token.test.TokenAssertions;
 
 public @Test class DefineDirectiveParserTest {
     public static void main(String[] args) {
@@ -22,9 +23,7 @@ public @Test class DefineDirectiveParserTest {
     private final @Service DefineDirectiveParser parser = DefineDirectiveParser.getInstance();
     private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
-    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
-    private final @Service MacroAssertions macroAssertions = MacroAssertions.getInstance();
 
     private void testParse() {
         parserValidator.validate(DefineDirectiveParser.getInstance());
@@ -34,8 +33,8 @@ public @Test class DefineDirectiveParserTest {
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("define"), directive.getKeyword());
-                macroAssertions.assertEquals(new Macro(f.word("TEST"), null, new List<>()), directive.getMacro());
+                TokenAssert.assertEquals(f.word("define"), directive.getKeyword());
+                MacroAssert.assertEquals(new Macro(f.word("TEST"), null, new List<>()), directive.getMacro());
             }
         );
 
@@ -52,8 +51,8 @@ public @Test class DefineDirectiveParserTest {
             new List<>(0, 1, 2, 3, 4, 5),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("define"), directive.getKeyword());
-                macroAssertions.assertEquals(
+                TokenAssert.assertEquals(f.word("define"), directive.getKeyword());
+                MacroAssert.assertEquals(
                     new Macro(f.word("TEST"), null, new List<>(f.whitespace(" "))), directive.getMacro()
                 );
             }

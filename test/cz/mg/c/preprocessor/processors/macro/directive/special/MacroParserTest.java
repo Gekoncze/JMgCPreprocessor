@@ -2,11 +2,10 @@ package cz.mg.c.preprocessor.processors.macro.directive.special;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.exceptions.PreprocessorException;
 import cz.mg.c.entities.macro.Macro;
-import cz.mg.c.preprocessor.test.MacroAssertions;
+import cz.mg.c.preprocessor.exceptions.PreprocessorException;
+import cz.mg.c.preprocessor.test.MacroAssert;
 import cz.mg.collections.list.List;
-import cz.mg.test.Assert;
 import cz.mg.test.Assertions;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
@@ -29,7 +28,6 @@ public @Test class MacroParserTest {
 
     private final @Service MacroParser parser = MacroParser.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
-    private final @Service MacroAssertions assertions = MacroAssertions.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
 
     private void testNoParametersAndNoImplementation() {
@@ -44,7 +42,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 3),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(f.word("LOREM_IPSUM"), null, new List<>()),
                 macro
             )
@@ -63,7 +61,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 3, 5),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(f.word("LOREM_IPSUM"), new List<>(), new List<>()),
                 macro
             )
@@ -82,7 +80,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 3),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(f.word("TEST"), null, new List<>(f.word("foo"), f.word("bar"))),
                 macro
             )
@@ -111,7 +109,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 3, 5, 6, 11, 12),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(
                     f.word("PLUS"),
                     new List<>(f.word("x"), f.word("y")),
@@ -135,7 +133,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 2, 3, 5, 6),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(
                     f.word("PLUS"),
                     new List<>(f.word(""), f.symbol("...")),
@@ -157,7 +155,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 2, 4, 5, 6),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(
                     f.word("PLUS"),
                     new List<>(f.word("x"), f.symbol("...")),
@@ -180,7 +178,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 2, 4, 5, 6, 7),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(
                     f.word("PLUS"),
                     new List<>(f.word("x"), f.word(""), f.symbol("...")),
@@ -204,7 +202,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 2, 4, 5, 6, 7, 8),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(
                     f.word("PLUS"),
                     new List<>(f.word("x"), f.word("y"), f.symbol("...")),
@@ -230,7 +228,7 @@ public @Test class MacroParserTest {
             ),
             new List<>(0, 1, 3),
             tokens -> parser.parse(tokens),
-            macro -> assertions.assertEquals(
+            macro -> MacroAssert.assertEquals(
                 new Macro(f.word("LOREM_IPSUM"), null, new List<>(
                     f.whitespace(" "),
                     f.symbol("("),

@@ -2,16 +2,16 @@ package cz.mg.c.preprocessor.processors.macro.expansion;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.c.entities.macro.MacroCall;
 import cz.mg.c.entities.macro.Macros;
 import cz.mg.c.entities.macro.system.FileMacro;
+import cz.mg.c.preprocessor.processors.macro.components.MacroManager;
 import cz.mg.collections.list.List;
 import cz.mg.file.File;
 import cz.mg.token.Token;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.tokens.WordToken;
 import cz.mg.token.tokens.quotes.DoubleQuoteToken;
-import cz.mg.token.test.TokenAssertions;
 
 import java.nio.file.Path;
 
@@ -26,7 +26,6 @@ public @Test class FileMacroExpansionServiceTest {
     }
 
     private final @Service FileMacroExpansionService service = FileMacroExpansionService.getInstance();
-    private final @Service TokenAssertions assertions = TokenAssertions.getInstance();
 
     private void testExpand() {
         File file = new File(
@@ -42,6 +41,6 @@ public @Test class FileMacroExpansionServiceTest {
         MacroCall call = new MacroCall(fileMacro, new WordToken("__FILE__", 48), new List<>());
         List<Token> actualTokens = service.expand(macros, call);
         List<Token> expectedTokens = new List<>(new DoubleQuoteToken(file.getPath().toAbsolutePath().toString(), 48));
-        assertions.assertEquals(expectedTokens, actualTokens);
+        TokenAssert.assertEquals(expectedTokens, actualTokens);
     }
 }

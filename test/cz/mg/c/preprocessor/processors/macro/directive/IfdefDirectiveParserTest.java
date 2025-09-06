@@ -2,14 +2,13 @@ package cz.mg.c.preprocessor.processors.macro.directive;
 
 import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
-import cz.mg.c.preprocessor.test.*;
+import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
-import cz.mg.test.Assert;
 import cz.mg.test.Assertions;
-import cz.mg.tokenizer.exceptions.TraceableException;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
-import cz.mg.token.test.TokenAssertions;
+import cz.mg.tokenizer.exceptions.TraceableException;
 
 public @Test class IfdefDirectiveParserTest {
     public static void main(String[] args) {
@@ -25,7 +24,6 @@ public @Test class IfdefDirectiveParserTest {
     private final @Service IfdefDirectiveParser parser = IfdefDirectiveParser.getInstance();
     private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
-    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
@@ -36,8 +34,8 @@ public @Test class IfdefDirectiveParserTest {
             new List<>(0, 1, 2),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("ifdef"), directive.getKeyword());
-                tokenAssertions.assertEquals(f.word("TEST"), directive.getName());
+                TokenAssert.assertEquals(f.word("ifdef"), directive.getKeyword());
+                TokenAssert.assertEquals(f.word("TEST"), directive.getName());
             }
         );
 
@@ -54,8 +52,8 @@ public @Test class IfdefDirectiveParserTest {
             new List<>(0, 1, 2, 3, 4, 5, 6),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("ifdef"), directive.getKeyword());
-                tokenAssertions.assertEquals(f.word("TEST"), directive.getName());
+                TokenAssert.assertEquals(f.word("ifdef"), directive.getKeyword());
+                TokenAssert.assertEquals(f.word("TEST"), directive.getName());
             }
         );
     }

@@ -4,9 +4,9 @@ import cz.mg.annotations.classes.Service;
 import cz.mg.annotations.classes.Test;
 import cz.mg.c.preprocessor.test.DirectiveParserValidator;
 import cz.mg.collections.list.List;
+import cz.mg.token.test.TokenAssert;
 import cz.mg.token.test.TokenFactory;
 import cz.mg.token.test.TokenMutator;
-import cz.mg.token.test.TokenAssertions;
 
 public @Test class IfDirectiveParserTest {
     public static void main(String[] args) {
@@ -21,7 +21,6 @@ public @Test class IfDirectiveParserTest {
     private final @Service IfDirectiveParser parser = IfDirectiveParser.getInstance();
     private final @Service DirectiveParserValidator parserValidator = DirectiveParserValidator.getInstance();
     private final @Service TokenMutator mutator = TokenMutator.getInstance();
-    private final @Service TokenAssertions tokenAssertions = TokenAssertions.getInstance();
     private final @Service TokenFactory f = TokenFactory.getInstance();
 
     private void testParse() {
@@ -32,8 +31,8 @@ public @Test class IfDirectiveParserTest {
             new List<>(0, 1),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("if"), directive.getKeyword());
-                tokenAssertions.assertEquals(
+                TokenAssert.assertEquals(f.word("if"), directive.getKeyword());
+                TokenAssert.assertEquals(
                     new List<>(f.number("1"), f.symbol(">"), f.number("2")),
                     directive.getExpression()
                 );
@@ -57,8 +56,8 @@ public @Test class IfDirectiveParserTest {
             new List<>(0, 1, 2, 3),
             tokens -> parser.parse(tokens),
             directive -> {
-                tokenAssertions.assertEquals(f.word("if"), directive.getKeyword());
-                tokenAssertions.assertEquals(
+                TokenAssert.assertEquals(f.word("if"), directive.getKeyword());
+                TokenAssert.assertEquals(
                     new List<>(
                         f.whitespace(" "),
                         f.number("1"),
